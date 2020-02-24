@@ -1,8 +1,12 @@
 <resources>
     <string name="app_name">WordLearnerAssignment_SMAP</string>
+    //Buttons
     <string name="pickbutton_list_test">PickButton_List_Test</string>
+    <string name="button_edit_detail">Edit</string>
+    //Activities
     <string name="activity_list">ACTIVITY_LIST</string>
     <string name="activity_details">ACTIVITY_DETAILS</string>
-    <string name="button_edit_detail">Edit</string>
     <string name="activity_edit">ACTIVITY_EDIT</string>
+
+
 </resources>
