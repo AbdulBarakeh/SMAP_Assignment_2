@@ -10,6 +10,7 @@ import android.widget.Button;
 public class ListActivity extends AppCompatActivity {
 
     private Button PickStandin;
+    private Button Exit;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,6 +21,13 @@ public class ListActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent GoToDetails = new Intent(ListActivity.this, DetailsActivity.class);
                 startActivity(GoToDetails);
+            }
+        });
+        Exit = findViewById(R.id.Exit_button_List);
+        Exit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
 
