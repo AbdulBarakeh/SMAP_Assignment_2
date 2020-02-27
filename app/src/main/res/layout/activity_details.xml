@@ -30,13 +30,12 @@
 
     <TextView
         android:id="@+id/NotesOfWord_Detail"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
         android:text="@string/Notes_Detail"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintStart_toStartOf="@+id/NotesOfWord_Label_Detail"
         app:layout_constraintTop_toBottomOf="@+id/NotesOfWord_Label_Detail" />
 
     <TextView
@@ -72,6 +71,8 @@
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
         android:text="Description:"
+        android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -79,13 +80,12 @@
 
     <TextView
         android:id="@+id/DescriptionOfWord_Detail"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
         android:text="@string/Descrip_Detail"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintStart_toStartOf="@+id/DescriptionOfWord_Label_Detail"
         app:layout_constraintTop_toBottomOf="@+id/DescriptionOfWord_Label_Detail" />
 
     <ImageView
@@ -124,13 +124,14 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
         android:text="Notes:"
+        android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.663" />
+        app:layout_constraintTop_toBottomOf="@+id/DescriptionOfWord_Detail"
+        app:layout_constraintVertical_bias="0.072" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
@@ -138,5 +139,12 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="170dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="334dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

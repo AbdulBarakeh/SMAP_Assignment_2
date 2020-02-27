@@ -21,7 +21,6 @@ public class AdapterForWordList extends RecyclerView.Adapter<AdapterForWordList.
 
     public void setOnItemClickListener(OnItemClickListener listener){
         CardClickListener = listener;
-
     }
 
     public static class ViewHolderForWordList extends RecyclerView.ViewHolder{

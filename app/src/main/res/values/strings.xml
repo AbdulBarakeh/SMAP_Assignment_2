@@ -17,6 +17,9 @@
     <string name="Pronoun_Detail">TextView</string>
     <string name="Rating_Detail">TextView</string>
     <string name="Name_Detail">TextView</string>
+    <string name="Rating_Edit">TextView</string>
+    <string name="NameOfWord_Edit">TextView</string>
+    <string name="NotesInput_edit">Insert Notes....</string>
 
 
 </resources>

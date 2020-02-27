@@ -26,9 +26,7 @@ public class WordTemplateClass {
     public String getPronounOfWord() {
         return PronounOfWord;
     }
-    public double getRatingOfWord(){
-        return RatingOfWord;
-    }
+    public double getRatingOfWord(){ return RatingOfWord;}
     public String getDescripOfWord() {
         return DescripOfWord;
     }
@@ -36,6 +34,27 @@ public class WordTemplateClass {
         return NotesOfWord;
     }
 
+    public void setImageOfWord(int imageOfWord) {
+        ImageOfWord = imageOfWord;
+    }
 
+    public void setNameOfWord(String nameOfWord) {
+        NameOfWord = nameOfWord;
+    }
 
+    public void setPronounOfWord(String pronounOfWord) {
+        PronounOfWord = pronounOfWord;
+    }
+
+    public void setRatingOfWord(double ratingOfWord) {
+        RatingOfWord = ratingOfWord;
+    }
+
+    public void setDescripOfWord(String descripOfWord) {
+        DescripOfWord = descripOfWord;
+    }
+
+    public void setNotesOfWord(String notesOfWord) {
+        NotesOfWord = notesOfWord;
+    }
 }

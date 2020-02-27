@@ -30,13 +30,13 @@ private double ratingOfWord;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
 
-        Intent receivedData = getIntent();
-        picOfWord = receivedData.getIntExtra("PicOfWord",R.drawable.imagenotfound);
-        nameOfWord = receivedData.getStringExtra( "NameOfWord" );
-        pronounOfWord = receivedData.getStringExtra( "PronounOfWord" );
-        descripOfWord = receivedData.getStringExtra( "DescripOfWord" );
-        notesOfWord = receivedData.getStringExtra( "NotesOfWord" );
-        ratingOfWord = receivedData.getDoubleExtra( "RatingOfWord",0 );
+        Intent receivedFromList = getIntent();
+        picOfWord = receivedFromList.getIntExtra("PicOfWord",R.drawable.imagenotfound);
+        nameOfWord = receivedFromList.getStringExtra( "NameOfWord" );
+        pronounOfWord = receivedFromList.getStringExtra( "PronounOfWord" );
+        descripOfWord = receivedFromList.getStringExtra( "DescripOfWord" );
+        notesOfWord = receivedFromList.getStringExtra( "NotesOfWord" );
+        ratingOfWord = receivedFromList.getDoubleExtra( "RatingOfWord",0 );
 
         PictureOfWord_Detail_T = findViewById( R.id.PictureOfWord_Detail);
         NameOfWord_Detail_T = findViewById( R.id.NameOfWord_Detail);
@@ -60,13 +60,19 @@ private double ratingOfWord;
                 finish();
             }
         });
+        //SRC:https://stackoverflow.com/questions/10407159/how-to-manage-startactivityforresult-on-android
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();//Lifecycle!
                 Intent GoToEdit = new Intent(DetailsActivity.this, EditActivity.class);
-                //Send specific data with the new intent
-                startActivity(GoToEdit);
+                GoToEdit.putExtra("PicOfWord",picOfWord);
+                GoToEdit.putExtra("NameOfWord",nameOfWord);
+                GoToEdit.putExtra("PronounOfWord",pronounOfWord);
+                GoToEdit.putExtra("DescripOfWord",descripOfWord);
+                GoToEdit.putExtra("NotesOfWord",notesOfWord);
+                GoToEdit.putExtra("RatingOfWord",ratingOfWord);
+                //Receive Data With finished activity
+                startActivityForResult(GoToEdit,RESULT_OK);
             }
         });
     }

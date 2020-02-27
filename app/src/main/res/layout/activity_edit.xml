@@ -38,7 +38,8 @@
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
-        android:text="TextView"
+        android:text="@string/NameOfWord_Edit"
+        android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -69,7 +70,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
-        android:text="TextView"
+        android:text="@string/Rating_Edit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.925"
@@ -119,11 +120,12 @@
         android:layout_marginBottom="16dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Insert Notes...."
+        android:text="@string/NotesInput_edit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:importantForAutofill="no" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
