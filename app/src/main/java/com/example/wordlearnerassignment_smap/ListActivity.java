@@ -22,7 +22,7 @@ import java.util.List;
 
 public class ListActivity extends AppCompatActivity {
     private RecyclerView RecyclerViewListActivity;
-    private RecyclerView.Adapter AdapterListActivity;
+    private AdapterForWordList AdapterListActivity;
     private RecyclerView.LayoutManager LayoutManagerListActivity;
 
     private Button PickStandin;
@@ -44,16 +44,20 @@ public class ListActivity extends AppCompatActivity {
 
         RecyclerViewListActivity.setLayoutManager(LayoutManagerListActivity);
         RecyclerViewListActivity.setAdapter(AdapterListActivity);
-
-
-        PickStandin = findViewById(R.id.PickButton_List_Test);
-        PickStandin.setOnClickListener(new View.OnClickListener() {
+        AdapterListActivity.setOnItemClickListener( new AdapterForWordList.OnItemClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onItemClick(int position) {
                 Intent GoToDetails = new Intent(ListActivity.this, DetailsActivity.class);
+                GoToDetails.putExtra("PicOfWord", WordList.get(position).ImageOfWord);
+                GoToDetails.putExtra("NameOfWord", WordList.get(position).NameOfWord);
+                GoToDetails.putExtra("PronounOfWord", WordList.get(position).PronounOfWord);
+                GoToDetails.putExtra("DescripOfWord", WordList.get(position).DescripOfWord);
+                GoToDetails.putExtra("NotesOfWord", WordList.get(position).NotesOfWord);
+                GoToDetails.putExtra("RatingOfWord", WordList.get(position).RatingOfWord);
                 startActivity(GoToDetails);
             }
-        });
+        } );
+
         Exit = findViewById(R.id.Exit_button_List);
         Exit.setOnClickListener(new View.OnClickListener() {
             @Override

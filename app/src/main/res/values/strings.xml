@@ -10,6 +10,13 @@
     <string name="RatingCardInfo">TextView</string>
     <string name="PronounCardInfo">TextView</string>
     <string name="nameOfCardInfo">TextView</string>
+    <string name="list_of_animals">List Of Animals</string>
+    <string name="exit_BTN_List_Activity">EXIT</string>
+    <string name="Descrip_Detail">TextView</string>
+    <string name="Notes_Detail">TextView</string>
+    <string name="Pronoun_Detail">TextView</string>
+    <string name="Rating_Detail">TextView</string>
+    <string name="Name_Detail">TextView</string>
 
 
 </resources>
