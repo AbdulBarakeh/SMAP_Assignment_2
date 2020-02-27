@@ -7,6 +7,9 @@
     <string name="activity_list">ACTIVITY_LIST</string>
     <string name="activity_details">ACTIVITY_DETAILS</string>
     <string name="activity_edit">ACTIVITY_EDIT</string>
+    <string name="RatingCardInfo">TextView</string>
+    <string name="PronounCardInfo">TextView</string>
+    <string name="nameOfCardInfo">TextView</string>
 
 
 </resources>
