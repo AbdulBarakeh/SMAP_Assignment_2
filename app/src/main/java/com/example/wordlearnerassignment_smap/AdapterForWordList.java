@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class AdapterForWordList extends RecyclerView.Adapter<AdapterForWordList.ViewHolderForWordList> {
-    private ArrayList<WordTemplateClass> ListOfWords;
+    private ArrayList<WordTemplate> ListOfWords;
 
     private OnItemClickListener CardClickListener;
 
@@ -52,7 +52,7 @@ public class AdapterForWordList extends RecyclerView.Adapter<AdapterForWordList.
             } );
         }
     }
-    public AdapterForWordList(ArrayList<WordTemplateClass> WordList){
+    public AdapterForWordList(ArrayList<WordTemplate> WordList){
         ListOfWords = WordList;
     }
     @Override
@@ -64,7 +64,7 @@ public class AdapterForWordList extends RecyclerView.Adapter<AdapterForWordList.
 
     @Override
     public void onBindViewHolder(ViewHolderForWordList holder, int position) {
-        WordTemplateClass currentItem = ListOfWords.get(position);
+        WordTemplate currentItem = ListOfWords.get(position);
 
         holder.PictureOfWord_Adapter.setImageResource(currentItem.getImageOfWord());
         holder.NameOfWord_Adapter.setText(currentItem.getNameOfWord());

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">OrdLæringsAflevering_SMAP</string>
+    <string name="button_edit_detail">REDIGER</string>
+    <string name="list_of_animals">Liste Af Dyr</string>
+    <string name="exit_BTN_List_Activity">FORLAD</string>
+    <string name="NotesInput_edit">Indsæt Noter...</string>
+    <string name="word_rating_edit">Ord Vurdering:</string>
+    <string name="notes_edit">Noter:</string>
+    <string name="OK_BTN_EDIT">OK</string>
+    <string name="cancel_btn_detail">ANNULLER</string>
+    <string name="description_label_detail">Beskrivelse:</string>
+    <string name="notes_label_detail">Noter:</string>
+    <string name="cancel_btn_edit">ANNULLER</string>
+</resources>

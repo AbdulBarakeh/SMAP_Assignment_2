@@ -1,6 +1,6 @@
 package com.example.wordlearnerassignment_smap;
 
-public class WordTemplateClass {
+public class WordTemplate {
 
     private int ImageOfWord;
     private String NameOfWord;
@@ -8,7 +8,7 @@ public class WordTemplateClass {
     private double RatingOfWord;
     private String DescripOfWord;
     private String NotesOfWord;
-    WordTemplateClass(int _ImageOfWord, String _NameOfWord, String _PronounOfWord, String _DescripOfWord, String _NotesOfWord, double _RatingOfWord){
+    WordTemplate(int _ImageOfWord, String _NameOfWord, String _PronounOfWord, String _DescripOfWord, String _NotesOfWord, double _RatingOfWord){
         ImageOfWord = _ImageOfWord;
         NameOfWord = _NameOfWord;
         PronounOfWord = _PronounOfWord;

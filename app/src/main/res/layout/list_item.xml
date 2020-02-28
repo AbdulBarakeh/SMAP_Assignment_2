@@ -5,11 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardCornerRadius="4dp">
-    <!--    //Source: https://www.youtube.com/watch?v=Nw9JF55LDzE&t=422s-->
+    <!--//Source: https://www.youtube.com/watch?v=Nw9JF55LDzE&t=422s-->
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/CardBackground">
+
+<!-- SRC:https://stackoverflow.com/questions/35439760/how-to-add-vertical-line-in-center-of-relative-layout-using-card-view-android-->
+        <View android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#000"/>
 
         <ImageView
             android:id="@+id/PicOfWord_CardInfo"
@@ -22,6 +28,7 @@
             tools:srcCompat="@tools:sample/avatars[2]" />
 
         <TextView
+            android:textAppearance="@style/CardView.Dark"
             android:id="@+id/NameOfWord_CardInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -39,6 +46,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:textAppearance="@color/cardview_dark_background"
             android:id="@+id/PronounOfWord_CardInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -54,6 +62,7 @@
             app:layout_constraintVertical_bias="0.0" />
 
         <TextView
+            android:textAppearance="@color/cardview_shadow_start_color"
             android:id="@+id/RatingOfWord_CardInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

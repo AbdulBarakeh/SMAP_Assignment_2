@@ -1,25 +1,27 @@
 <resources>
     <string name="app_name">WordLearnerAssignment_SMAP</string>
     //Buttons
-    <string name="pickbutton_list_test">PickButton_List_Test</string>
-    <string name="button_edit_detail">Edit</string>
+    <string name="button_edit_detail">EDIT</string>
     //Activities
-    <string name="activity_list">ACTIVITY_LIST</string>
-    <string name="activity_details">ACTIVITY_DETAILS</string>
-    <string name="activity_edit">ACTIVITY_EDIT</string>
-    <string name="RatingCardInfo">TextView</string>
-    <string name="PronounCardInfo">TextView</string>
-    <string name="nameOfCardInfo">TextView</string>
     <string name="list_of_animals">List Of Animals</string>
     <string name="exit_BTN_List_Activity">EXIT</string>
-    <string name="Descrip_Detail">TextView</string>
-    <string name="Notes_Detail">TextView</string>
-    <string name="Pronoun_Detail">TextView</string>
-    <string name="Rating_Detail">TextView</string>
-    <string name="Name_Detail">TextView</string>
-    <string name="Rating_Edit">TextView</string>
-    <string name="NameOfWord_Edit">TextView</string>
     <string name="NotesInput_edit">Insert Notes....</string>
+    <string name="word_rating_edit">Word Rating:</string>
+    <string name="cancel_btn_edit">CANCEL</string>
+    <string name="notes_edit">Notes:</string>
+    <string name="OK_BTN_EDIT">OK</string>
+    <string name="cancel_btn_detail">CANCEL</string>
+    <string name="description_label_detail">Description:</string>
+    <string name="notes_label_detail">Notes:</string>
 
-
+    <string name="RatingCardInfo" translatable="false">TextView</string>
+    <string name="PronounCardInfo" translatable="false">TextView</string>
+    <string name="nameOfCardInfo" translatable="false">TextView</string>
+    <string name="Descrip_Detail" translatable="false">TextView</string>
+    <string name="Notes_Detail" translatable="false">TextView</string>
+    <string name="Pronoun_Detail" translatable="false">TextView</string>
+    <string name="Rating_Detail" translatable="false">TextView</string>
+    <string name="Name_Detail" translatable="false">TextView</string>
+    <string name="Rating_Edit" translatable="false">TextView</string>
+    <string name="NameOfWord_Edit" translatable="false">TextView</string>
 </resources>
