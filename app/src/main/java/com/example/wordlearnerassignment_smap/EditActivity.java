@@ -1,30 +1,23 @@
 package com.example.wordlearnerassignment_smap;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class EditActivity extends AppCompatActivity {
 private Button cancel;
 private Button OK;
 
-private ImageView PictureOfWord_Edit_T;
 private TextView NameOfWord_Edit_T;
-private TextView  PronounOfWord_Edit_T;
-private TextView  DescripOfWord_Edit_T;
 private EditText  NotesOfWord_Edit_T;
 private TextView RatingOfWord_Edit_T;
 private SeekBar RatingBar_Edit_T;
-
 private int picOfWord;
 private String nameOfWord;
 private String pronounOfWord;
@@ -45,20 +38,16 @@ private double ratingOfWord;
         notesOfWord = receivedFromDetail.getStringExtra( "NotesOfWord" );
         ratingOfWord = receivedFromDetail.getDoubleExtra( "RatingOfWord",0 );
 
-        //PictureOfWord_Edit_T = findViewById( R.id.PictureOfWord_Edit);
+
         NameOfWord_Edit_T = findViewById( R.id.NameOfWord_Edit);
-        //PronounOfWord_Edit_T = findViewById( R.id.PronounOfWord_Edit);
-        //DescripOfWord_Edit_T = findViewById( R.id.DescriptionOfWord_Edit);
         NotesOfWord_Edit_T = findViewById( R.id.NotesInput_Edit);
         RatingOfWord_Edit_T = findViewById( R.id.Rating_Edit);
         RatingBar_Edit_T = findViewById(R.id.Seekbar_Edit);
 
-        //PictureOfWord_Edit_T.setImageResource(picOfWord);
         NameOfWord_Edit_T.setText(nameOfWord);
-        //PronounOfWord_Edit_T.setText(pronounOfWord);
-        //DescripOfWord_Edit_T.setText(descripOfWord);
         NotesOfWord_Edit_T.setText(notesOfWord);
         RatingOfWord_Edit_T.setText(String.valueOf(ratingOfWord));
+        // Scalability of the trigger position, and placing in to corespond with the current rating.
         RatingBar_Edit_T.setMax(100);
         RatingBar_Edit_T.setProgress((int)ratingOfWord*10);
 
@@ -74,6 +63,7 @@ private double ratingOfWord;
         OK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                notesOfWord = NotesOfWord_Edit_T.getText().toString();
                 Intent returnValues = new Intent();
                 returnValues.putExtra("pic",picOfWord);
                 returnValues.putExtra("name",nameOfWord);
@@ -83,7 +73,6 @@ private double ratingOfWord;
                 returnValues.putExtra("rating",ratingOfWord);
                 setResult(98, returnValues);
                 finish();
-                //Remember to save changes
             }
         });
 //SRC: DemoUI-Project SMAP-Course F20
@@ -96,31 +85,10 @@ private double ratingOfWord;
             }
 
             @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
+            public void onStartTrackingTouch(SeekBar seekBar) { }
 
             @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
+            public void onStopTrackingTouch(SeekBar seekBar) { }
         });
-//        //SRC: https://developer.android.com/training/keyboard-input/style
-        NotesOfWord_Edit_T.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v , int actionId , KeyEvent event) {
-                boolean handled = false;
-                if (actionId == EditorInfo.IME_ACTION_GO) {
-                    NotesOfWord_Edit_T.setText(v.getText());
-                    notesOfWord = NotesOfWord_Edit_T.getText().toString();
-                    handled = true;
-                }
-                return handled;
-            }
-        });
-
-
-
     }
-
 }

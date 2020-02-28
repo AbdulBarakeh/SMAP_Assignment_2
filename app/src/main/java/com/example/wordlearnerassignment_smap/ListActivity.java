@@ -1,25 +1,16 @@
 package com.example.wordlearnerassignment_smap;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.List;
 
 public class ListActivity extends AppCompatActivity {
     private RecyclerView RecyclerViewListActivity;
@@ -27,13 +18,6 @@ public class ListActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager LayoutManagerListActivity;
     private Button Exit;
     ArrayList<WordTemplateClass> WordList = new ArrayList<>();
-    static final int DETAIL_RESPONSE = 1;
-    int picOfWord;
-    String nameOfWord;
-    String pronounOfWord;
-    String descripOfWord;
-    String notesOfWord;
-    double ratingOfWord;
     int currentPosition;
 
     @Override
@@ -61,17 +45,8 @@ public class ListActivity extends AppCompatActivity {
                 GoToDetails.putExtra("RatingOfWord", WordList.get(position).getRatingOfWord());
                 currentPosition = position;
                 startActivityForResult(GoToDetails,99);
-                //Wait for result
-//                WordList.get(position).setImageOfWord(picOfWord);
-//                WordList.get(position).setNameOfWord(nameOfWord);
-//                WordList.get(position).setPronounOfWord(pronounOfWord);
-//                WordList.get(position).setDescripOfWord(descripOfWord);
-//                WordList.get(position).setNotesOfWord(notesOfWord);
-//                WordList.get(position).setRatingOfWord(ratingOfWord);
             }
         } );
-
-
         Exit = findViewById(R.id.Exit_button_List);
         Exit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,11 +66,6 @@ public class ListActivity extends AppCompatActivity {
                 WordList.get(currentPosition).setDescripOfWord(receivedIntent.getStringExtra("descrip"));
                 WordList.get(currentPosition).setNotesOfWord(receivedIntent.getStringExtra("notes"));
                 WordList.get(currentPosition).setRatingOfWord(receivedIntent.getDoubleExtra("rating",0));
-//                nameOfWord = receivedIntent.getStringExtra("name");
-//                 pronounOfWord = receivedIntent.getStringExtra("pronoun");
-//                 descripOfWord = receivedIntent.getStringExtra("descrip");
-//                 notesOfWord = receivedIntent.getStringExtra("notes");
-//                 ratingOfWord = receivedIntent.getDoubleExtra("rating",0);
                  AdapterListActivity.notifyDataSetChanged();
 
             }

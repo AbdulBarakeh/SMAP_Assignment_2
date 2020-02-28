@@ -70,10 +70,7 @@ public class AdapterForWordList extends RecyclerView.Adapter<AdapterForWordList.
         holder.NameOfWord_Adapter.setText(currentItem.getNameOfWord());
         holder.PronounOfWord_Adapter.setText(currentItem.getPronounOfWord());
         holder.RatingOfWord_Adapter.setText(String.valueOf(currentItem.getRatingOfWord()));
-//        holder.NotesOfWord_Adapter.setText(currentItem.getNotesOfWord()); //Makes App Crash if enabled, no UI element to place the data
-//        holder.DescripOfWord_Adapter.setText(currentItem.getDescripOfWord()); //Makes App Crash if enabled, no UI element to place the data
     }
-
     @Override
     public int getItemCount() {
         return ListOfWords.size();
