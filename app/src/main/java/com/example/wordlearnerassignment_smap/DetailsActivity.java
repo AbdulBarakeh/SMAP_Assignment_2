@@ -30,7 +30,9 @@ private double ratingOfWord;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
-
+//        if (savedInstanceState!= null){
+//            savedInstanceState.getBundle("Detail_Instance");
+//        }
         Intent receivedFromList = getIntent();
         picOfWord = receivedFromList.getIntExtra("PicOfWord",R.drawable.imagenotfound);
         nameOfWord = receivedFromList.getStringExtra( "NameOfWord" );
@@ -88,4 +90,10 @@ private double ratingOfWord;
                 finish();
             }
     }
+
+//    @Override
+//    protected void onSaveInstanceState(@NonNull Bundle outState) {
+//        super.onSaveInstanceState(outState);
+//        outState.putBundle("Detail_Instance",outState);
+//    }
 }
