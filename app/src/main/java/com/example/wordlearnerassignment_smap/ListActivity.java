@@ -1,5 +1,6 @@
 package com.example.wordlearnerassignment_smap;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,7 +27,14 @@ public class ListActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager LayoutManagerListActivity;
     private Button Exit;
     ArrayList<WordTemplateClass> WordList = new ArrayList<>();
-
+    static final int DETAIL_RESPONSE = 1;
+    int picOfWord;
+    String nameOfWord;
+    String pronounOfWord;
+    String descripOfWord;
+    String notesOfWord;
+    double ratingOfWord;
+    int currentPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,20 +49,28 @@ public class ListActivity extends AppCompatActivity {
         AdapterListActivity = new AdapterForWordList(WordList);
         RecyclerViewListActivity.setLayoutManager(LayoutManagerListActivity);
         RecyclerViewListActivity.setAdapter(AdapterListActivity);
-
         AdapterListActivity.setOnItemClickListener( new AdapterForWordList.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
                 Intent GoToDetails = new Intent(ListActivity.this, DetailsActivity.class);
-                GoToDetails.putExtra("PicOfWord", WordList.get(position).ImageOfWord);
-                GoToDetails.putExtra("NameOfWord", WordList.get(position).NameOfWord);
-                GoToDetails.putExtra("PronounOfWord", WordList.get(position).PronounOfWord);
-                GoToDetails.putExtra("DescripOfWord", WordList.get(position).DescripOfWord);
-                GoToDetails.putExtra("NotesOfWord", WordList.get(position).NotesOfWord);
-                GoToDetails.putExtra("RatingOfWord", WordList.get(position).RatingOfWord);
-                startActivityForResult(GoToDetails,RESULT_OK);
+                GoToDetails.putExtra("PicOfWord", WordList.get(position).getImageOfWord());
+                GoToDetails.putExtra("NameOfWord", WordList.get(position).getNameOfWord());
+                GoToDetails.putExtra("PronounOfWord", WordList.get(position).getPronounOfWord());
+                GoToDetails.putExtra("DescripOfWord", WordList.get(position).getDescripOfWord());
+                GoToDetails.putExtra("NotesOfWord", WordList.get(position).getNotesOfWord());
+                GoToDetails.putExtra("RatingOfWord", WordList.get(position).getRatingOfWord());
+                currentPosition = position;
+                startActivityForResult(GoToDetails,99);
+                //Wait for result
+//                WordList.get(position).setImageOfWord(picOfWord);
+//                WordList.get(position).setNameOfWord(nameOfWord);
+//                WordList.get(position).setPronounOfWord(pronounOfWord);
+//                WordList.get(position).setDescripOfWord(descripOfWord);
+//                WordList.get(position).setNotesOfWord(notesOfWord);
+//                WordList.get(position).setRatingOfWord(ratingOfWord);
             }
         } );
+
 
         Exit = findViewById(R.id.Exit_button_List);
         Exit.setOnClickListener(new View.OnClickListener() {
@@ -64,6 +80,27 @@ public class ListActivity extends AppCompatActivity {
             }
         });
     }
+//Handle Received Data
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @NonNull Intent receivedIntent) {
+        super.onActivityResult(requestCode , resultCode , receivedIntent);
+            if (resultCode == 99) {
+                WordList.get(currentPosition).setImageOfWord(receivedIntent.getIntExtra("pic" , R.drawable.imagenotfound));
+                WordList.get(currentPosition).setNameOfWord(receivedIntent.getStringExtra("name"));
+                WordList.get(currentPosition).setPronounOfWord(receivedIntent.getStringExtra("pronoun"));
+                WordList.get(currentPosition).setDescripOfWord(receivedIntent.getStringExtra("descrip"));
+                WordList.get(currentPosition).setNotesOfWord(receivedIntent.getStringExtra("notes"));
+                WordList.get(currentPosition).setRatingOfWord(receivedIntent.getDoubleExtra("rating",0));
+//                nameOfWord = receivedIntent.getStringExtra("name");
+//                 pronounOfWord = receivedIntent.getStringExtra("pronoun");
+//                 descripOfWord = receivedIntent.getStringExtra("descrip");
+//                 notesOfWord = receivedIntent.getStringExtra("notes");
+//                 ratingOfWord = receivedIntent.getDoubleExtra("rating",0);
+                 AdapterListActivity.notifyDataSetChanged();
+
+            }
+    }
+
     private ArrayList<WordTemplateClass> CreateSamples(){
         ArrayList<WordTemplateClass> Sample = new ArrayList<>();
         Sample.add(new WordTemplateClass(R.drawable.buffalo,"Buffalo", "ˈbəf(ə)ˌlō","a heavily built wild ox with backward-curving horns, found mainly in the Old World tropics.","",0));

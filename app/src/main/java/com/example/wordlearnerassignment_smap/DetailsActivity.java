@@ -1,5 +1,6 @@
 package com.example.wordlearnerassignment_smap;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 public class DetailsActivity extends AppCompatActivity {
 private Button cancel;
 private Button edit;
+static final int EDIT_RESPONSE = 1;
 private ImageView PictureOfWord_Detail_T;
 private TextView  NameOfWord_Detail_T;
 private TextView  PronounOfWord_Detail_T;
@@ -72,8 +74,20 @@ private double ratingOfWord;
                 GoToEdit.putExtra("NotesOfWord",notesOfWord);
                 GoToEdit.putExtra("RatingOfWord",ratingOfWord);
                 //Receive Data With finished activity
-                startActivityForResult(GoToEdit,RESULT_OK);
+                startActivityForResult(GoToEdit,98);
+                //startActivity(GoToEdit);
             }
         });
+
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @NonNull Intent receivedData) {
+        super.onActivityResult(requestCode , resultCode , receivedData);
+            if (resultCode == 98){
+                Intent returner = receivedData;
+                setResult(99,returner);
+                finish();
+
+            }
     }
 }
