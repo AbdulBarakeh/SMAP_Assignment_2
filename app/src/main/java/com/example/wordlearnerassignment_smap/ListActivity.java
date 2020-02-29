@@ -2,6 +2,7 @@ package com.example.wordlearnerassignment_smap;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.Button;
 
@@ -24,8 +25,14 @@ public class ListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
+//SRC: https://stackoverflow.com/questions/31490657/how-to-use-onsaveinstancestate-method-with-arraylist
+        if (savedInstanceState!= null){
+            WordList = savedInstanceState.getParcelableArrayList("list_activity");
+        }
+        else{
+            WordList = CreateSamples();
+        }
 
-        WordList = CreateSamples();
 
         RecyclerViewListActivity = findViewById(R.id.recyclerView);
         RecyclerViewListActivity.setHasFixedSize(true);
@@ -88,5 +95,11 @@ public class ListActivity extends AppCompatActivity {
         Sample.add(new WordTemplate(R.drawable.shark,"Shark", "SHärk","a long-bodied chiefly marine fish with a cartilaginous skeleton, a prominent dorsal fin, and tooth-like scales. Most sharks are predatory, though the largest kinds feed on plankton, and some can grow to a large size.","",0));
         Sample.add(new WordTemplate(R.drawable.snake,"Snake", "snāk","a long limbless reptile which has no eyelids, a short tail, and jaws that are capable of considerable extension. Some snakes have a venomous bite.","",0));
         return Sample;
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList("list_activity",  WordList);
     }
 }

@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class EditActivity extends AppCompatActivity {
@@ -30,19 +31,31 @@ private double ratingOfWord;
         setContentView(R.layout.activity_edit);
 
         Intent receivedFromDetail = getIntent();
+        if (savedInstanceState != null){
+            picOfWord = receivedFromDetail.getIntExtra("PicOfWord",R.drawable.imagenotfound);
+            nameOfWord = receivedFromDetail.getStringExtra( "NameOfWord" );
+            pronounOfWord = receivedFromDetail.getStringExtra( "PronounOfWord" );
+            descripOfWord = receivedFromDetail.getStringExtra( "DescripOfWord" );
+            notesOfWord = savedInstanceState.getString("notes");
+            ratingOfWord = savedInstanceState.getDouble("rating");
+        }
+        else{
+            picOfWord = receivedFromDetail.getIntExtra("PicOfWord",R.drawable.imagenotfound);
+            nameOfWord = receivedFromDetail.getStringExtra( "NameOfWord" );
+            pronounOfWord = receivedFromDetail.getStringExtra( "PronounOfWord" );
+            descripOfWord = receivedFromDetail.getStringExtra( "DescripOfWord" );
+            notesOfWord = receivedFromDetail.getStringExtra( "NotesOfWord" );
+            ratingOfWord = receivedFromDetail.getDoubleExtra( "RatingOfWord",0 );
+        }
 
-        picOfWord = receivedFromDetail.getIntExtra("PicOfWord",R.drawable.imagenotfound);
-        nameOfWord = receivedFromDetail.getStringExtra( "NameOfWord" );
-        pronounOfWord = receivedFromDetail.getStringExtra( "PronounOfWord" );
-        descripOfWord = receivedFromDetail.getStringExtra( "DescripOfWord" );
-        notesOfWord = receivedFromDetail.getStringExtra( "NotesOfWord" );
-        ratingOfWord = receivedFromDetail.getDoubleExtra( "RatingOfWord",0 );
 
 
         NameOfWord_Edit_T = findViewById( R.id.NameOfWord_Edit);
         NotesOfWord_Edit_T = findViewById( R.id.NotesInput_Edit);
         RatingOfWord_Edit_T = findViewById( R.id.Rating_Edit);
         RatingBar_Edit_T = findViewById(R.id.Seekbar_Edit);
+
+
 
         NameOfWord_Edit_T.setText(nameOfWord);
         NotesOfWord_Edit_T.setText(notesOfWord);
@@ -90,5 +103,12 @@ private double ratingOfWord;
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) { }
         });
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putDouble("rating",ratingOfWord);
+        outState.putString("notes",notesOfWord);
     }
 }

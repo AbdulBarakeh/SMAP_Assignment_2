@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".DetailsActivity">
-
+<!--    SRC: buttondesign.xml ( https://stackoverflow.com/questions/6054562/how-to-make-the-corners-of-a-button-round ) -->
     <Button
         android:id="@+id/ACTIVITY_DETAIL_CANCEL_BUTTON"
         android:layout_width="0dp"
@@ -15,8 +15,9 @@
         android:layout_marginBottom="32dp"
         android:text="@string/cancel_btn_detail"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@drawable/buttondesign"
+        android:textColor="@color/btn_white_txt"/>
     <Button
         android:id="@+id/ACTIVITY_DETAIL_BUTTON_EDIT"
         android:layout_width="0dp"
@@ -26,7 +27,9 @@
         android:layout_marginBottom="32dp"
         android:text="@string/button_edit_detail"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/buttondesign"
+        android:textColor="@color/btn_white_txt" />
 
     <TextView
         android:id="@+id/NotesOfWord_Detail"

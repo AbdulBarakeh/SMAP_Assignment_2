@@ -4,4 +4,5 @@
     <color name="colorPrimaryDark">#C14972</color>
     <color name="colorAccent">#D81B60</color>
     <color name="CardBackground">#81495C</color>
+    <color name="btn_white_txt">#FFFFFF</color>
 </resources>

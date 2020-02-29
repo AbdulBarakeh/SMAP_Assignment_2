@@ -15,7 +15,11 @@
         android:layout_marginBottom="56dp"
         android:text="@string/OK_BTN_EDIT"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/buttondesign"
+        android:textColor="@color/btn_white_txt"
+
+        />
 
     <Button
         android:id="@+id/ACTIVITY_EDIT_CANCEL_BUTTON2"
@@ -26,7 +30,9 @@
         android:layout_marginBottom="56dp"
         android:text="@string/cancel_btn_edit"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@drawable/buttondesign"
+        android:textColor="@color/btn_white_txt"/>
 
     <TextView
         android:id="@+id/NameOfWord_Edit"

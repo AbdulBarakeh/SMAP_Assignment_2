@@ -1,6 +1,9 @@
 package com.example.wordlearnerassignment_smap;
 
-public class WordTemplate {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class WordTemplate implements Parcelable {
 
     private int ImageOfWord;
     private String NameOfWord;
@@ -16,6 +19,27 @@ public class WordTemplate {
         NotesOfWord = _NotesOfWord;
         RatingOfWord = _RatingOfWord;
     }
+
+    protected WordTemplate(Parcel in) {
+        ImageOfWord = in.readInt();
+        NameOfWord = in.readString();
+        PronounOfWord = in.readString();
+        RatingOfWord = in.readDouble();
+        DescripOfWord = in.readString();
+        NotesOfWord = in.readString();
+    }
+
+    public static final Creator<WordTemplate> CREATOR = new Creator<WordTemplate>() {
+        @Override
+        public WordTemplate createFromParcel(Parcel in) {
+            return new WordTemplate(in);
+        }
+
+        @Override
+        public WordTemplate[] newArray(int size) {
+            return new WordTemplate[size];
+        }
+    };
 
     public int getImageOfWord() {
         return ImageOfWord;
@@ -56,5 +80,21 @@ public class WordTemplate {
 
     public void setNotesOfWord(String notesOfWord) {
         NotesOfWord = notesOfWord;
+    }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest , int flags) {
+        dest.writeInt(ImageOfWord);
+        dest.writeString(NameOfWord);
+        dest.writeString(PronounOfWord);
+        dest.writeDouble(RatingOfWord);
+        dest.writeString(DescripOfWord);
+        dest.writeString(NotesOfWord);
     }
 }
