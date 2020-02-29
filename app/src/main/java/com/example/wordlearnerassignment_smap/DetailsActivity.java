@@ -30,15 +30,23 @@ private double ratingOfWord;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
-
-        Intent receivedFromList = getIntent();
-        picOfWord = receivedFromList.getIntExtra("PicOfWord",R.drawable.imagenotfound);
-        nameOfWord = receivedFromList.getStringExtra( "NameOfWord" );
-        pronounOfWord = receivedFromList.getStringExtra( "PronounOfWord" );
-        descripOfWord = receivedFromList.getStringExtra( "DescripOfWord" );
-        notesOfWord = receivedFromList.getStringExtra( "NotesOfWord" );
-        ratingOfWord = receivedFromList.getDoubleExtra( "RatingOfWord",0 );
-
+        if (savedInstanceState != null){
+            picOfWord = savedInstanceState.getInt("detail_pic");
+            nameOfWord = savedInstanceState.getString("detail_name");
+            pronounOfWord = savedInstanceState.getString("detail_pronoun");
+            descripOfWord = savedInstanceState.getString("detail_descrip");
+            notesOfWord = savedInstanceState.getString("detail_notes");
+            ratingOfWord = savedInstanceState.getDouble("detail_rating");
+        }
+        else {
+            Intent receivedFromList = getIntent();
+            picOfWord = receivedFromList.getIntExtra("PicOfWord" , R.drawable.imagenotfound);
+            nameOfWord = receivedFromList.getStringExtra("NameOfWord");
+            pronounOfWord = receivedFromList.getStringExtra("PronounOfWord");
+            descripOfWord = receivedFromList.getStringExtra("DescripOfWord");
+            notesOfWord = receivedFromList.getStringExtra("NotesOfWord");
+            ratingOfWord = receivedFromList.getDoubleExtra("RatingOfWord" , 0);
+        }
         PictureOfWord_Detail_T = findViewById( R.id.PictureOfWord_Detail);
         NameOfWord_Detail_T = findViewById( R.id.NameOfWord_Detail);
         PronounOfWord_Detail_T = findViewById( R.id.PronounOfWord_Detail);
@@ -66,12 +74,12 @@ private double ratingOfWord;
             @Override
             public void onClick(View v) {
                 Intent GoToEdit = new Intent(DetailsActivity.this, EditActivity.class);
-                GoToEdit.putExtra("PicOfWord",picOfWord);
-                GoToEdit.putExtra("NameOfWord",nameOfWord);
-                GoToEdit.putExtra("PronounOfWord",pronounOfWord);
-                GoToEdit.putExtra("DescripOfWord",descripOfWord);
-                GoToEdit.putExtra("NotesOfWord",notesOfWord);
-                GoToEdit.putExtra("RatingOfWord",ratingOfWord);
+                GoToEdit.putExtra("PicOfWord"       ,picOfWord);
+                GoToEdit.putExtra("NameOfWord"      ,nameOfWord);
+                GoToEdit.putExtra("PronounOfWord"   ,pronounOfWord);
+                GoToEdit.putExtra("DescripOfWord"   ,descripOfWord);
+                GoToEdit.putExtra("NotesOfWord"     ,notesOfWord);
+                GoToEdit.putExtra("RatingOfWord"    ,ratingOfWord);
                 //Receive Data With finished activity
                 startActivityForResult(GoToEdit,98);
             }
@@ -87,5 +95,16 @@ private double ratingOfWord;
                 setResult(99,returner);
                 finish();
             }
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("detail_pic", picOfWord);
+        outState.putString("detail_name", nameOfWord);
+        outState.putString("detail_pronoun",pronounOfWord);
+        outState.putString("detail_descrip",descripOfWord);
+        outState.putString("detail_notes",notesOfWord);
+        outState.putDouble("detail_rating",ratingOfWord);
     }
 }
