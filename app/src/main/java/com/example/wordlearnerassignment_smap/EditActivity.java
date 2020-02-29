@@ -25,6 +25,7 @@ private String pronounOfWord;
 private String descripOfWord;
 private String notesOfWord;
 private double ratingOfWord;
+private int positionOfWord;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +39,7 @@ private double ratingOfWord;
             descripOfWord = receivedFromDetail.getStringExtra( "DescripOfWord" );
             notesOfWord = savedInstanceState.getString("notes");
             ratingOfWord = savedInstanceState.getDouble("rating");
+            positionOfWord = savedInstanceState.getInt("position");
         }
         else{
             picOfWord = receivedFromDetail.getIntExtra("PicOfWord",R.drawable.imagenotfound);
@@ -46,16 +48,13 @@ private double ratingOfWord;
             descripOfWord = receivedFromDetail.getStringExtra( "DescripOfWord" );
             notesOfWord = receivedFromDetail.getStringExtra( "NotesOfWord" );
             ratingOfWord = receivedFromDetail.getDoubleExtra( "RatingOfWord",0 );
+            positionOfWord = receivedFromDetail.getIntExtra("PositionOfWord",13);
         }
-
-
 
         NameOfWord_Edit_T = findViewById( R.id.NameOfWord_Edit);
         NotesOfWord_Edit_T = findViewById( R.id.NotesInput_Edit);
         RatingOfWord_Edit_T = findViewById( R.id.Rating_Edit);
         RatingBar_Edit_T = findViewById(R.id.Seekbar_Edit);
-
-
 
         NameOfWord_Edit_T.setText(nameOfWord);
         NotesOfWord_Edit_T.setText(notesOfWord);
@@ -84,6 +83,7 @@ private double ratingOfWord;
                 returnValues.putExtra("descrip",descripOfWord);
                 returnValues.putExtra("notes",notesOfWord);
                 returnValues.putExtra("rating",ratingOfWord);
+                returnValues.putExtra("position",positionOfWord);
                 setResult(98, returnValues);
                 finish();
             }
@@ -110,5 +110,6 @@ private double ratingOfWord;
         super.onSaveInstanceState(outState);
         outState.putDouble("rating",ratingOfWord);
         outState.putString("notes",notesOfWord);
+        outState.putInt("position",positionOfWord);
     }
 }

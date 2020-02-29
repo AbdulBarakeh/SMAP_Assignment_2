@@ -26,6 +26,7 @@ private String pronounOfWord;
 private String descripOfWord;
 private String notesOfWord;
 private double ratingOfWord;
+private int positionOfWord;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +38,7 @@ private double ratingOfWord;
             descripOfWord = savedInstanceState.getString("detail_descrip");
             notesOfWord = savedInstanceState.getString("detail_notes");
             ratingOfWord = savedInstanceState.getDouble("detail_rating");
+            positionOfWord = savedInstanceState.getInt("detail_position");
         }
         else {
             Intent receivedFromList = getIntent();
@@ -46,6 +48,7 @@ private double ratingOfWord;
             descripOfWord = receivedFromList.getStringExtra("DescripOfWord");
             notesOfWord = receivedFromList.getStringExtra("NotesOfWord");
             ratingOfWord = receivedFromList.getDoubleExtra("RatingOfWord" , 0);
+            positionOfWord = receivedFromList.getIntExtra("PositionOfWord", 13);
         }
         PictureOfWord_Detail_T = findViewById( R.id.PictureOfWord_Detail);
         NameOfWord_Detail_T = findViewById( R.id.NameOfWord_Detail);
@@ -80,6 +83,7 @@ private double ratingOfWord;
                 GoToEdit.putExtra("DescripOfWord"   ,descripOfWord);
                 GoToEdit.putExtra("NotesOfWord"     ,notesOfWord);
                 GoToEdit.putExtra("RatingOfWord"    ,ratingOfWord);
+                GoToEdit.putExtra("PositionOfWord"  ,positionOfWord);
                 //Receive Data With finished activity
                 startActivityForResult(GoToEdit,98);
             }
@@ -106,5 +110,6 @@ private double ratingOfWord;
         outState.putString("detail_descrip",descripOfWord);
         outState.putString("detail_notes",notesOfWord);
         outState.putDouble("detail_rating",ratingOfWord);
+        outState.putInt("detail_position",positionOfWord);
     }
 }

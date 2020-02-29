@@ -11,13 +11,15 @@ public class WordTemplate implements Parcelable {
     private double RatingOfWord;
     private String DescripOfWord;
     private String NotesOfWord;
-    WordTemplate(int _ImageOfWord, String _NameOfWord, String _PronounOfWord, String _DescripOfWord, String _NotesOfWord, double _RatingOfWord){
+    private int PositionOfWord;
+    WordTemplate(int _ImageOfWord, String _NameOfWord, String _PronounOfWord, String _DescripOfWord, String _NotesOfWord, double _RatingOfWord, int _PositionOfWord){
         ImageOfWord = _ImageOfWord;
         NameOfWord = _NameOfWord;
         PronounOfWord = _PronounOfWord;
         DescripOfWord = _DescripOfWord;
         NotesOfWord = _NotesOfWord;
         RatingOfWord = _RatingOfWord;
+        PositionOfWord = _PositionOfWord;
     }
 
     protected WordTemplate(Parcel in) {
@@ -27,6 +29,7 @@ public class WordTemplate implements Parcelable {
         RatingOfWord = in.readDouble();
         DescripOfWord = in.readString();
         NotesOfWord = in.readString();
+        PositionOfWord = in.readInt();
     }
 
     public static final Creator<WordTemplate> CREATOR = new Creator<WordTemplate>() {
@@ -57,6 +60,11 @@ public class WordTemplate implements Parcelable {
     public String getNotesOfWord() {
         return NotesOfWord;
     }
+    public int getPositionOfWord() {
+        return PositionOfWord;
+    }
+
+
 
     public void setImageOfWord(int imageOfWord) {
         ImageOfWord = imageOfWord;
@@ -82,6 +90,9 @@ public class WordTemplate implements Parcelable {
         NotesOfWord = notesOfWord;
     }
 
+    public void setPositionOfWord(int positionOfWord) {
+        PositionOfWord = positionOfWord;
+    }
 
     @Override
     public int describeContents() {
@@ -96,5 +107,6 @@ public class WordTemplate implements Parcelable {
         dest.writeDouble(RatingOfWord);
         dest.writeString(DescripOfWord);
         dest.writeString(NotesOfWord);
+        dest.writeInt(PositionOfWord);
     }
 }
