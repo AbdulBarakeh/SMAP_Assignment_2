@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         android:background="@color/CardBackground">
 
-<!-- SRC:https://stackoverflow.com/questions/35439760/how-to-add-vertical-line-in-center-of-relative-layout-using-card-view-android-->
+        <!-- SRC:https://stackoverflow.com/questions/35439760/how-to-add-vertical-line-in-center-of-relative-layout-using-card-view-android-->
         <View android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:background="#000"/>

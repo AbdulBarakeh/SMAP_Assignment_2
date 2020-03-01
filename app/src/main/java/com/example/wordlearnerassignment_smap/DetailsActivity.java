@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class DetailsActivity extends AppCompatActivity {
+
 private Button cancel;
 private Button edit;
 private ImageView PictureOfWord_Detail_T;
@@ -27,45 +28,50 @@ private String descripOfWord;
 private String notesOfWord;
 private double ratingOfWord;
 private int positionOfWord;
+static final int BETWEEN_LIST_DETAIL_RES = 99;
+static final int BETWEEN_DETAIL_EDIT_RES = 98;
+static final int BETWEEN_DETAIL_EDIT_REQ = 102;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
         if (savedInstanceState != null){
-            picOfWord = savedInstanceState.getInt("detail_pic");
-            nameOfWord = savedInstanceState.getString("detail_name");
-            pronounOfWord = savedInstanceState.getString("detail_pronoun");
-            descripOfWord = savedInstanceState.getString("detail_descrip");
-            notesOfWord = savedInstanceState.getString("detail_notes");
-            ratingOfWord = savedInstanceState.getDouble("detail_rating");
-            positionOfWord = savedInstanceState.getInt("detail_position");
+            picOfWord = savedInstanceState.getInt(       "saved_pic"     );
+            nameOfWord = savedInstanceState.getString(   "saved_name"    );
+            pronounOfWord = savedInstanceState.getString("saved_pronoun" );
+            descripOfWord = savedInstanceState.getString("saved_descrip" );
+            notesOfWord = savedInstanceState.getString(  "saved_notes"   );
+            ratingOfWord = savedInstanceState.getDouble( "saved_rating"  );
+            positionOfWord = savedInstanceState.getInt(  "saved_position");
         }
         else {
             Intent receivedFromList = getIntent();
-            picOfWord = receivedFromList.getIntExtra("PicOfWord" , R.drawable.imagenotfound);
-            nameOfWord = receivedFromList.getStringExtra("NameOfWord");
-            pronounOfWord = receivedFromList.getStringExtra("PronounOfWord");
-            descripOfWord = receivedFromList.getStringExtra("DescripOfWord");
-            notesOfWord = receivedFromList.getStringExtra("NotesOfWord");
-            ratingOfWord = receivedFromList.getDoubleExtra("RatingOfWord" , 0);
-            positionOfWord = receivedFromList.getIntExtra("PositionOfWord", 13);
+            picOfWord = receivedFromList.getIntExtra(       "PicOfWord_Sent_From_List"     , R.drawable.imagenotfound);
+            nameOfWord = receivedFromList.getStringExtra(   "NameOfWord_Sent_From_List"    );
+            pronounOfWord = receivedFromList.getStringExtra("PronounOfWord_Sent_From_List" );
+            descripOfWord = receivedFromList.getStringExtra("DescripOfWord_Sent_From_List" );
+            notesOfWord = receivedFromList.getStringExtra(  "NotesOfWord_Sent_From_List"   );
+            ratingOfWord = receivedFromList.getDoubleExtra( "RatingOfWord_Sent_From_List"  , 0);
+            positionOfWord = receivedFromList.getIntExtra(  "PositionOfWord_Sent_From_List", 13);
         }
+        //Bind UI elements with local variables
         PictureOfWord_Detail_T = findViewById( R.id.PictureOfWord_Detail);
         NameOfWord_Detail_T = findViewById( R.id.NameOfWord_Detail);
         PronounOfWord_Detail_T = findViewById( R.id.PronounOfWord_Detail);
         DescripOfWord_Detail_T = findViewById( R.id.DescriptionOfWord_Detail);
         NotesOfWord_Detail_T = findViewById( R.id.NotesOfWord_Detail);
         RatingOfWord_Detail_T = findViewById( R.id.RatingOfWord_Detail);
+        cancel = findViewById(R.id.ACTIVITY_DETAIL_CANCEL_BUTTON);
+        edit = findViewById(R.id.ACTIVITY_DETAIL_BUTTON_EDIT);
 
+        //Set the data into the UI elements
         PictureOfWord_Detail_T.setImageResource(picOfWord);
         NameOfWord_Detail_T.setText(nameOfWord);
         PronounOfWord_Detail_T.setText(pronounOfWord);
         DescripOfWord_Detail_T.setText(descripOfWord);
         NotesOfWord_Detail_T.setText(notesOfWord);
         RatingOfWord_Detail_T.setText(String.valueOf(ratingOfWord));
-
-        cancel = findViewById(R.id.ACTIVITY_DETAIL_CANCEL_BUTTON);
-        edit = findViewById(R.id.ACTIVITY_DETAIL_BUTTON_EDIT);
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,19 +79,20 @@ private int positionOfWord;
             }
         });
         //SRC:https://stackoverflow.com/questions/10407159/how-to-manage-startactivityforresult-on-android
+        //Send data to edit activity
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent GoToEdit = new Intent(DetailsActivity.this, EditActivity.class);
-                GoToEdit.putExtra("PicOfWord"       ,picOfWord);
-                GoToEdit.putExtra("NameOfWord"      ,nameOfWord);
-                GoToEdit.putExtra("PronounOfWord"   ,pronounOfWord);
-                GoToEdit.putExtra("DescripOfWord"   ,descripOfWord);
-                GoToEdit.putExtra("NotesOfWord"     ,notesOfWord);
-                GoToEdit.putExtra("RatingOfWord"    ,ratingOfWord);
-                GoToEdit.putExtra("PositionOfWord"  ,positionOfWord);
+                GoToEdit.putExtra("PicOfWord_Sent_From_Detail"       ,picOfWord);
+                GoToEdit.putExtra("NameOfWord_Sent_From_Detail"      ,nameOfWord);
+                GoToEdit.putExtra("PronounOfWord_Sent_From_Detail"   ,pronounOfWord);
+                GoToEdit.putExtra("DescripOfWord_Sent_From_Detail"   ,descripOfWord);
+                GoToEdit.putExtra("NotesOfWord_Sent_From_Detail"     ,notesOfWord);
+                GoToEdit.putExtra("RatingOfWord_Sent_From_Detail"    ,ratingOfWord);
+                GoToEdit.putExtra("PositionOfWord_Sent_From_Detail"  ,positionOfWord);
                 //Receive Data With finished activity
-                startActivityForResult(GoToEdit,98);
+                startActivityForResult(GoToEdit,BETWEEN_DETAIL_EDIT_REQ);
             }
         });
     }
@@ -93,23 +100,25 @@ private int positionOfWord;
     protected void onActivityResult(int requestCode, int resultCode, @NonNull Intent receivedData)
     {
         super.onActivityResult(requestCode , resultCode , receivedData);
-            if (resultCode == 98)
+        if (requestCode == BETWEEN_DETAIL_EDIT_REQ){
+            if (resultCode == BETWEEN_DETAIL_EDIT_RES)
             {
                 Intent returner = receivedData;
-                setResult(99,returner);
+                setResult(BETWEEN_LIST_DETAIL_RES,returner);
                 finish();
             }
+        }
     }
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putInt("detail_pic", picOfWord);
-        outState.putString("detail_name", nameOfWord);
-        outState.putString("detail_pronoun",pronounOfWord);
-        outState.putString("detail_descrip",descripOfWord);
-        outState.putString("detail_notes",notesOfWord);
-        outState.putDouble("detail_rating",ratingOfWord);
-        outState.putInt("detail_position",positionOfWord);
+        outState.putInt(    "saved_pic"        ,picOfWord);
+        outState.putString( "saved_name"       ,nameOfWord);
+        outState.putString( "saved_pronoun"    ,pronounOfWord);
+        outState.putString( "saved_descrip"    ,descripOfWord);
+        outState.putString( "saved_notes"      ,notesOfWord);
+        outState.putDouble( "saved_rating"     ,ratingOfWord);
+        outState.putInt(    "saved_position"   ,positionOfWord);
     }
 }

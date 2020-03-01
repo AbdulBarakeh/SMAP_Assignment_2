@@ -1,9 +1,9 @@
 <resources>
-    <string name="app_name">WordLearnerAssignment_SMAP</string>
+    <string name="app_name">WordLearner</string>
     //Buttons
     <string name="button_edit_detail">EDIT</string>
     //Activities
-    <string name="list_of_animals">List Of Animals</string>
+    <string name="list_of_animals">My Words</string>
     <string name="exit_BTN_List_Activity">EXIT</string>
     <string name="NotesInput_edit">Insert Notes....</string>
     <string name="word_rating_edit">Word Rating:</string>
