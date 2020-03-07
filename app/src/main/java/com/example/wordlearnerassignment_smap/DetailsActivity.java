@@ -14,12 +14,12 @@ public class DetailsActivity extends AppCompatActivity {
 
 private Button cancel;
 private Button edit;
-private ImageView PictureOfWord_Detail_T;
-private TextView  NameOfWord_Detail_T;
-private TextView  PronounOfWord_Detail_T;
-private TextView  DescripOfWord_Detail_T;
-private TextView  NotesOfWord_Detail_T;
-private TextView RatingOfWord_Detail_T;
+private ImageView PictureOfWord;
+private TextView NameOfWord;
+private TextView PronounOfWord;
+private TextView DescripOfWord;
+private TextView NotesOfWord;
+private TextView RatingOfWord;
 
 private int picOfWord;
 private String nameOfWord;
@@ -56,22 +56,22 @@ static final int BETWEEN_DETAIL_EDIT_REQ = 102;
             positionOfWord = receivedFromList.getIntExtra(  "PositionOfWord_Sent_From_List", 13);
         }
         //Bind UI elements with local variables
-        PictureOfWord_Detail_T = findViewById( R.id.PictureOfWord_Detail);
-        NameOfWord_Detail_T = findViewById( R.id.NameOfWord_Detail);
-        PronounOfWord_Detail_T = findViewById( R.id.PronounOfWord_Detail);
-        DescripOfWord_Detail_T = findViewById( R.id.DescriptionOfWord_Detail);
-        NotesOfWord_Detail_T = findViewById( R.id.NotesOfWord_Detail);
-        RatingOfWord_Detail_T = findViewById( R.id.RatingOfWord_Detail);
+        PictureOfWord = findViewById( R.id.PictureOfWord_Detail);
+        NameOfWord = findViewById( R.id.NameOfWord_Detail);
+        PronounOfWord = findViewById( R.id.PronounOfWord_Detail);
+        DescripOfWord = findViewById( R.id.DescriptionOfWord_Detail);
+        NotesOfWord = findViewById( R.id.NotesOfWord_Detail);
+        RatingOfWord = findViewById( R.id.RatingOfWord_Detail);
         cancel = findViewById(R.id.ACTIVITY_DETAIL_CANCEL_BUTTON);
         edit = findViewById(R.id.ACTIVITY_DETAIL_BUTTON_EDIT);
 
         //Set the data into the UI elements
-        PictureOfWord_Detail_T.setImageResource(picOfWord);
-        NameOfWord_Detail_T.setText(nameOfWord);
-        PronounOfWord_Detail_T.setText(pronounOfWord);
-        DescripOfWord_Detail_T.setText(descripOfWord);
-        NotesOfWord_Detail_T.setText(notesOfWord);
-        RatingOfWord_Detail_T.setText(String.valueOf(ratingOfWord));
+        PictureOfWord.setImageResource(picOfWord);
+        NameOfWord.setText(nameOfWord);
+        PronounOfWord.setText(pronounOfWord);
+        DescripOfWord.setText(descripOfWord);
+        NotesOfWord.setText(notesOfWord);
+        RatingOfWord.setText(String.valueOf(ratingOfWord));
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

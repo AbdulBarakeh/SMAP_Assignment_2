@@ -28,20 +28,22 @@
             tools:srcCompat="@tools:sample/avatars[2]" />
 
         <TextView
-            android:textAppearance="@style/CardView.Dark"
             android:id="@+id/NameOfWord_CardInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="40dp"
-            android:layout_marginLeft="40dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
             android:layout_marginTop="16dp"
             android:layout_toEndOf="@+id/PicOfWord_CardInfo"
             android:layout_toRightOf="@+id/PicOfWord_CardInfo"
             android:text="@string/nameOfCardInfo"
+            android:textAppearance="@style/CardView.Dark"
             android:textColor="@android:color/black"
             android:textSize="20sp"
             android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/RatingOfWord_CardInfo"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/PicOfWord_CardInfo"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -57,9 +59,11 @@
             android:textAppearance="@style/CardView.Dark"
             android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/RatingOfWord_CardInfo"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/NameOfWord_CardInfo"
             app:layout_constraintTop_toBottomOf="@+id/NameOfWord_CardInfo"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintVertical_bias="0.058" />
 
         <TextView
             android:id="@+id/RatingOfWord_CardInfo"

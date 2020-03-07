@@ -86,6 +86,13 @@ public class ListActivity extends AppCompatActivity {
         }
     }
 
+    //Save state for rotation
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList("saved_list_activity",  WordList);
+    }
+
     //Create list of words
     private ArrayList<WordTemplate> CreateSamples(){
         ArrayList<WordTemplate> Sample = new ArrayList<>();
@@ -104,12 +111,5 @@ public class ListActivity extends AppCompatActivity {
         Sample.add(new WordTemplate(R.drawable.shark,       "Shark",    "SHärk",        "a long-bodied chiefly marine fish with a cartilaginous skeleton, a prominent dorsal fin, and tooth-like scales. Most sharks are predatory, though the largest kinds feed on plankton, and some can grow to a large size.","",0,12));
         Sample.add(new WordTemplate(R.drawable.snake,       "Snake",    "snāk",         "a long limbless reptile which has no eyelids, a short tail, and jaws that are capable of considerable extension. Some snakes have a venomous bite.","",0,13));
         return Sample;
-    }
-
-    //Save state for rotation
-    @Override
-    protected void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putParcelableArrayList("saved_list_activity",  WordList);
     }
 }
