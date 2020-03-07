@@ -50,13 +50,7 @@ public class ListActivity extends AppCompatActivity {
             @Override
             public void onItemClick(int position) {
             Intent GoToDetails = new Intent(ListActivity.this, DetailsActivity.class);
-            GoToDetails.putExtra("PicOfWord_Sent_From_List"        , WordList.get(position).getImageOfWord());
-            GoToDetails.putExtra("NameOfWord_Sent_From_List"       , WordList.get(position).getNameOfWord());
-            GoToDetails.putExtra("PronounOfWord_Sent_From_List"    , WordList.get(position).getPronounOfWord());
-            GoToDetails.putExtra("DescripOfWord_Sent_From_List"    , WordList.get(position).getDescripOfWord());
-            GoToDetails.putExtra("NotesOfWord_Sent_From_List"      , WordList.get(position).getNotesOfWord());
-            GoToDetails.putExtra("RatingOfWord_Sent_From_List"     , WordList.get(position).getRatingOfWord());
-            GoToDetails.putExtra("PositionOfWord_Sent_From_List"   ,WordList.get(position).getPositionOfWord());
+            GoToDetails.putExtra("word",WordList.get(position));
             startActivityForResult(GoToDetails, BETWEEN_LIST_DETAIL_REQ);
             }
         } );
@@ -75,12 +69,14 @@ public class ListActivity extends AppCompatActivity {
         super.onActivityResult(requestCode , resultCode , receivedIntent);
         if (requestCode == BETWEEN_LIST_DETAIL_REQ){
             if (resultCode == BETWEEN_LIST_DETAIL_RES) {
-                WordList.get(receivedIntent.getIntExtra("PositionOfWord_Sent_From_Edit",13)).setImageOfWord(receivedIntent.getIntExtra(      "PicOfWord_Sent_From_Edit"    , R.drawable.imagenotfound));
-                WordList.get(receivedIntent.getIntExtra("PositionOfWord_Sent_From_Edit",13)).setNameOfWord(receivedIntent.getStringExtra(    "NameOfWord_Sent_From_Edit"   ));
-                WordList.get(receivedIntent.getIntExtra("PositionOfWord_Sent_From_Edit",13)).setPronounOfWord(receivedIntent.getStringExtra( "PronounOfWord_Sent_From_Edit"));
-                WordList.get(receivedIntent.getIntExtra("PositionOfWord_Sent_From_Edit",13)).setDescripOfWord(receivedIntent.getStringExtra( "DescripOfWord_Sent_From_Edit"));
-                WordList.get(receivedIntent.getIntExtra("PositionOfWord_Sent_From_Edit",13)).setNotesOfWord(receivedIntent.getStringExtra(   "NotesOfWord_Sent_From_Edit"  ));
-                WordList.get(receivedIntent.getIntExtra("PositionOfWord_Sent_From_Edit",13)).setRatingOfWord(receivedIntent.getDoubleExtra(  "RatingOfWord_Sent_From_Edit" ,0));
+                WordTemplate tmpWord = receivedIntent.getParcelableExtra("word");
+                int tmpPosition = tmpWord.getPositionOfWord();
+                WordList.get(tmpPosition).setImageOfWord(tmpWord.getImageOfWord());
+                WordList.get(tmpPosition).setNameOfWord(tmpWord.getNameOfWord());
+                WordList.get(tmpPosition).setPronounOfWord(tmpWord.getPronounOfWord());
+                WordList.get(tmpPosition).setDescripOfWord(tmpWord.getDescripOfWord());
+                WordList.get(tmpPosition).setNotesOfWord(tmpWord.getNotesOfWord());
+                WordList.get(tmpPosition).setRatingOfWord(tmpWord.getRatingOfWord());
                 AdapterListActivity.notifyDataSetChanged();
             }
         }

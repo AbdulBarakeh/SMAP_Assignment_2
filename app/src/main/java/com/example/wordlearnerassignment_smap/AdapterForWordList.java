@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+// Over all I got no effing clue about what this file does. I just know that it is needed to make the recyclerview work
 // SRC: https://codinginflow.com/tutorials/android/simple-recyclerview-java/part-1-layouts-model-class part 1-5
 public class AdapterForWordList extends RecyclerView.Adapter<AdapterForWordList.ViewHolderForWordList> {
     private ArrayList<WordTemplate> ListOfWords;
@@ -24,17 +25,17 @@ public class AdapterForWordList extends RecyclerView.Adapter<AdapterForWordList.
     }
     //Extending viewholder class for our specific need
     public static class ViewHolderForWordList extends RecyclerView.ViewHolder{
-        public ImageView PictureOfWord_Adapter;
-        public TextView NameOfWord_Adapter;
-        public TextView PronounOfWord_Adapter;
-        public TextView RatingOfWord_Adapter;
+        public ImageView PictureOfWord;
+        public TextView NameOfWord;
+        public TextView PronounOfWord;
+        public TextView RatingOfWord;
 
         public ViewHolderForWordList(View itemView, final OnItemClickListener listener) {
             super(itemView);
-            PictureOfWord_Adapter = itemView.findViewById(R.id.PicOfWord_CardInfo);
-            NameOfWord_Adapter = itemView.findViewById(R.id.NameOfWord_CardInfo);
-            PronounOfWord_Adapter = itemView.findViewById(R.id.PronounOfWord_CardInfo);
-            RatingOfWord_Adapter = itemView.findViewById(R.id.RatingOfWord_CardInfo);
+            PictureOfWord = itemView.findViewById(R.id.PicOfWord_CardInfo);
+            NameOfWord = itemView.findViewById(R.id.NameOfWord_CardInfo);
+            PronounOfWord = itemView.findViewById(R.id.PronounOfWord_CardInfo);
+            RatingOfWord = itemView.findViewById(R.id.RatingOfWord_CardInfo);
             itemView.setOnClickListener( new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -63,10 +64,10 @@ public class AdapterForWordList extends RecyclerView.Adapter<AdapterForWordList.
     public void onBindViewHolder(ViewHolderForWordList holder, int position) {
         WordTemplate currentItem = ListOfWords.get(position);
 
-        holder.PictureOfWord_Adapter.setImageResource(currentItem.getImageOfWord());
-        holder.NameOfWord_Adapter.setText(currentItem.getNameOfWord());
-        holder.PronounOfWord_Adapter.setText(currentItem.getPronounOfWord());
-        holder.RatingOfWord_Adapter.setText(String.valueOf(currentItem.getRatingOfWord()));
+        holder.PictureOfWord.setImageResource(currentItem.getImageOfWord());
+        holder.NameOfWord.setText(currentItem.getNameOfWord());
+        holder.PronounOfWord.setText(currentItem.getPronounOfWord());
+        holder.RatingOfWord.setText(String.valueOf(currentItem.getRatingOfWord()));
     }
     @Override
     public int getItemCount() {

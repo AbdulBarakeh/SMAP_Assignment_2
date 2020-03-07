@@ -21,39 +21,21 @@ private TextView DescripOfWord;
 private TextView NotesOfWord;
 private TextView RatingOfWord;
 
-private int picOfWord;
-private String nameOfWord;
-private String pronounOfWord;
-private String descripOfWord;
-private String notesOfWord;
-private double ratingOfWord;
-private int positionOfWord;
 static final int BETWEEN_LIST_DETAIL_RES = 99;
 static final int BETWEEN_DETAIL_EDIT_RES = 98;
 static final int BETWEEN_DETAIL_EDIT_REQ = 102;
+WordTemplate word;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
         if (savedInstanceState != null){
-            picOfWord = savedInstanceState.getInt(       "saved_pic"     );
-            nameOfWord = savedInstanceState.getString(   "saved_name"    );
-            pronounOfWord = savedInstanceState.getString("saved_pronoun" );
-            descripOfWord = savedInstanceState.getString("saved_descrip" );
-            notesOfWord = savedInstanceState.getString(  "saved_notes"   );
-            ratingOfWord = savedInstanceState.getDouble( "saved_rating"  );
-            positionOfWord = savedInstanceState.getInt(  "saved_position");
+            word = savedInstanceState.getParcelable("word");
         }
         else {
             Intent receivedFromList = getIntent();
-            picOfWord = receivedFromList.getIntExtra(       "PicOfWord_Sent_From_List"     , R.drawable.imagenotfound);
-            nameOfWord = receivedFromList.getStringExtra(   "NameOfWord_Sent_From_List"    );
-            pronounOfWord = receivedFromList.getStringExtra("PronounOfWord_Sent_From_List" );
-            descripOfWord = receivedFromList.getStringExtra("DescripOfWord_Sent_From_List" );
-            notesOfWord = receivedFromList.getStringExtra(  "NotesOfWord_Sent_From_List"   );
-            ratingOfWord = receivedFromList.getDoubleExtra( "RatingOfWord_Sent_From_List"  , 0);
-            positionOfWord = receivedFromList.getIntExtra(  "PositionOfWord_Sent_From_List", 13);
+            word = receivedFromList.getParcelableExtra("word");
         }
         //Bind UI elements with local variables
         PictureOfWord = findViewById( R.id.PictureOfWord_Detail);
@@ -66,12 +48,12 @@ static final int BETWEEN_DETAIL_EDIT_REQ = 102;
         edit = findViewById(R.id.ACTIVITY_DETAIL_BUTTON_EDIT);
 
         //Set the data into the UI elements
-        PictureOfWord.setImageResource(picOfWord);
-        NameOfWord.setText(nameOfWord);
-        PronounOfWord.setText(pronounOfWord);
-        DescripOfWord.setText(descripOfWord);
-        NotesOfWord.setText(notesOfWord);
-        RatingOfWord.setText(String.valueOf(ratingOfWord));
+        PictureOfWord.setImageResource(word.getImageOfWord());
+        NameOfWord.setText(word.getNameOfWord());
+        PronounOfWord.setText(word.getPronounOfWord());
+        DescripOfWord.setText(word.getDescripOfWord());
+        NotesOfWord.setText(word.getNotesOfWord());
+        RatingOfWord.setText(String.valueOf(word.getRatingOfWord()));
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,13 +66,7 @@ static final int BETWEEN_DETAIL_EDIT_REQ = 102;
             @Override
             public void onClick(View v) {
                 Intent GoToEdit = new Intent(DetailsActivity.this, EditActivity.class);
-                GoToEdit.putExtra("PicOfWord_Sent_From_Detail"       ,picOfWord);
-                GoToEdit.putExtra("NameOfWord_Sent_From_Detail"      ,nameOfWord);
-                GoToEdit.putExtra("PronounOfWord_Sent_From_Detail"   ,pronounOfWord);
-                GoToEdit.putExtra("DescripOfWord_Sent_From_Detail"   ,descripOfWord);
-                GoToEdit.putExtra("NotesOfWord_Sent_From_Detail"     ,notesOfWord);
-                GoToEdit.putExtra("RatingOfWord_Sent_From_Detail"    ,ratingOfWord);
-                GoToEdit.putExtra("PositionOfWord_Sent_From_Detail"  ,positionOfWord);
+                GoToEdit.putExtra("word",word);
                 //Receive Data With finished activity
                 startActivityForResult(GoToEdit,BETWEEN_DETAIL_EDIT_REQ);
             }
@@ -104,6 +80,7 @@ static final int BETWEEN_DETAIL_EDIT_REQ = 102;
             if (resultCode == BETWEEN_DETAIL_EDIT_RES)
             {
                 Intent returner = receivedData;
+
                 setResult(BETWEEN_LIST_DETAIL_RES,returner);
                 finish();
             }
@@ -113,12 +90,6 @@ static final int BETWEEN_DETAIL_EDIT_REQ = 102;
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putInt(    "saved_pic"        ,picOfWord);
-        outState.putString( "saved_name"       ,nameOfWord);
-        outState.putString( "saved_pronoun"    ,pronounOfWord);
-        outState.putString( "saved_descrip"    ,descripOfWord);
-        outState.putString( "saved_notes"      ,notesOfWord);
-        outState.putDouble( "saved_rating"     ,ratingOfWord);
-        outState.putInt(    "saved_position"   ,positionOfWord);
+            outState.putParcelable("word",word);
     }
 }
