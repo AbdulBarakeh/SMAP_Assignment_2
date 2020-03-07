@@ -6,76 +6,76 @@ import android.os.Parcelable;
 //Creation of Wordclass
 public class WordTemplate implements Parcelable {
 
-    private int ImageOfWord;
-    private String NameOfWord;
-    private String PronounOfWord;
-    private double RatingOfWord;
-    private String DescripOfWord;
-    private String NotesOfWord;
-    private int PositionOfWord;
+    private int Image;
+    private String Name;
+    private String Pronoun;
+    private double Rating;
+    private String Descrip;
+    private String Notes;
+    private int Position;
 
-    WordTemplate(int _ImageOfWord, String _NameOfWord, String _PronounOfWord, String _DescripOfWord, String _NotesOfWord, double _RatingOfWord, int _PositionOfWord){
-        ImageOfWord = _ImageOfWord;
-        NameOfWord = _NameOfWord;
-        PronounOfWord = _PronounOfWord;
-        DescripOfWord = _DescripOfWord;
-        NotesOfWord = _NotesOfWord;
-        RatingOfWord = _RatingOfWord;
-        PositionOfWord = _PositionOfWord;
+    WordTemplate(int _Image, String _Name, String _Pronoun, String _Descrip, String _Notes, double _Rating, int _Position){
+        Image = _Image;
+        Name = _Name;
+        Pronoun = _Pronoun;
+        Descrip = _Descrip;
+        Notes = _Notes;
+        Rating = _Rating;
+        Position = _Position;
     }
 
     protected WordTemplate(Parcel in) {
-        ImageOfWord = in.readInt();
-        NameOfWord = in.readString();
-        PronounOfWord = in.readString();
-        RatingOfWord = in.readDouble();
-        DescripOfWord = in.readString();
-        NotesOfWord = in.readString();
-        PositionOfWord = in.readInt();
+        Image = in.readInt();
+        Name = in.readString();
+        Pronoun = in.readString();
+        Rating = in.readDouble();
+        Descrip = in.readString();
+        Notes = in.readString();
+        Position = in.readInt();
     }
 
-    public int getImageOfWord() {
-        return        ImageOfWord   ;
+    public int getImage() {
+        return Image;
     }
-    public String getNameOfWord() {
-        return      NameOfWord    ;
+    public String getName() {
+        return Name;
     }
-    public String getPronounOfWord() {
-        return   PronounOfWord ;
+    public String getPronoun() {
+        return Pronoun;
     }
-    public double getRatingOfWord(){ return     RatingOfWord  ; }
-    public String getDescripOfWord() {
-        return   DescripOfWord ;
+    public double getRating(){ return Rating; }
+    public String getDescrip() {
+        return Descrip;
     }
-    public String getNotesOfWord() {
-        return     NotesOfWord   ;
+    public String getNotes() {
+        return Notes;
     }
-    public int getPositionOfWord() {
-        return     PositionOfWord;
-    }
-
-    public void setImageOfWord(int imageOfWord) {
-        ImageOfWord = imageOfWord;
+    public int getPosition() {
+        return Position;
     }
 
-    public void setNameOfWord(String nameOfWord) {
-        NameOfWord = nameOfWord;
+    public void setImage(int image) {
+        Image = image;
     }
 
-    public void setPronounOfWord(String pronounOfWord) {
-        PronounOfWord = pronounOfWord;
+    public void setName(String name) {
+        Name = name;
     }
 
-    public void setRatingOfWord(double ratingOfWord) {
-        RatingOfWord = ratingOfWord;
+    public void setPronoun(String pronoun) {
+        Pronoun = pronoun;
     }
 
-    public void setDescripOfWord(String descripOfWord) {
-            DescripOfWord = descripOfWord;
+    public void setRating(double rating) {
+        Rating = rating;
     }
 
-    public void setNotesOfWord(String notesOfWord) {
-            NotesOfWord = notesOfWord;
+    public void setDescrip(String descrip) {
+            Descrip = descrip;
+    }
+
+    public void setNotes(String notes) {
+            Notes = notes;
     }
 
     //Implementation of Parcel Methods
@@ -97,12 +97,12 @@ public class WordTemplate implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest , int flags) {
-        dest.writeInt(      ImageOfWord     );
-        dest.writeString(   NameOfWord      );
-        dest.writeString(   PronounOfWord   );
-        dest.writeDouble(   RatingOfWord    );
-        dest.writeString(   DescripOfWord   );
-        dest.writeString(   NotesOfWord     );
-        dest.writeInt(      PositionOfWord  );
+        dest.writeInt(Image);
+        dest.writeString(Name);
+        dest.writeString(Pronoun);
+        dest.writeDouble(Rating);
+        dest.writeString(Descrip);
+        dest.writeString(Notes);
+        dest.writeInt(Position);
     }
 }

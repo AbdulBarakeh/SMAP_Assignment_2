@@ -25,17 +25,17 @@ public class AdapterForWordList extends RecyclerView.Adapter<AdapterForWordList.
     }
     //Extending viewholder class for our specific need
     public static class ViewHolderForWordList extends RecyclerView.ViewHolder{
-        public ImageView PictureOfWord;
-        public TextView NameOfWord;
-        public TextView PronounOfWord;
-        public TextView RatingOfWord;
+        public ImageView Picture;
+        public TextView Name;
+        public TextView Pronoun;
+        public TextView Rating;
 
         public ViewHolderForWordList(View itemView, final OnItemClickListener listener) {
             super(itemView);
-            PictureOfWord = itemView.findViewById(R.id.PicOfWord_CardInfo);
-            NameOfWord = itemView.findViewById(R.id.NameOfWord_CardInfo);
-            PronounOfWord = itemView.findViewById(R.id.PronounOfWord_CardInfo);
-            RatingOfWord = itemView.findViewById(R.id.RatingOfWord_CardInfo);
+            Picture = itemView.findViewById(R.id.PicOfWord_CardInfo);
+            Name = itemView.findViewById(R.id.NameOfWord_CardInfo);
+            Pronoun = itemView.findViewById(R.id.PronounOfWord_CardInfo);
+            Rating = itemView.findViewById(R.id.RatingOfWord_CardInfo);
             itemView.setOnClickListener( new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -64,10 +64,10 @@ public class AdapterForWordList extends RecyclerView.Adapter<AdapterForWordList.
     public void onBindViewHolder(ViewHolderForWordList holder, int position) {
         WordTemplate currentItem = ListOfWords.get(position);
 
-        holder.PictureOfWord.setImageResource(currentItem.getImageOfWord());
-        holder.NameOfWord.setText(currentItem.getNameOfWord());
-        holder.PronounOfWord.setText(currentItem.getPronounOfWord());
-        holder.RatingOfWord.setText(String.valueOf(currentItem.getRatingOfWord()));
+        holder.Picture.setImageResource(currentItem.getImage());
+        holder.Name.setText(currentItem.getName());
+        holder.Pronoun.setText(currentItem.getPronoun());
+        holder.Rating.setText(String.valueOf(currentItem.getRating()));
     }
     @Override
     public int getItemCount() {

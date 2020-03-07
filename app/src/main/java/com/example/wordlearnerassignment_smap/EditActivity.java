@@ -15,9 +15,9 @@ public class EditActivity extends AppCompatActivity {
 
 private Button cancel;
 private Button OK;
-private TextView NameOfWord;
-private EditText NotesOfWord;
-private TextView RatingOfWord;
+private TextView Name;
+private EditText Notes;
+private TextView Rating;
 private SeekBar RatingBar;
 
 static final int BETWEEN_DETAIL_EDIT_RES = 98;
@@ -38,19 +38,19 @@ WordTemplate word;
         //Bind UI elements with local variables
         cancel = findViewById(R.id.ACTIVITY_EDIT_CANCEL_BUTTON2);
         OK = findViewById(R.id.ACTIVITY_EDIT_OK_BUT);
-        NameOfWord = findViewById( R.id.NameOfWord_Edit);
-        NotesOfWord = findViewById( R.id.NotesInput_Edit);
-        RatingOfWord = findViewById( R.id.Rating_Edit);
+        Name = findViewById( R.id.NameOfWord_Edit);
+        Notes = findViewById( R.id.NotesInput_Edit);
+        Rating = findViewById( R.id.Rating_Edit);
         RatingBar = findViewById(R.id.Seekbar_Edit);
 
         //Set the data into the UI elements
-        NameOfWord.setText(word.getNameOfWord());
-        NotesOfWord.setText(word.getNotesOfWord());
-        RatingOfWord.setText(String.valueOf(word.getRatingOfWord()));
+        Name.setText(word.getName());
+        Notes.setText(word.getNotes());
+        Rating.setText(String.valueOf(word.getRating()));
 
         // Scalability of the trigger position, and placing in to corespond with the current rating.
         RatingBar.setMax(100);
-        RatingBar.setProgress((int)word.getRatingOfWord()*10);
+        RatingBar.setProgress((int)word.getRating()*10);
 
         //Send data back to detail activity on click
         cancel.setOnClickListener(new View.OnClickListener() {
@@ -63,7 +63,7 @@ WordTemplate word;
             @Override
             public void onClick(View v) {
                 Intent returnValues = new Intent();
-                word.setNotesOfWord(NotesOfWord.getText().toString());
+                word.setNotes(Notes.getText().toString());
                 returnValues.putExtra("word",word);
                 setResult(BETWEEN_DETAIL_EDIT_RES, returnValues);
                 finish();
@@ -76,8 +76,8 @@ WordTemplate word;
             @Override
             public void onProgressChanged(SeekBar seekBar , int progress , boolean fromUser) {
                 double doubleProgress = ((double) progress)/10;
-                RatingOfWord.setText(String.valueOf(doubleProgress));
-                word.setRatingOfWord(Double.parseDouble(RatingOfWord.getText().toString()));
+                Rating.setText(String.valueOf(doubleProgress));
+                word.setRating(Double.parseDouble(Rating.getText().toString()));
             }
 
             @Override

@@ -70,13 +70,13 @@ public class ListActivity extends AppCompatActivity {
         if (requestCode == BETWEEN_LIST_DETAIL_REQ){
             if (resultCode == BETWEEN_LIST_DETAIL_RES) {
                 WordTemplate tmpWord = receivedIntent.getParcelableExtra("word");
-                int tmpPosition = tmpWord.getPositionOfWord();
-                WordList.get(tmpPosition).setImageOfWord(tmpWord.getImageOfWord());
-                WordList.get(tmpPosition).setNameOfWord(tmpWord.getNameOfWord());
-                WordList.get(tmpPosition).setPronounOfWord(tmpWord.getPronounOfWord());
-                WordList.get(tmpPosition).setDescripOfWord(tmpWord.getDescripOfWord());
-                WordList.get(tmpPosition).setNotesOfWord(tmpWord.getNotesOfWord());
-                WordList.get(tmpPosition).setRatingOfWord(tmpWord.getRatingOfWord());
+                int tmpPosition = tmpWord.getPosition();
+                WordList.get(tmpPosition).setImage(tmpWord.getImage());
+                WordList.get(tmpPosition).setName(tmpWord.getName());
+                WordList.get(tmpPosition).setPronoun(tmpWord.getPronoun());
+                WordList.get(tmpPosition).setDescrip(tmpWord.getDescrip());
+                WordList.get(tmpPosition).setNotes(tmpWord.getNotes());
+                WordList.get(tmpPosition).setRating(tmpWord.getRating());
                 AdapterListActivity.notifyDataSetChanged();
             }
         }
