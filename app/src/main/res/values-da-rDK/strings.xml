@@ -12,4 +12,5 @@
     <string name="description_label_detail">Beskrivelse:</string>
     <string name="notes_label_detail">Noter:</string>
     <string name="cancel_btn_edit">ANNULLER</string>
+    <string name="write_your_notes">Skriv dine Noter</string>
 </resources>

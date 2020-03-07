@@ -24,4 +24,5 @@
     <string name="Name_Detail" translatable="false">TextView</string>
     <string name="Rating_Edit" translatable="false">TextView</string>
     <string name="NameOfWord_Edit" translatable="false">TextView</string>
+    <string name="write_your_notes">Write Your Notes</string>
 </resources>

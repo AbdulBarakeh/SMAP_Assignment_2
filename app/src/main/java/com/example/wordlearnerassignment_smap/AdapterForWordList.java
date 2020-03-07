@@ -9,7 +9,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-
+// SRC: https://codinginflow.com/tutorials/android/simple-recyclerview-java/part-1-layouts-model-class part 1-5
 public class AdapterForWordList extends RecyclerView.Adapter<AdapterForWordList.ViewHolderForWordList> {
     private ArrayList<WordTemplate> ListOfWords;
 
@@ -18,18 +18,16 @@ public class AdapterForWordList extends RecyclerView.Adapter<AdapterForWordList.
     public interface OnItemClickListener{
         void onItemClick(int position);
     }
-
+    //Setting up clicklistener for every card
     public void setOnItemClickListener(OnItemClickListener listener){
         CardClickListener = listener;
     }
-
+    //Extending viewholder class for our specific need
     public static class ViewHolderForWordList extends RecyclerView.ViewHolder{
         public ImageView PictureOfWord_Adapter;
         public TextView NameOfWord_Adapter;
         public TextView PronounOfWord_Adapter;
         public TextView RatingOfWord_Adapter;
-        public TextView DescripOfWord_Adapter;
-        public TextView NotesOfWord_Adapter;
 
         public ViewHolderForWordList(View itemView, final OnItemClickListener listener) {
             super(itemView);
@@ -37,8 +35,6 @@ public class AdapterForWordList extends RecyclerView.Adapter<AdapterForWordList.
             NameOfWord_Adapter = itemView.findViewById(R.id.NameOfWord_CardInfo);
             PronounOfWord_Adapter = itemView.findViewById(R.id.PronounOfWord_CardInfo);
             RatingOfWord_Adapter = itemView.findViewById(R.id.RatingOfWord_CardInfo);
-            DescripOfWord_Adapter = itemView.findViewById(R.id.DescriptionOfWord_Detail);//Not sure if it will crash cause it doesn't have a UI element
-            NotesOfWord_Adapter = itemView.findViewById(R.id.NotesOfWord_Detail);//NotSure same reason as above
             itemView.setOnClickListener( new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -52,6 +48,7 @@ public class AdapterForWordList extends RecyclerView.Adapter<AdapterForWordList.
             } );
         }
     }
+
     public AdapterForWordList(ArrayList<WordTemplate> WordList){
         ListOfWords = WordList;
     }

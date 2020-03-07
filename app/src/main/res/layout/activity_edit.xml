@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".EditActivity">
-
+    <!--    SRC: buttondesign.xml ( https://stackoverflow.com/questions/6054562/how-to-make-the-corners-of-a-button-round ) -->
     <Button
         android:id="@+id/ACTIVITY_EDIT_OK_BUT"
         android:layout_width="0dp"
@@ -141,6 +141,7 @@
                 android:importantForAutofill="no"
                 android:inputType="textMultiLine"
                 android:text="@string/NotesInput_edit"
+                android:hint="@string/write_your_notes"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
