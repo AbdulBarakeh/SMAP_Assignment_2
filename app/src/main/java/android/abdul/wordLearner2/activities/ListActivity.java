@@ -3,13 +3,18 @@ package android.abdul.wordLearner2.activities;
 import android.abdul.wordLearner2.AdapterForWordList;
 import android.abdul.wordLearner2.datamodels.WordTemplate;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.res.Configuration;
 import android.os.Binder;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Messenger;
+import android.view.KeyboardShortcutGroup;
+import android.view.Menu;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
@@ -17,8 +22,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.abdul.wordLearner2.R;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ListActivity extends AppCompatActivity {
 
@@ -26,6 +34,8 @@ public class ListActivity extends AppCompatActivity {
     private AdapterForWordList AdapterListActivity;
     private RecyclerView.LayoutManager LayoutManagerListActivity;
     private Button Exit;
+    private Button Add;
+    private EditText SearchInput;
 
     ArrayList<WordTemplate> WordList = new ArrayList<>();
     static final int BETWEEN_LIST_DETAIL_RES = 99;
@@ -52,6 +62,9 @@ public class ListActivity extends AppCompatActivity {
         RecyclerViewListActivity.setLayoutManager(LayoutManagerListActivity);
         RecyclerViewListActivity.setAdapter(AdapterListActivity);
         Exit = findViewById(R.id.Exit_button_List);
+        Add = findViewById(R.id.add_button);
+        SearchInput = findViewById(R.id.search_Input);
+
 
         //Send data to next activity
         AdapterListActivity.setOnItemClickListener( new AdapterForWordList.OnItemClickListener() {
@@ -138,4 +151,6 @@ public class ListActivity extends AppCompatActivity {
     public void add(View v){
 
     }
+
+
 }

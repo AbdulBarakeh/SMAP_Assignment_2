@@ -13,4 +13,6 @@
     <string name="notes_label_detail">Noter:</string>
     <string name="cancel_btn_edit">ANNULLER</string>
     <string name="write_your_notes">Skriv dine Noter</string>
+    <string name="add">ADD</string>
+    <string name="search_current_or_add_new">Search current or Add new</string>
 </resources>

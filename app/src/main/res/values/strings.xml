@@ -25,4 +25,6 @@
     <string name="Rating_Edit" translatable="false">TextView</string>
     <string name="NameOfWord_Edit" translatable="false">TextView</string>
     <string name="write_your_notes">Write Your Notes</string>
+    <string name="add">ADD</string>
+    <string name="search_current_or_add_new">Search current or Add new</string>
 </resources>
