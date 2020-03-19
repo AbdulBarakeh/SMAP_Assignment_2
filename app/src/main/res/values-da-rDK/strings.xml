@@ -4,7 +4,7 @@
     <string name="button_edit_detail">REDIGER</string>
     <string name="list_of_animals">Mine Ord</string>
     <string name="exit_BTN_List_Activity">FORLAD</string>
-    <string name="NotesInput_edit">Indsæt Noter...</string>
+    <string name="NotesInput_edit">Indsæt Noter…</string>
     <string name="word_rating_edit">Ord Vurdering:</string>
     <string name="notes_edit">Noter:</string>
     <string name="OK_BTN_EDIT">OK</string>
@@ -13,6 +13,8 @@
     <string name="notes_label_detail">Noter:</string>
     <string name="cancel_btn_edit">ANNULLER</string>
     <string name="write_your_notes">Skriv dine Noter</string>
-    <string name="add">ADD</string>
-    <string name="search_current_or_add_new">Search current or Add new</string>
+    <string name="add">TILFØJ</string>
+    <string name="search_current_or_add_new">Søg nuværrende eller tilføj ny</string>
+    <string name="button_update_edit">OPDATER</string>
+    <string name="button_delete_detail">SLET</string>
 </resources>

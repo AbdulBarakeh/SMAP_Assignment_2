@@ -45,7 +45,7 @@ WordTemplate word;
         }
         //Bind UI elements with local variables
         cancel = findViewById(R.id.ACTIVITY_EDIT_CANCEL_BUTTON2);
-        OK = findViewById(R.id.ACTIVITY_EDIT_OK_BUT);
+        OK = findViewById(R.id.ACTIVITY_EDIT_UPDATE_BUT);
         Name = findViewById( R.id.NameOfWord_Edit);
         Notes = findViewById( R.id.NotesInput_Edit);
         Rating = findViewById( R.id.Rating_Edit);

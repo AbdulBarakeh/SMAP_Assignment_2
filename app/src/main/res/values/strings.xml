@@ -27,4 +27,6 @@
     <string name="write_your_notes">Write Your Notes</string>
     <string name="add">ADD</string>
     <string name="search_current_or_add_new">Search current or Add new</string>
+    <string name="button_update_edit">UPDATE</string>
+    <string name="button_delete_detail">DELETE</string>
 </resources>
