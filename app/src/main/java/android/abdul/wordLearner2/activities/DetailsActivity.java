@@ -1,14 +1,23 @@
-package com.example.wordlearnerassignment_smap;
+package android.abdul.wordLearner2.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.abdul.wordLearner2.datamodels.WordTemplate;
+import android.abdul.wordLearner2.service.WordLearnerService;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.ServiceConnection;
+import android.os.Binder;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.os.Messenger;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import android.abdul.wordLearner2.R;
 
 public class DetailsActivity extends AppCompatActivity {
 
@@ -86,10 +95,32 @@ WordTemplate word;
             }
         }
     }
-
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-            outState.putParcelable("word",word);
+        outState.putParcelable("word",word);
+    }
+    private Messenger msgQueue = null;//needed to send msg to service from activity
+    private ComponentName cn = new ComponentName("DetailsActivity","DetailActivity.class");//Gotta figure out what this is
+    private IBinder binder = new Binder();//same for this
+
+    ServiceConnection serviceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name , IBinder service) {
+
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+
+        }
+    };
+
+    public void getDataFromService(){
+        serviceConnection.onServiceConnected(cn,binder);//NoClue It's all mock ups
+        serviceConnection.onServiceDisconnected(cn);// maybe
+    }
+    public void delete(View v){
+
     }
 }

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".EditActivity">
+    tools:context="android.abdul.wordLearner2.activities.EditActivity">
     <!--    SRC: buttondesign.xml ( https://stackoverflow.com/questions/6054562/how-to-make-the-corners-of-a-button-round ) -->
     <Button
         android:id="@+id/ACTIVITY_EDIT_OK_BUT"

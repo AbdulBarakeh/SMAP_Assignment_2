@@ -1,5 +1,6 @@
-package com.example.wordlearnerassignment_smap;
+package android.abdul.wordLearner2;
 
+import android.abdul.wordLearner2.datamodels.WordTemplate;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,6 +8,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.abdul.wordLearner2.R;
 
 import java.util.ArrayList;
 // Over all I got no effing clue about what this file does. I just know that it is needed to make the recyclerview work

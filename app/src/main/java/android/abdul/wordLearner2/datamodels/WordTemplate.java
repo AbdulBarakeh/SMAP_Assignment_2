@@ -1,4 +1,4 @@
-package com.example.wordlearnerassignment_smap;
+package android.abdul.wordLearner2.datamodels;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -14,7 +14,17 @@ public class WordTemplate implements Parcelable {
     private String Notes;
     private int Position;
 
-    WordTemplate(int _Image, String _Name, String _Pronoun, String _Descrip, String _Notes, double _Rating, int _Position){
+    //I'm lazy so I made a constructor that doesn't take any arguments. It's nice to have while coding.
+    public WordTemplate(){
+        Image = new Integer(0);
+        Name = new String();
+        Pronoun = new String();
+        Descrip = new String();
+        Notes = new String();
+        Rating = new Double(0);
+        Position = new Integer(0);
+    }
+    public WordTemplate(int _Image, String _Name, String _Pronoun, String _Descrip, String _Notes, double _Rating, int _Position){
         Image = _Image;
         Name = _Name;
         Pronoun = _Pronoun;

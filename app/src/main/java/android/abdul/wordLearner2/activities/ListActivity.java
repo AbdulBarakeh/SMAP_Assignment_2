@@ -1,7 +1,14 @@
-package com.example.wordlearnerassignment_smap;
+package android.abdul.wordLearner2.activities;
 
+import android.abdul.wordLearner2.AdapterForWordList;
+import android.abdul.wordLearner2.datamodels.WordTemplate;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.ServiceConnection;
+import android.os.Binder;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.os.Messenger;
 import android.view.View;
 import android.widget.Button;
 
@@ -9,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import android.abdul.wordLearner2.R;
 
 import java.util.ArrayList;
 
@@ -107,5 +115,27 @@ public class ListActivity extends AppCompatActivity {
         Sample.add(new WordTemplate(R.drawable.shark,       "Shark",    "SHärk",        "a long-bodied chiefly marine fish with a cartilaginous skeleton, a prominent dorsal fin, and tooth-like scales. Most sharks are predatory, though the largest kinds feed on plankton, and some can grow to a large size.","",0,12));
         Sample.add(new WordTemplate(R.drawable.snake,       "Snake",    "snāk",         "a long limbless reptile which has no eyelids, a short tail, and jaws that are capable of considerable extension. Some snakes have a venomous bite.","",0,13));
         return Sample;
+    }
+    private Messenger msgQueue = null;//needed to send msg to service from activity
+    private ComponentName cn = new ComponentName("ListActivity","ListActivity.class");//Gotta figure out what this is
+    private IBinder binder = new Binder();//same for this
+
+    ServiceConnection serviceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name , IBinder service) {
+
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+
+        }
+    };
+    public void getDataFromService(){
+        serviceConnection.onServiceConnected(cn,binder);//NoClue It's all mock ups
+        serviceConnection.onServiceDisconnected(cn);// maybe
+    }
+    public void add(View v){
+
     }
 }

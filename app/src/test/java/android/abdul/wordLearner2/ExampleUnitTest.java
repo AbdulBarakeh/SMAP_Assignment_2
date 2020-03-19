@@ -1,4 +1,4 @@
-package com.example.wordlearnerassignment_smap;
+package android.abdul.wordLearner2;
 
 import org.junit.Test;
 
