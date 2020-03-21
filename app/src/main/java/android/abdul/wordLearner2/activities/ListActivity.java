@@ -2,12 +2,14 @@ package android.abdul.wordLearner2.activities;
 
 import android.abdul.wordLearner2.AdapterForWordList;
 import android.abdul.wordLearner2.datamodels.WordTemplate;
+import android.abdul.wordLearner2.service.WordLearnerService;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.res.Configuration;
 import android.os.Binder;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Messenger;
@@ -18,10 +20,13 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.abdul.wordLearner2.R;
+import android.abdul.wordLearner2.service.WordLearnerService;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -41,10 +46,16 @@ public class ListActivity extends AppCompatActivity {
     static final int BETWEEN_LIST_DETAIL_RES = 99;
     static final int BETWEEN_LIST_DETAIL_REQ = 101;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
+
+        Intent wordService = new Intent(this, WordLearnerService.class);
+        //bindService(wordService,serviceConnection,Context.BIND_ADJUST_WITH_ACTIVITY);
+        ContextCompat.startForegroundService(this, wordService);
+
 
         //SRC: https://stackoverflow.com/questions/31490657/how-to-use-onsaveinstancestate-method-with-arraylist
         if (savedInstanceState!= null){
@@ -81,6 +92,9 @@ public class ListActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+
+
     }
 
     //Handle Received Data
@@ -129,27 +143,27 @@ public class ListActivity extends AppCompatActivity {
         Sample.add(new WordTemplate(R.drawable.snake,       "Snake",    "snāk",         "a long limbless reptile which has no eyelids, a short tail, and jaws that are capable of considerable extension. Some snakes have a venomous bite.","",0,13));
         return Sample;
     }
-    private Messenger msgQueue = null;//needed to send msg to service from activity
-    private ComponentName cn = new ComponentName("ListActivity","ListActivity.class");//Gotta figure out what this is
-    private IBinder binder = new Binder();//same for this
+//         private Messenger msgQueue = null;//needed to send msg to service from activity
+//        private ComponentName cn = new ComponentName("ListActivity","ListActivity.class");//Gotta figure out what this is
+//        private IBinder binder = new Binder();//same for this
 
-    ServiceConnection serviceConnection = new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName name , IBinder service) {
+        ServiceConnection serviceConnection = new ServiceConnection() {
+            @Override
+            public void onServiceConnected(ComponentName name , IBinder service) {
 
+            }
+
+            @Override
+            public void onServiceDisconnected(ComponentName name) {
+
+            }
+        };
+        public void getDataFromService(){
+//            serviceConnection.onServiceConnected(cn,binder);//NoClue It's all mock ups
+//            //code
+//            serviceConnection.onServiceDisconnected(cn);// maybe
         }
-
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-
-        }
-    };
-    public void getDataFromService(){
-        serviceConnection.onServiceConnected(cn,binder);//NoClue It's all mock ups
-        serviceConnection.onServiceDisconnected(cn);// maybe
-    }
-    public void add(View v){
-
+        public void add(View v){
     }
 
 

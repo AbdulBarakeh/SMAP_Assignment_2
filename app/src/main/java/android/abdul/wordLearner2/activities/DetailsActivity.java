@@ -100,25 +100,21 @@ WordTemplate word;
         super.onSaveInstanceState(outState);
         outState.putParcelable("word",word);
     }
-    private Messenger msgQueue = null;//needed to send msg to service from activity
-    private ComponentName cn = new ComponentName("DetailsActivity","DetailActivity.class");//Gotta figure out what this is
-    private IBinder binder = new Binder();//same for this
 
     ServiceConnection serviceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name , IBinder service) {
-
+            // get worddata from service
         }
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
-
+            // nothing
         }
     };
 
     public void getDataFromService(){
-        serviceConnection.onServiceConnected(cn,binder);//NoClue It's all mock ups
-        serviceConnection.onServiceDisconnected(cn);// maybe
+
     }
     public void delete(View v){
 
