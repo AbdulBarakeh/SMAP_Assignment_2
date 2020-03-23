@@ -12,47 +12,69 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.os.Message;
 import android.util.Log;
+import android.widget.Switch;
 
 import androidx.core.app.NotificationCompat;
 
+import java.util.ArrayList;
+
+import static android.abdul.wordLearner2.BaseApplication.SERVICE_CHANNEL;
 import static android.abdul.wordLearner2.BaseApplication.SUGGESTION_CHANNEL;
 
 public class WordLearnerService extends Service {
     private static final String TAG = "WordLearnerService";
-    Message msgQueue = new Message();
-    IBinder binder = new Binder();
+    //Message msgQueue = new Message();
+
+    public class WordleranerServiceBinder extends Binder{
+        public WordLearnerService getService(){
+            return WordLearnerService.this;
+        }
+    }
+
     public WordLearnerService() {
     }
     @Override
     public void onCreate() {
         Log.d(TAG , "onCreate: I Exist");
-        Intent obj = new Intent(this, ListActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this,0,obj,0);
-        Notification suggestion = new NotificationCompat.Builder(this,SUGGESTION_CHANNEL)
+        Intent suggestionIntent = new Intent(this, ListActivity.class);
+        Intent serviceIntent = new Intent(this, ListActivity.class);
+
+        PendingIntent pendingIntent_suggestion = PendingIntent.getActivity(this,0,suggestionIntent,0);
+        PendingIntent pendingIntent_service = PendingIntent.getActivity(this,0,serviceIntent,0);
+
+        Notification service = new NotificationCompat.Builder(this, SERVICE_CHANNEL)
+                .setChannelId(SERVICE_CHANNEL)
+                .setOngoing(true)
+                .setContentTitle("Wordlearner Service")
+                .setContentText("Service is running...")
+                .setContentIntent(pendingIntent_service)
+                .setSmallIcon(R.drawable.foxicon)
+                .build();
+
+        Notification suggestion = new NotificationCompat.Builder(this, SUGGESTION_CHANNEL)
                 .setChannelId(SUGGESTION_CHANNEL)
                 .setOngoing(true)
-                .setContentTitle("SHIT")
-                .setContentText("SHUT")
-                .setContentIntent(pendingIntent)
+                .setContentTitle("Suggested word")
+                .setContentText("*INSERT WORD*")
+                .setContentIntent(pendingIntent_suggestion)
                 .setSmallIcon(R.drawable.ic_and)
                 .build();
 
+        startForeground(666,service);
         startForeground(667,suggestion);
+
     }
 
     @Override
     public int onStartCommand(Intent intent , int flags , int startId) {
-       return super.onStartCommand(intent , flags , startId);
-
+        super.onStartCommand(intent ,flags , startId);
+        return START_NOT_STICKY;
     }
     @Override
     public IBinder onBind(Intent intent) {
-//        // TODO: Return the communication channel to the service.
-   Log.d(TAG , "onBind: I binded");
-//        binder = intent.getParcelableExtra("Binder");
-//        return binder;
-////        throw new UnsupportedOperationException("Not yet implemented");
- return null;
+        // TODO: Return the communication channel to the service.
+        Log.d(TAG , "onBind: I binded");
+        return new WordleranerServiceBinder();
     }
     @Override
     public void onDestroy() {
@@ -60,9 +82,15 @@ public class WordLearnerService extends Service {
         super.onDestroy();
     }
 
-    public void getAllWords(){
+    public ArrayList<WordTemplate> getAllWords(){
 
+        return new ArrayList<WordTemplate>();
     }
+
+    public WordTemplate getWord(String word){
+        return new WordTemplate();
+    }
+
     public WordTemplate addWord(String word){
         //search database first
         //If no result
@@ -70,14 +98,11 @@ public class WordLearnerService extends Service {
         //Insert in wordtemplate
         return new WordTemplate();
     }
-    public WordTemplate getWord(String word){
-        return new WordTemplate();
-    }
-
     public void deleteWord(String word){
 
     }
     public void updateWord(String word){
 
     }
+
 }

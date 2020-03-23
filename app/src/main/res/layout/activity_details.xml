@@ -92,16 +92,17 @@
         android:id="@+id/ACTIVITY_DETAIL_BUTTON_DELETE"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
         android:layout_marginRight="24dp"
         android:layout_marginBottom="32dp"
-        android:layout_marginStart="24dp"
         android:background="@drawable/buttondesign"
+        android:onClick="delete"
         android:text="@string/button_delete_detail"
         android:textColor="@color/btn_white_txt"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/ACTIVITY_DETAIL_BUTTON_EDIT"
-        app:layout_constraintStart_toEndOf="@id/ACTIVITY_DETAIL_CANCEL_BUTTON"/>
+        app:layout_constraintStart_toEndOf="@id/ACTIVITY_DETAIL_CANCEL_BUTTON" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"

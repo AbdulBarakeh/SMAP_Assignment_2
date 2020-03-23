@@ -34,6 +34,7 @@ static final int BETWEEN_LIST_DETAIL_RES = 99;
 static final int BETWEEN_DETAIL_EDIT_RES = 98;
 static final int BETWEEN_DETAIL_EDIT_REQ = 102;
 WordTemplate word;
+WordLearnerService wordService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,7 +105,8 @@ WordTemplate word;
     ServiceConnection serviceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name , IBinder service) {
-            // get worddata from service
+            wordService = ((WordLearnerService.WordleranerServiceBinder) service ).getService();
+            word = wordService.getWord(Name.getText().toString());
         }
 
         @Override
@@ -114,9 +116,10 @@ WordTemplate word;
     };
 
     public void getDataFromService(){
+        //Might be useless now taht we actually get our data from service onBind with getWord()
 
     }
     public void delete(View v){
-
-    }
+        wordService.deleteWord(Name.getText().toString());
+}
 }

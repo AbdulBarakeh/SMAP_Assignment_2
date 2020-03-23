@@ -1,6 +1,7 @@
 package android.abdul.wordLearner2.activities;
 
 import android.abdul.wordLearner2.datamodels.WordTemplate;
+import android.abdul.wordLearner2.service.WordLearnerService;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
@@ -30,6 +31,7 @@ private SeekBar RatingBar;
 
 static final int BETWEEN_DETAIL_EDIT_RES = 98;
 WordTemplate word;
+WordLearnerService wordService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,7 +111,8 @@ WordTemplate word;
     ServiceConnection serviceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name , IBinder service) {
-
+            wordService = ( (WordLearnerService.WordleranerServiceBinder) service ).getService();
+            word = wordService.getWord(Name.getText().toString());
         }
 
         @Override
@@ -119,10 +122,9 @@ WordTemplate word;
     };
 
     public void getDataFromService(){
-        serviceConnection.onServiceConnected(cn,binder);//NoClue It's all mock ups
-        serviceConnection.onServiceDisconnected(cn);// maybe
+        //Might be useless now taht we actually get our data from service onBind with getWord()
     }
     public void update(View v){
-
+        wordService.updateWord(Name.getText().toString());
     }
 }

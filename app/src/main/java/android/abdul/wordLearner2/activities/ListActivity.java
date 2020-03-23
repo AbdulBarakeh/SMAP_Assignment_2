@@ -46,6 +46,7 @@ public class ListActivity extends AppCompatActivity {
     static final int BETWEEN_LIST_DETAIL_RES = 99;
     static final int BETWEEN_LIST_DETAIL_REQ = 101;
 
+    WordLearnerService wordService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,8 +54,8 @@ public class ListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list);
 
         Intent wordService = new Intent(this, WordLearnerService.class);
-        //bindService(wordService,serviceConnection,Context.BIND_ADJUST_WITH_ACTIVITY);
         ContextCompat.startForegroundService(this, wordService);
+        bindService(wordService,serviceConnection,Context.BIND_AUTO_CREATE);
 
 
         //SRC: https://stackoverflow.com/questions/31490657/how-to-use-onsaveinstancestate-method-with-arraylist
@@ -145,12 +146,13 @@ public class ListActivity extends AppCompatActivity {
     }
 //         private Messenger msgQueue = null;//needed to send msg to service from activity
 //        private ComponentName cn = new ComponentName("ListActivity","ListActivity.class");//Gotta figure out what this is
-//        private IBinder binder = new Binder();//same for this
+//       private IBinder binder = new Binder();//same for this
 
         ServiceConnection serviceConnection = new ServiceConnection() {
             @Override
             public void onServiceConnected(ComponentName name , IBinder service) {
-
+                wordService = ( (WordLearnerService.WordleranerServiceBinder) service ).getService();
+                WordList = wordService.getAllWords();
             }
 
             @Override
@@ -159,11 +161,11 @@ public class ListActivity extends AppCompatActivity {
             }
         };
         public void getDataFromService(){
-//            serviceConnection.onServiceConnected(cn,binder);//NoClue It's all mock ups
-//            //code
-//            serviceConnection.onServiceDisconnected(cn);// maybe
+            //Might be useless now taht we actually get our data from service onBind with getWord()
         }
         public void add(View v){
+            String word = SearchInput.getText().toString();
+            wordService.addWord(word);
     }
 
 
