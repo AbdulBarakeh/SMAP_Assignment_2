@@ -89,26 +89,6 @@ public class WordLearnerService extends Service {
         LBM = LocalBroadcastManager.getInstance(this);
 
         WordRepository DB = new WordRepository(getApplicationContext());
-        final String URL = "https://owlbot.info/api/v4/dictionary/owl";
-        final String Token = "f161a4938824d1cf79c89edce6cb6815f0e51cb8";
-        RequestQueue queue = Volley.newRequestQueue(this);
-        // Request a string response from the provided URL.
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        // Display the first 500 characters of the response string.
-//                        textView.setText("Response is: "+ response.substring(0,500));
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-//                textView.setText("That didn't work!");
-            }
-        });
-
-// Add the request to the RequestQueue.
-        queue.add(stringRequest);
 
     }
 

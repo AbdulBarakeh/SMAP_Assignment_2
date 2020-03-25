@@ -7,14 +7,14 @@
     tools:context="android.abdul.wordLearner2.activities.EditActivity">
     <!--    SRC: buttondesign.xml ( https://stackoverflow.com/questions/6054562/how-to-make-the-corners-of-a-button-round ) -->
     <Button
-        android:id="@+id/ACTIVITY_EDIT_OK_BUT"
+        android:id="@+id/ACTIVITY_EDIT_UPDATE_BUT"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="40dp"
         android:layout_marginRight="40dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/buttondesign"
-        android:text="@string/OK_BTN_EDIT"
+        android:text="@string/button_update_edit"
         android:textColor="@color/btn_white_txt"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -34,7 +34,7 @@
         android:text="@string/cancel_btn_edit"
         android:textColor="@color/btn_white_txt"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/ACTIVITY_EDIT_OK_BUT"
+        app:layout_constraintEnd_toStartOf="@+id/ACTIVITY_EDIT_UPDATE_BUT"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 

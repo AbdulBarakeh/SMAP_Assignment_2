@@ -14,17 +14,17 @@ public class WordEntity implements Parcelable {
     public int _uid;
 
     @ColumnInfo(name = "image")
-    public int _image;
+    int _image;
     @ColumnInfo(name = "name")
-    public String _name;
+    String _name;
     @ColumnInfo(name = "pronounciation")
-    public String _pronounciation;
+    String _pronounciation;
     @ColumnInfo(name = "description")
-    public String _description;
+    String _description;
     @ColumnInfo(name = "rating")
-    public double _rating;
+    double _rating;
     @ColumnInfo(name = "notes")
-    public String _notes;
+    String _notes;
 
     public WordEntity(int _Image, String _Name, String _Pronounciation, String _Description, String _Notes, double _Rating){
         _image              = _Image;

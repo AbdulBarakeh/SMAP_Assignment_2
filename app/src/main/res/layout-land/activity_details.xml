@@ -120,34 +120,44 @@
     </ScrollView>
 
     <Button
+        android:id="@+id/ACTIVITY_DETAIL_BUTTON_DELETE"
+        android:layout_width="88dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/buttondesign"
+        android:onClick="delete"
+        android:text="@string/button_delete_detail"
+        android:textColor="@color/btn_white_txt"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/ACTIVITY_DETAIL_BUTTON_EDIT"
+        app:layout_constraintStart_toEndOf="@+id/ACTIVITY_DETAIL_CANCEL_BUTTON" />
+
+    <Button
         android:id="@+id/ACTIVITY_DETAIL_CANCEL_BUTTON"
         android:layout_width="88dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/buttondesign"
         android:text="@string/cancel_btn_detail"
         android:textColor="@color/btn_white_txt"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/ACTIVITY_DETAIL_BUTTON_EDIT"
-        app:layout_constraintHorizontal_bias="0.267"
         app:layout_constraintStart_toStartOf="@+id/guideline4" />
 
     <Button
         android:id="@+id/ACTIVITY_DETAIL_BUTTON_EDIT"
         android:layout_width="88dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="40dp"
-        android:layout_marginRight="40dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/buttondesign"
         android:text="@string/button_edit_detail"
         android:textColor="@color/btn_white_txt"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline4"
         android:layout_width="wrap_content"

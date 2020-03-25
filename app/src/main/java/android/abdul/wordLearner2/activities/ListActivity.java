@@ -56,7 +56,7 @@ public class ListActivity extends AppCompatActivity {
         setupRecyclerview();
         Button exit = findViewById(R.id.Exit_button_List);
         SearchInput = findViewById(R.id.search_Input);
-        addButton = findViewById(R.id.add_button);
+        addButton = findViewById(R.id.add_button_list);
         //Send data to next activity
         AdapterListActivity.setOnItemClickListener( new AdapterForWordList.OnItemClickListener() {
             @Override
@@ -85,7 +85,11 @@ public class ListActivity extends AppCompatActivity {
 
 
     }
-
+    private void startMyService() {
+        wordServiceIntent = new Intent(this, WordLearnerService.class);
+        ContextCompat.startForegroundService(this, wordServiceIntent);
+        bindService(wordServiceIntent,serviceConnection,Context.BIND_AUTO_CREATE);
+    }
     private void registerBroadcast() {
         LBM = LocalBroadcastManager.getInstance(this);
         IntentFilter intentFilter = new IntentFilter();
@@ -111,11 +115,7 @@ public class ListActivity extends AppCompatActivity {
         AdapterListActivity.notifyDataSetChanged();
     }
 
-        private void startMyService() {
-            wordServiceIntent = new Intent(this, WordLearnerService.class);
-            ContextCompat.startForegroundService(this, wordServiceIntent);
-            bindService(wordServiceIntent,serviceConnection,Context.BIND_AUTO_CREATE);
-        }
+
 
 
 
