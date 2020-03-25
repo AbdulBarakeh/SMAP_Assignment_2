@@ -51,11 +51,11 @@ public class WordTemplate implements Parcelable {
     public String getName() {
         return Name;
     }
-    public String getPronoun() {
+    public String getPronounciation() {
         return Pronoun;
     }
     public double getRating(){ return Rating; }
-    public String getDescrip() {
+    public String getDescription() {
         return Descrip;
     }
     public String getNotes() {

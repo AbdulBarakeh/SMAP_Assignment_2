@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="android.abdul.wordLearner2">
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <application
         android:name=".BaseApplication"
         android:allowBackup="true"
@@ -22,6 +24,7 @@
             </intent-filter>
         </activity>
         <service android:name=".service.WordLearnerService"/>
+        <receiver android:name=".activities.ListActivity$BroadcastListReceiver"/>
     </application>
 
 </manifest>

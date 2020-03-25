@@ -1,19 +1,12 @@
 package android.abdul.wordLearner2.activities;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
+import android.abdul.wordLearner2.database.WordEntity;
 import android.abdul.wordLearner2.datamodels.WordTemplate;
 import android.abdul.wordLearner2.service.WordLearnerService;
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
-import android.os.Binder;
 import android.os.Bundle;
-import android.os.IBinder;
-import android.os.Messenger;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -35,7 +28,7 @@ private TextView Rating;
 static final int BETWEEN_LIST_DETAIL_RES = 99;
 static final int BETWEEN_DETAIL_EDIT_RES = 98;
 static final int BETWEEN_DETAIL_EDIT_REQ = 102;
-WordTemplate word;
+    WordEntity word;
 WordLearnerService wordService;
 String wordname;
 Intent intent;
@@ -74,8 +67,8 @@ Intent intent;
         //Set the data into the UI elements
         Picture.setImageResource(word.getImage());
         Name.setText(word.getName());
-        Pronoun.setText(word.getPronoun());
-        Descrip.setText(word.getDescrip());
+        Pronoun.setText(word.getPronounciation());
+        Descrip.setText(word.getDescription());
         Notes.setText(word.getNotes());
         Rating.setText(String.valueOf(word.getRating()));
     }

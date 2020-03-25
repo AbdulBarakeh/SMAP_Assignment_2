@@ -1,5 +1,6 @@
 package android.abdul.wordLearner2.activities;
 
+import android.abdul.wordLearner2.database.WordEntity;
 import android.abdul.wordLearner2.datamodels.WordTemplate;
 import android.abdul.wordLearner2.service.WordLearnerService;
 import android.content.ComponentName;
@@ -28,7 +29,7 @@ private TextView Rating;
 private SeekBar RatingBar;
 
 static final int BETWEEN_DETAIL_EDIT_RES = 98;
-WordTemplate word;
+    WordEntity word;
 WordLearnerService wordService;
 
     @Override

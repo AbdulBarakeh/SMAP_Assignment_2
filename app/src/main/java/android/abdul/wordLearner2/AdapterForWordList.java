@@ -1,5 +1,6 @@
 package android.abdul.wordLearner2;
 
+import android.abdul.wordLearner2.database.WordEntity;
 import android.abdul.wordLearner2.datamodels.WordTemplate;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,13 +10,11 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.abdul.wordLearner2.R;
-
 import java.util.ArrayList;
 // Over all I got no effing clue about what this file does. I just know that it is needed to make the recyclerview work
 // SRC: https://codinginflow.com/tutorials/android/simple-recyclerview-java/part-1-layouts-model-class part 1-5
 public class AdapterForWordList extends RecyclerView.Adapter<AdapterForWordList.ViewHolderForWordList> {
-    private ArrayList<WordTemplate> ListOfWords;
+    private ArrayList<WordEntity> ListOfWords;
 
     private OnItemClickListener CardClickListener;
 
@@ -52,8 +51,8 @@ public class AdapterForWordList extends RecyclerView.Adapter<AdapterForWordList.
             } );
         }
     }
-    public void updateList(ArrayList<WordTemplate> UpdatedWordList){ListOfWords = UpdatedWordList;}
-    public AdapterForWordList(ArrayList<WordTemplate> WordList){
+    public void updateList(ArrayList<WordEntity> UpdatedWordList){ListOfWords = UpdatedWordList;}
+    public AdapterForWordList(ArrayList<WordEntity> WordList){
         ListOfWords = WordList;
     }
     @Override
@@ -64,11 +63,11 @@ public class AdapterForWordList extends RecyclerView.Adapter<AdapterForWordList.
     }
     @Override
     public void onBindViewHolder(ViewHolderForWordList holder, int position) {
-        WordTemplate currentItem = ListOfWords.get(position);
+        WordEntity currentItem = ListOfWords.get(position);
 
         holder.Picture.setImageResource(currentItem.getImage());
         holder.Name.setText(currentItem.getName());
-        holder.Pronoun.setText(currentItem.getPronoun());
+        holder.Pronoun.setText(currentItem.getPronounciation());
         holder.Rating.setText(String.valueOf(currentItem.getRating()));
     }
     @Override

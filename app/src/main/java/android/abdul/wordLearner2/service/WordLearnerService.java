@@ -2,6 +2,9 @@ package android.abdul.wordLearner2.service;
 
 import android.abdul.wordLearner2.R;
 import android.abdul.wordLearner2.activities.ListActivity;
+import android.abdul.wordLearner2.database.WordDatabase;
+import android.abdul.wordLearner2.database.WordEntity;
+import android.abdul.wordLearner2.database.WordRepository;
 import android.abdul.wordLearner2.datamodels.WordTemplate;
 import android.app.Notification;
 import android.app.PendingIntent;
@@ -15,6 +18,8 @@ import android.util.Log;
 import android.widget.Switch;
 
 import androidx.core.app.NotificationCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.room.Room;
 
 import java.util.ArrayList;
 
@@ -24,8 +29,9 @@ import static android.abdul.wordLearner2.BaseApplication.SUGGESTION_CHANNEL;
 
 public class WordLearnerService extends Service {
     private static final String TAG = "WordLearnerService";
-    ArrayList<WordTemplate> wordList = new ArrayList<>();
-    WordTemplate word = new WordTemplate();
+    ArrayList<WordEntity> wordList = new ArrayList<>();
+    WordEntity word = new WordEntity();
+    LocalBroadcastManager LBM;
     //Binder
     IBinder binder = new WordleranerServiceBinder();
     public class WordleranerServiceBinder extends Binder{
@@ -66,6 +72,8 @@ public class WordLearnerService extends Service {
         startForeground(666,service);
         startForeground(667,suggestion);
         CreateSamples();
+        LBM = LocalBroadcastManager.getInstance(this);
+        WordRepository DB = new WordRepository(getApplicationContext());
     }
 
     @Override
@@ -85,11 +93,11 @@ public class WordLearnerService extends Service {
         super.onDestroy();
     }
 
-    public ArrayList<WordTemplate> getAllWords(){
+    public ArrayList<WordEntity> getAllWords(){
         return wordList;
     }
 
-    public WordTemplate getWord(String word){
+    public WordEntity getWord(String word){
         return findWordInList(word);
     }
 
@@ -98,7 +106,7 @@ public class WordLearnerService extends Service {
         //If no result
         //search API
         //Insert in wordtemplate
-        WordTemplate newWord = new WordTemplate();
+        WordEntity newWord = new WordEntity();
         newWord.setName(word);
         newWord.setImage(R.drawable.imagenotfound);
         wordList.add(newWord);
@@ -106,42 +114,42 @@ public class WordLearnerService extends Service {
     public void deleteWord(String word){
         deleteWordFromList(word);
     }
-    public void updateWord(WordTemplate word){
+    public void updateWord(WordEntity word){
         update(word);
     }
 
     //Create list of words
-    private ArrayList<WordTemplate> CreateSamples(){
-        ArrayList<WordTemplate> Sample = new ArrayList<>();
-        Sample.add(new WordTemplate(R.drawable.buffalo,     "Buffalo",  "ˈbəf(ə)ˌlō",   "a heavily built wild ox with backward-curving horns, found mainly in the Old World tropics.","",0,0));
-        Sample.add(new WordTemplate(R.drawable.camel,       "Camel",    "ˈkaməl",       "a large, long-necked ungulate mammal of arid country, with long slender legs, broad cushioned feet, and either one or two humps on the back. Camels can survive for long periods without food or drink, chiefly by using up the fat reserves in their humps.","",0,1));
-        Sample.add(new WordTemplate(R.drawable.cheetah,     "Cheetah",  "ˈCHēdə",       "a large slender spotted cat found in Africa and parts of Asia. It is the fastest animal on land.","",0,2));
-        Sample.add(new WordTemplate(R.drawable.crocodile,   "Crocodile","ˈkräkəˌdīl",   "a large predatory semiaquatic reptile with long jaws, long tail, short legs, and a horny textured skin.","",0,3));
-        Sample.add(new WordTemplate(R.drawable.elephant,    "Elephant", "ˈeləfənt",     "a very large plant-eating mammal with a prehensile trunk, long curved ivory tusks, and large ears, native to Africa and southern Asia. It is the largest living land animal.","",0,4));
-        Sample.add(new WordTemplate(R.drawable.giraffe,     "Giraffe",  "jəˈraf",       "a large African mammal with a very long neck and forelegs, having a coat patterned with brown patches separated by lighter lines. It is the tallest living animal.","",0,5));
-        Sample.add(new WordTemplate(R.drawable.gnu,         "Gnu",      "n(y)o͞o",       "a large dark antelope with a long head, a beard and mane, and a sloping back.","",0,6));
-        Sample.add(new WordTemplate(R.drawable.kudo,        "Kudo",     "ˈko͞odo͞o",      "an African antelope that has a greyish or brownish coat with white vertical stripes, and a short bushy tail. The male has long spirally curved horns.","",0,7));
-        Sample.add(new WordTemplate(R.drawable.leopard,     "Leopard",  "ˈlepərd",      "a large solitary cat that has a fawn or brown coat with black spots, native to the forests of Africa and southern Asia.","",0,8));
-        Sample.add(new WordTemplate(R.drawable.lion,        "Lion",     "ˈlīən",        "a large tawny-coloured cat that lives in prides, found in Africa and NW India. The male has a flowing shaggy mane and takes little part in hunting, which is done cooperatively by the females.","",0,9));
-        Sample.add(new WordTemplate(R.drawable.oryx,        "Oryx",     "null",         "a large antelope living in arid regions of Africa and Arabia, having dark markings on the face and long horns.","",0,10));
-        Sample.add(new WordTemplate(R.drawable.ostrich,     "Ostrich",  "ˈästriCH",     "a flightless swift-running African bird with a long neck, long legs, and two toes on each foot. It is the largest living bird, with males reaching a height of up to 2.75 m.","",0,11));
-        Sample.add(new WordTemplate(R.drawable.shark,       "Shark",    "SHärk",        "a long-bodied chiefly marine fish with a cartilaginous skeleton, a prominent dorsal fin, and tooth-like scales. Most sharks are predatory, though the largest kinds feed on plankton, and some can grow to a large size.","",0,12));
-        Sample.add(new WordTemplate(R.drawable.snake,       "Snake",    "snāk",         "a long limbless reptile which has no eyelids, a short tail, and jaws that are capable of considerable extension. Some snakes have a venomous bite.","",0,13));
+    private ArrayList<WordEntity> CreateSamples(){
+        ArrayList<WordEntity> Sample = new ArrayList<>();
+        Sample.add(new WordEntity(R.drawable.buffalo,     "Buffalo",  "ˈbəf(ə)ˌlō",   "a heavily built wild ox with backward-curving horns, found mainly in the Old World tropics.","",0));
+        Sample.add(new WordEntity(R.drawable.camel,       "Camel",    "ˈkaməl",       "a large, long-necked ungulate mammal of arid country, with long slender legs, broad cushioned feet, and either one or two humps on the back. Camels can survive for long periods without food or drink, chiefly by using up the fat reserves in their humps.","",0));
+        Sample.add(new WordEntity(R.drawable.cheetah,     "Cheetah",  "ˈCHēdə",       "a large slender spotted cat found in Africa and parts of Asia. It is the fastest animal on land.","",0));
+        Sample.add(new WordEntity(R.drawable.crocodile,   "Crocodile","ˈkräkəˌdīl",   "a large predatory semiaquatic reptile with long jaws, long tail, short legs, and a horny textured skin.","",0));
+        Sample.add(new WordEntity(R.drawable.elephant,    "Elephant", "ˈeləfənt",     "a very large plant-eating mammal with a prehensile trunk, long curved ivory tusks, and large ears, native to Africa and southern Asia. It is the largest living land animal.","",0));
+        Sample.add(new WordEntity(R.drawable.giraffe,     "Giraffe",  "jəˈraf",       "a large African mammal with a very long neck and forelegs, having a coat patterned with brown patches separated by lighter lines. It is the tallest living animal.","",0));
+        Sample.add(new WordEntity(R.drawable.gnu,         "Gnu",      "n(y)o͞o",       "a large dark antelope with a long head, a beard and mane, and a sloping back.","",0));
+        Sample.add(new WordEntity(R.drawable.kudo,        "Kudo",     "ˈko͞odo͞o",      "an African antelope that has a greyish or brownish coat with white vertical stripes, and a short bushy tail. The male has long spirally curved horns.","",0));
+        Sample.add(new WordEntity(R.drawable.leopard,     "Leopard",  "ˈlepərd",      "a large solitary cat that has a fawn or brown coat with black spots, native to the forests of Africa and southern Asia.","",0));
+        Sample.add(new WordEntity(R.drawable.lion,        "Lion",     "ˈlīən",        "a large tawny-coloured cat that lives in prides, found in Africa and NW India. The male has a flowing shaggy mane and takes little part in hunting, which is done cooperatively by the females.","",0));
+        Sample.add(new WordEntity(R.drawable.oryx,        "Oryx",     "null",         "a large antelope living in arid regions of Africa and Arabia, having dark markings on the face and long horns.","",0));
+        Sample.add(new WordEntity(R.drawable.ostrich,     "Ostrich",  "ˈästriCH",     "a flightless swift-running African bird with a long neck, long legs, and two toes on each foot. It is the largest living bird, with males reaching a height of up to 2.75 m.","",0));
+        Sample.add(new WordEntity(R.drawable.shark,       "Shark",    "SHärk",        "a long-bodied chiefly marine fish with a cartilaginous skeleton, a prominent dorsal fin, and tooth-like scales. Most sharks are predatory, though the largest kinds feed on plankton, and some can grow to a large size.","",0));
+        Sample.add(new WordEntity(R.drawable.snake,       "Snake",    "snāk",         "a long limbless reptile which has no eyelids, a short tail, and jaws that are capable of considerable extension. Some snakes have a venomous bite.","",0));
         wordList = Sample;
         return wordList;
     }
-    private WordTemplate findWordInList(String word){
-        for (WordTemplate specificWord : wordList) {
+    private WordEntity findWordInList(String word){
+        for (WordEntity specificWord : wordList) {
             if (specificWord.getName().equals(word)){
                 Log.d(TAG, "findWordInList: Word found");
                 return specificWord;
             }
         }
         Log.d(TAG, "findWordInList: Word not found");
-        return new WordTemplate();
+        return new WordEntity();
     }
     private void deleteWordFromList(String word){
-        for (WordTemplate currentListWord : wordList ) {
+        for (WordEntity currentListWord : wordList ) {
             if (currentListWord.getName().equals(word)){
                 Log.d(TAG, "deleteWordFromList: Word removed");
                 wordList.remove(currentListWord);
@@ -149,10 +157,10 @@ public class WordLearnerService extends Service {
         }
     }
 
-    private void update(WordTemplate word){
+    private void update(WordEntity word){
         Intent broadcaster = new Intent().setAction(ListActivity.BROADCAST);
         broadcaster.putExtra("word", word);
-        sendBroadcast(broadcaster);
+        LBM.sendBroadcast(broadcaster);
     }
 
 

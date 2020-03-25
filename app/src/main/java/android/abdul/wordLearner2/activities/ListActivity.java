@@ -2,6 +2,7 @@ package android.abdul.wordLearner2.activities;
 
 import android.abdul.wordLearner2.AdapterForWordList;
 import android.abdul.wordLearner2.R;
+import android.abdul.wordLearner2.database.WordEntity;
 import android.abdul.wordLearner2.datamodels.WordTemplate;
 import android.abdul.wordLearner2.service.WordLearnerService;
 import android.content.BroadcastReceiver;
@@ -29,16 +30,17 @@ import java.util.ArrayList;
 
 public class ListActivity extends AppCompatActivity {
 
-    public static final String BROADCAST = "android.abdul.wordLearner2.service.WordLearnerService";
+    public static final String BROADCAST = "android.abdul.wordLearner2.activities.ListActivity";
     private AdapterForWordList AdapterListActivity;
     RecyclerView recyclerViewListActivity;
     private EditText SearchInput;
     private Button addButton;
 
-    ArrayList<WordTemplate> WordList = new ArrayList<>();
+    ArrayList<WordEntity> WordList = new ArrayList<>();
     private WordLearnerService wordService;
     Intent wordServiceIntent;
     BroadcastListReceiver listReceiver;
+    LocalBroadcastManager LBM;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,18 +76,21 @@ public class ListActivity extends AppCompatActivity {
         startMyService();
         registerBroadcast();
 
+
     }
 
     private void registerBroadcast() {
+        LBM = LocalBroadcastManager.getInstance(this);
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(BROADCAST);
-        LocalBroadcastManager.getInstance(this).registerReceiver(listReceiver, intentFilter);
+        listReceiver = new BroadcastListReceiver();
+        LBM.registerReceiver(listReceiver, intentFilter);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unregisterReceiver(listReceiver);
+        LBM.unregisterReceiver(listReceiver);
     }
 
     private void setupRecyclerview() {
@@ -118,12 +123,12 @@ public class ListActivity extends AppCompatActivity {
             @Override
             public void onServiceDisconnected(ComponentName name) {}
         };
-    public class BroadcastListReceiver extends BroadcastReceiver{
+    public class  BroadcastListReceiver extends BroadcastReceiver{
 
         @Override
         public void onReceive(Context context , Intent intent) {
-            WordTemplate sentWord = intent.getParcelableExtra("word");
-            for (WordTemplate currentword : WordList) {
+            WordEntity sentWord = intent.getParcelableExtra("word");
+            for (WordEntity currentword : WordList) {
                 if (currentword.getName().equals(sentWord.getName())){
                     currentword.setRating(sentWord.getRating());
                     currentword.setNotes(sentWord.getNotes());
