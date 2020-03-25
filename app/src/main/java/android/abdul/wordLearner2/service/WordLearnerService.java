@@ -21,10 +21,24 @@ import androidx.core.app.NotificationCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.room.Room;
 
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.JsonRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 import static android.abdul.wordLearner2.BaseApplication.SERVICE_CHANNEL;
 import static android.abdul.wordLearner2.BaseApplication.SUGGESTION_CHANNEL;
+import static com.android.volley.Request.*;
+import static com.android.volley.Request.Method.GET;
 
 
 public class WordLearnerService extends Service {
@@ -73,7 +87,29 @@ public class WordLearnerService extends Service {
         startForeground(667,suggestion);
         CreateSamples();
         LBM = LocalBroadcastManager.getInstance(this);
+
         WordRepository DB = new WordRepository(getApplicationContext());
+        final String URL = "https://owlbot.info/api/v4/dictionary/owl";
+        final String Token = "f161a4938824d1cf79c89edce6cb6815f0e51cb8";
+        RequestQueue queue = Volley.newRequestQueue(this);
+        // Request a string response from the provided URL.
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Display the first 500 characters of the response string.
+//                        textView.setText("Response is: "+ response.substring(0,500));
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+//                textView.setText("That didn't work!");
+            }
+        });
+
+// Add the request to the RequestQueue.
+        queue.add(stringRequest);
+
     }
 
     @Override

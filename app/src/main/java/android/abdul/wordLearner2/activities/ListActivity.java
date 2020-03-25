@@ -26,6 +26,13 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
 import java.util.ArrayList;
 
 public class ListActivity extends AppCompatActivity {
@@ -104,11 +111,12 @@ public class ListActivity extends AppCompatActivity {
         AdapterListActivity.notifyDataSetChanged();
     }
 
-    private void startMyService() {
-        wordServiceIntent = new Intent(this, WordLearnerService.class);
-        ContextCompat.startForegroundService(this, wordServiceIntent);
-        bindService(wordServiceIntent,serviceConnection,Context.BIND_AUTO_CREATE);
-    }
+        private void startMyService() {
+            wordServiceIntent = new Intent(this, WordLearnerService.class);
+            ContextCompat.startForegroundService(this, wordServiceIntent);
+            bindService(wordServiceIntent,serviceConnection,Context.BIND_AUTO_CREATE);
+        }
+
 
 
         ServiceConnection serviceConnection = new ServiceConnection() {
@@ -123,19 +131,21 @@ public class ListActivity extends AppCompatActivity {
             @Override
             public void onServiceDisconnected(ComponentName name) {}
         };
-    public class  BroadcastListReceiver extends BroadcastReceiver{
+        public class  BroadcastListReceiver extends BroadcastReceiver{
 
-        @Override
-        public void onReceive(Context context , Intent intent) {
-            WordEntity sentWord = intent.getParcelableExtra("word");
-            for (WordEntity currentword : WordList) {
-                if (currentword.getName().equals(sentWord.getName())){
-                    currentword.setRating(sentWord.getRating());
-                    currentword.setNotes(sentWord.getNotes());
-                    AdapterListActivity.notifyDataSetChanged();
+            @Override
+            public void onReceive(Context context , Intent intent) {
+                WordEntity sentWord = intent.getParcelableExtra("word");
+                for (WordEntity currentword : WordList) {
+                    if (currentword.getName().equals(sentWord.getName())){
+                        currentword.setRating(sentWord.getRating());
+                        currentword.setNotes(sentWord.getNotes());
+                        AdapterListActivity.notifyDataSetChanged();
+                    }
                 }
             }
         }
-    }
+
+
 }
 
