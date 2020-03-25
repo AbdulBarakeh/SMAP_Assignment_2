@@ -52,7 +52,7 @@ public class AdapterForWordList extends RecyclerView.Adapter<AdapterForWordList.
             } );
         }
     }
-
+    public void updateList(ArrayList<WordTemplate> UpdatedWordList){ListOfWords = UpdatedWordList;}
     public AdapterForWordList(ArrayList<WordTemplate> WordList){
         ListOfWords = WordList;
     }
@@ -62,7 +62,6 @@ public class AdapterForWordList extends RecyclerView.Adapter<AdapterForWordList.
         ViewHolderForWordList VH = new ViewHolderForWordList(V, CardClickListener );
         return VH;
     }
-
     @Override
     public void onBindViewHolder(ViewHolderForWordList holder, int position) {
         WordTemplate currentItem = ListOfWords.get(position);

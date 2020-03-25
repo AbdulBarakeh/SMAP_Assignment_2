@@ -2,10 +2,12 @@ package android.abdul.wordLearner2.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.abdul.wordLearner2.datamodels.WordTemplate;
 import android.abdul.wordLearner2.service.WordLearnerService;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Binder;
@@ -35,35 +37,19 @@ static final int BETWEEN_DETAIL_EDIT_RES = 98;
 static final int BETWEEN_DETAIL_EDIT_REQ = 102;
 WordTemplate word;
 WordLearnerService wordService;
+String wordname;
+Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
-        if (savedInstanceState != null){
-            word = savedInstanceState.getParcelable("word");
-        }
-        else {
-            Intent receivedFromList = getIntent();
-            word = receivedFromList.getParcelableExtra("word");
-        }
-        //Bind UI elements with local variables
-        Picture = findViewById( R.id.PictureOfWord_Detail);
-        Name = findViewById( R.id.NameOfWord_Detail);
-        Pronoun = findViewById( R.id.PronounOfWord_Detail);
-        Descrip = findViewById( R.id.DescriptionOfWord_Detail);
-        Notes = findViewById( R.id.NotesOfWord_Detail);
-        Rating = findViewById( R.id.RatingOfWord_Detail);
-        cancel = findViewById(R.id.ACTIVITY_DETAIL_CANCEL_BUTTON);
-        edit = findViewById(R.id.ACTIVITY_DETAIL_BUTTON_EDIT);
 
-        //Set the data into the UI elements
-        Picture.setImageResource(word.getImage());
-        Name.setText(word.getName());
-        Pronoun.setText(word.getPronoun());
-        Descrip.setText(word.getDescrip());
-        Notes.setText(word.getNotes());
-        Rating.setText(String.valueOf(word.getRating()));
+        Intent receivedFromList = getIntent();
+        word = receivedFromList.getParcelableExtra("word");
+        initializeUi();
+        setViewdata();
+
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,49 +63,52 @@ WordLearnerService wordService;
             public void onClick(View v) {
                 Intent GoToEdit = new Intent(DetailsActivity.this, EditActivity.class);
                 GoToEdit.putExtra("word",word);
-                //Receive Data With finished activity
-                startActivityForResult(GoToEdit,BETWEEN_DETAIL_EDIT_REQ);
+                startActivity(GoToEdit);
+                finish();
+
             }
         });
     }
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @NonNull Intent receivedData)
-    {
-        super.onActivityResult(requestCode , resultCode , receivedData);
-        if (requestCode == BETWEEN_DETAIL_EDIT_REQ){
-            if (resultCode == BETWEEN_DETAIL_EDIT_RES)
-            {
-                Intent returner = receivedData;
 
-                setResult(BETWEEN_LIST_DETAIL_RES,returner);
-                finish();
-            }
-        }
-    }
-    @Override
-    protected void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putParcelable("word",word);
+    private void setViewdata() {
+        //Set the data into the UI elements
+        Picture.setImageResource(word.getImage());
+        Name.setText(word.getName());
+        Pronoun.setText(word.getPronoun());
+        Descrip.setText(word.getDescrip());
+        Notes.setText(word.getNotes());
+        Rating.setText(String.valueOf(word.getRating()));
     }
 
-    ServiceConnection serviceConnection = new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName name , IBinder service) {
-            wordService = ((WordLearnerService.WordleranerServiceBinder) service ).getService();
-            word = wordService.getWord(Name.getText().toString());
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-            // nothing
-        }
-    };
-
-    public void getDataFromService(){
-        //Might be useless now taht we actually get our data from service onBind with getWord()
-
+    private void initializeUi() {
+        //Bind UI elements with local variables
+        Picture = findViewById( R.id.PictureOfWord_Detail);
+        Name = findViewById( R.id.NameOfWord_Detail);
+        Pronoun = findViewById( R.id.PronounOfWord_Detail);
+        Descrip = findViewById( R.id.DescriptionOfWord_Detail);
+        Notes = findViewById( R.id.NotesOfWord_Detail);
+        Rating = findViewById( R.id.RatingOfWord_Detail);
+        cancel = findViewById(R.id.ACTIVITY_DETAIL_CANCEL_BUTTON);
+        edit = findViewById(R.id.ACTIVITY_DETAIL_BUTTON_EDIT);
     }
+//    private void startMyService() {
+//        intent = new Intent(this, WordLearnerService.class);
+//        bindService(intent,serviceConnection,BIND_AUTO_CREATE);
+//    }
+//    ServiceConnection serviceConnection = new ServiceConnection() {
+//        @Override
+//        public void onServiceConnected(ComponentName name , IBinder service) {
+//            wordService = ((WordLearnerService.WordleranerServiceBinder) service ).getService();
+//            word = wordService.getWord(wordname);
+//        }
+//
+//        @Override
+//        public void onServiceDisconnected(ComponentName name) {
+//            // nothing
+//        }
+//    };
+
     public void delete(View v){
         wordService.deleteWord(Name.getText().toString());
-}
+    }
 }

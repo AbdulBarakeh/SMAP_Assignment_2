@@ -1,5 +1,7 @@
 package android.abdul.wordLearner2.datamodels;
 
+import android.abdul.wordLearner2.activities.ListActivity;
+import android.content.Intent;
 import android.os.Parcel;
 import android.os.Parcelable;
 //SRC: https://stackoverflow.com/questions/31490657/how-to-use-onsaveinstancestate-method-with-arraylist
@@ -13,7 +15,6 @@ public class WordTemplate implements Parcelable {
     private String Descrip;
     private String Notes;
     private int Position;
-
     //I'm lazy so I made a constructor that doesn't take any arguments. It's nice to have while coding.
     public WordTemplate(){
         Image = new Integer(0);
