@@ -122,6 +122,7 @@ public class WordLearnerService extends Service {
         //If no result
         //search API
         //Insert in wordtemplate
+
         WordEntity newWord = new WordEntity();
         newWord.setName(word);
         newWord.setImage(R.drawable.imagenotfound);

@@ -6,6 +6,8 @@ import android.os.Parcelable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import com.google.gson.annotations.SerializedName;
+import com.google.gson.annotations.Expose;
 
 @Entity
 public class WordEntity implements Parcelable {
@@ -15,14 +17,19 @@ public class WordEntity implements Parcelable {
 
     @ColumnInfo(name = "image")
     int _image;
+
     @ColumnInfo(name = "name")
     String _name;
+
     @ColumnInfo(name = "pronounciation")
     String _pronounciation;
+
     @ColumnInfo(name = "description")
     String _description;
+
     @ColumnInfo(name = "rating")
     double _rating;
+
     @ColumnInfo(name = "notes")
     String _notes;
 
