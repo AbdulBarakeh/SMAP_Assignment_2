@@ -3,7 +3,6 @@ package android.abdul.wordLearner2.activities;
 import android.abdul.wordLearner2.AdapterForWordList;
 import android.abdul.wordLearner2.R;
 import android.abdul.wordLearner2.database.WordEntity;
-import android.abdul.wordLearner2.datamodels.WordTemplate;
 import android.abdul.wordLearner2.service.WordLearnerService;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -11,32 +10,30 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
-import android.net.ConnectivityManager;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.util.LruCache;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 
 import java.util.ArrayList;
 
 public class ListActivity extends AppCompatActivity {
 
+    private RequestQueue mRequestQueue;
+    private ImageLoader mImageLoader;
     public static final String BROADCAST = "android.abdul.wordLearner2.activities.ListActivity";
     private AdapterForWordList AdapterListActivity;
     RecyclerView recyclerViewListActivity;
@@ -53,6 +50,7 @@ public class ListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
+
         setupRecyclerview();
         Button exit = findViewById(R.id.Exit_button_List);
         SearchInput = findViewById(R.id.search_Input);
@@ -62,16 +60,18 @@ public class ListActivity extends AppCompatActivity {
             @Override
             public void onItemClick(int position) {
             Intent GoToDetails = new Intent(ListActivity.this, DetailsActivity.class);
-            GoToDetails.putExtra("word",WordList.get(position));
+            GoToDetails.putExtra("word",WordList.get(position).getName());
             startActivity(GoToDetails);
             }
         } );
+
         exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
+
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,9 +82,11 @@ public class ListActivity extends AppCompatActivity {
         });
         startMyService();
         registerBroadcast();
-
-
     }
+
+
+
+
     private void startMyService() {
         wordServiceIntent = new Intent(this, WordLearnerService.class);
         ContextCompat.startForegroundService(this, wordServiceIntent);
@@ -109,15 +111,11 @@ public class ListActivity extends AppCompatActivity {
         recyclerViewListActivity = findViewById(R.id.recyclerView);
         recyclerViewListActivity.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManagerListActivity = new LinearLayoutManager(this);
-        AdapterListActivity = new AdapterForWordList(WordList);
+        AdapterListActivity = new AdapterForWordList(this,WordList);
         recyclerViewListActivity.setLayoutManager(layoutManagerListActivity);
         recyclerViewListActivity.setAdapter(AdapterListActivity);
         AdapterListActivity.notifyDataSetChanged();
     }
-
-
-
-
 
         ServiceConnection serviceConnection = new ServiceConnection() {
             @Override

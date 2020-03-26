@@ -1,7 +1,9 @@
 package android.abdul.wordLearner2;
 
 import android.abdul.wordLearner2.database.WordEntity;
-import android.abdul.wordLearner2.datamodels.WordTemplate;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.util.LruCache;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,13 +12,21 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.NetworkImageView;
+import com.android.volley.toolbox.Volley;
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 // Over all I got no effing clue about what this file does. I just know that it is needed to make the recyclerview work
 // SRC: https://codinginflow.com/tutorials/android/simple-recyclerview-java/part-1-layouts-model-class part 1-5
 public class AdapterForWordList extends RecyclerView.Adapter<AdapterForWordList.ViewHolderForWordList> {
     private ArrayList<WordEntity> ListOfWords;
-
+    private RequestQueue mRequestQueue;
+    private ImageLoader mImageLoader;
     private OnItemClickListener CardClickListener;
+    private Context context;
 
     public interface OnItemClickListener{
         void onItemClick(int position);
@@ -27,14 +37,14 @@ public class AdapterForWordList extends RecyclerView.Adapter<AdapterForWordList.
     }
     //Extending viewholder class for our specific need
     public static class ViewHolderForWordList extends RecyclerView.ViewHolder{
-        public ImageView Picture;
+        public NetworkImageView Picture;
         public TextView Name;
         public TextView Pronoun;
         public TextView Rating;
 
         public ViewHolderForWordList(View itemView, final OnItemClickListener listener) {
             super(itemView);
-            Picture = itemView.findViewById(R.id.PicOfWord_CardInfo);
+            Picture = (NetworkImageView)itemView.findViewById(R.id.PicOfWord_CardInfo);
             Name = itemView.findViewById(R.id.NameOfWord_CardInfo);
             Pronoun = itemView.findViewById(R.id.PronounOfWord_CardInfo);
             Rating = itemView.findViewById(R.id.RatingOfWord_CardInfo);
@@ -52,8 +62,10 @@ public class AdapterForWordList extends RecyclerView.Adapter<AdapterForWordList.
         }
     }
     public void updateList(ArrayList<WordEntity> UpdatedWordList){ListOfWords = UpdatedWordList;}
-    public AdapterForWordList(ArrayList<WordEntity> WordList){
+    public AdapterForWordList(Context context, ArrayList<WordEntity> WordList){
         ListOfWords = WordList;
+        this.context = context;
+        loadImage();
     }
     @Override
     public ViewHolderForWordList onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -65,7 +77,7 @@ public class AdapterForWordList extends RecyclerView.Adapter<AdapterForWordList.
     public void onBindViewHolder(ViewHolderForWordList holder, int position) {
         WordEntity currentItem = ListOfWords.get(position);
 
-        holder.Picture.setImageResource(currentItem.getImage());
+        holder.Picture.setImageUrl(currentItem.getImage(),mImageLoader);
         holder.Name.setText(currentItem.getName());
         holder.Pronoun.setText(currentItem.getPronounciation());
         holder.Rating.setText(String.valueOf(currentItem.getRating()));
@@ -73,5 +85,18 @@ public class AdapterForWordList extends RecyclerView.Adapter<AdapterForWordList.
     @Override
     public int getItemCount() {
         return ListOfWords.size();
+    }
+
+    private void loadImage() {
+        mRequestQueue = Volley.newRequestQueue(context);
+        mImageLoader = new ImageLoader(mRequestQueue, new ImageLoader.ImageCache() {
+            private final LruCache<String, Bitmap> mCache = new LruCache<String, Bitmap>(10);
+            public void putBitmap(String url, Bitmap bitmap) {
+                mCache.put(url, bitmap);
+            }
+            public Bitmap getBitmap(String url) {
+                return mCache.get(url);
+            }
+        });
     }
 }

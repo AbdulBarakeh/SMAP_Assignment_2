@@ -48,6 +48,9 @@ public class WordLearnerService extends Service {
     LocalBroadcastManager LBM;
     //Binder
     IBinder binder = new WordleranerServiceBinder();
+
+
+
     public class WordleranerServiceBinder extends Binder{
         public WordLearnerService getService(){
             return WordLearnerService.this;
@@ -125,7 +128,7 @@ public class WordLearnerService extends Service {
 
         WordEntity newWord = new WordEntity();
         newWord.setName(word);
-        newWord.setImage(R.drawable.imagenotfound);
+        newWord.setImage("R.drawable.imagenotfound");
         wordList.add(newWord);
     }
     public void deleteWord(String word){
@@ -138,20 +141,20 @@ public class WordLearnerService extends Service {
     //Create list of words
     private ArrayList<WordEntity> CreateSamples(){
         ArrayList<WordEntity> Sample = new ArrayList<>();
-        Sample.add(new WordEntity(R.drawable.buffalo,     "Buffalo",  "ˈbəf(ə)ˌlō",   "a heavily built wild ox with backward-curving horns, found mainly in the Old World tropics.","",0));
-        Sample.add(new WordEntity(R.drawable.camel,       "Camel",    "ˈkaməl",       "a large, long-necked ungulate mammal of arid country, with long slender legs, broad cushioned feet, and either one or two humps on the back. Camels can survive for long periods without food or drink, chiefly by using up the fat reserves in their humps.","",0));
-        Sample.add(new WordEntity(R.drawable.cheetah,     "Cheetah",  "ˈCHēdə",       "a large slender spotted cat found in Africa and parts of Asia. It is the fastest animal on land.","",0));
-        Sample.add(new WordEntity(R.drawable.crocodile,   "Crocodile","ˈkräkəˌdīl",   "a large predatory semiaquatic reptile with long jaws, long tail, short legs, and a horny textured skin.","",0));
-        Sample.add(new WordEntity(R.drawable.elephant,    "Elephant", "ˈeləfənt",     "a very large plant-eating mammal with a prehensile trunk, long curved ivory tusks, and large ears, native to Africa and southern Asia. It is the largest living land animal.","",0));
-        Sample.add(new WordEntity(R.drawable.giraffe,     "Giraffe",  "jəˈraf",       "a large African mammal with a very long neck and forelegs, having a coat patterned with brown patches separated by lighter lines. It is the tallest living animal.","",0));
-        Sample.add(new WordEntity(R.drawable.gnu,         "Gnu",      "n(y)o͞o",       "a large dark antelope with a long head, a beard and mane, and a sloping back.","",0));
-        Sample.add(new WordEntity(R.drawable.kudo,        "Kudo",     "ˈko͞odo͞o",      "an African antelope that has a greyish or brownish coat with white vertical stripes, and a short bushy tail. The male has long spirally curved horns.","",0));
-        Sample.add(new WordEntity(R.drawable.leopard,     "Leopard",  "ˈlepərd",      "a large solitary cat that has a fawn or brown coat with black spots, native to the forests of Africa and southern Asia.","",0));
-        Sample.add(new WordEntity(R.drawable.lion,        "Lion",     "ˈlīən",        "a large tawny-coloured cat that lives in prides, found in Africa and NW India. The male has a flowing shaggy mane and takes little part in hunting, which is done cooperatively by the females.","",0));
-        Sample.add(new WordEntity(R.drawable.oryx,        "Oryx",     "null",         "a large antelope living in arid regions of Africa and Arabia, having dark markings on the face and long horns.","",0));
-        Sample.add(new WordEntity(R.drawable.ostrich,     "Ostrich",  "ˈästriCH",     "a flightless swift-running African bird with a long neck, long legs, and two toes on each foot. It is the largest living bird, with males reaching a height of up to 2.75 m.","",0));
-        Sample.add(new WordEntity(R.drawable.shark,       "Shark",    "SHärk",        "a long-bodied chiefly marine fish with a cartilaginous skeleton, a prominent dorsal fin, and tooth-like scales. Most sharks are predatory, though the largest kinds feed on plankton, and some can grow to a large size.","",0));
-        Sample.add(new WordEntity(R.drawable.snake,       "Snake",    "snāk",         "a long limbless reptile which has no eyelids, a short tail, and jaws that are capable of considerable extension. Some snakes have a venomous bite.","",0));
+        Sample.add(new WordEntity("https://media.owlbot.info/dictionary/images/kkkkkkw.jpg.400x400_q85_box-0,0,600,600_crop_detail.jpg",     "Buffalo",  "ˈbəf(ə)ˌlō",   "a heavily built wild ox with backward-curving horns, found mainly in the Old World tropics.","",0));
+        Sample.add(new WordEntity("https://media.owlbot.info/dictionary/images/nnnt.png.400x400_q85_box-0,0,500,500_crop_detail.png",       "Camel",    "ˈkaməl",       "a large, long-necked ungulate mammal of arid country, with long slender legs, broad cushioned feet, and either one or two humps on the back. Camels can survive for long periods without food or drink, chiefly by using up the fat reserves in their humps.","",0));
+        Sample.add(new WordEntity("https://media.owlbot.info/dictionary/images/sssssb.jpg.400x400_q85_box-0,0,500,500_crop_detail.jpg",     "Cheetah",  "ˈCHēdə",       "a large slender spotted cat found in Africa and parts of Asia. It is the fastest animal on land.","",0));
+        Sample.add(new WordEntity("https://media.owlbot.info/dictionary/images/rrrrrm.jpg.400x400_q85_box-0,0,500,500_crop_detail.jpg",   "Crocodile","ˈkräkəˌdīl",   "a large predatory semiaquatic reptile with long jaws, long tail, short legs, and a horny textured skin.","",0));
+        Sample.add(new WordEntity("https://media.owlbot.info/dictionary/images/27ti5gwrzr_Julie_Larsen_Maher_3242_African_Elephant_UGA_06_30_10_hr.jpg.400x400_q85_box-356,0,1156,798_crop_detail.jpg",    "Elephant", "ˈeləfənt",     "a very large plant-eating mammal with a prehensile trunk, long curved ivory tusks, and large ears, native to Africa and southern Asia. It is the largest living land animal.","",0));
+//        Sample.add(new WordEntity(R.drawable.giraffe,     "Giraffe",  "jəˈraf",       "a large African mammal with a very long neck and forelegs, having a coat patterned with brown patches separated by lighter lines. It is the tallest living animal.","",0));
+//        Sample.add(new WordEntity(R.drawable.gnu,         "Gnu",      "n(y)o͞o",       "a large dark antelope with a long head, a beard and mane, and a sloping back.","",0));
+//        Sample.add(new WordEntity(R.drawable.kudo,        "Kudo",     "ˈko͞odo͞o",      "an African antelope that has a greyish or brownish coat with white vertical stripes, and a short bushy tail. The male has long spirally curved horns.","",0));
+//        Sample.add(new WordEntity(R.drawable.leopard,     "Leopard",  "ˈlepərd",      "a large solitary cat that has a fawn or brown coat with black spots, native to the forests of Africa and southern Asia.","",0));
+//        Sample.add(new WordEntity(R.drawable.lion,        "Lion",     "ˈlīən",        "a large tawny-coloured cat that lives in prides, found in Africa and NW India. The male has a flowing shaggy mane and takes little part in hunting, which is done cooperatively by the females.","",0));
+//        Sample.add(new WordEntity(R.drawable.oryx,        "Oryx",     "null",         "a large antelope living in arid regions of Africa and Arabia, having dark markings on the face and long horns.","",0));
+//        Sample.add(new WordEntity(R.drawable.ostrich,     "Ostrich",  "ˈästriCH",     "a flightless swift-running African bird with a long neck, long legs, and two toes on each foot. It is the largest living bird, with males reaching a height of up to 2.75 m.","",0));
+//        Sample.add(new WordEntity(R.drawable.shark,       "Shark",    "SHärk",        "a long-bodied chiefly marine fish with a cartilaginous skeleton, a prominent dorsal fin, and tooth-like scales. Most sharks are predatory, though the largest kinds feed on plankton, and some can grow to a large size.","",0));
+//        Sample.add(new WordEntity(R.drawable.snake,       "Snake",    "snāk",         "a long limbless reptile which has no eyelids, a short tail, and jaws that are capable of considerable extension. Some snakes have a venomous bite.","",0));
         wordList = Sample;
         return wordList;
     }
@@ -180,6 +183,8 @@ public class WordLearnerService extends Service {
         LBM.sendBroadcast(broadcaster);
     }
 
-
+    public void addApiWord(WordEntity parsedWord) {
+        wordList.add(parsedWord);
+    }
 
 }

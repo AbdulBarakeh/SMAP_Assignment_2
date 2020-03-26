@@ -6,8 +6,6 @@ import android.os.Parcelable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-import com.google.gson.annotations.SerializedName;
-import com.google.gson.annotations.Expose;
 
 @Entity
 public class WordEntity implements Parcelable {
@@ -16,7 +14,10 @@ public class WordEntity implements Parcelable {
     public int _uid;
 
     @ColumnInfo(name = "image")
-    int _image;
+    String _image;
+
+    @ColumnInfo(name = "image_int")
+    int _image_int;
 
     @ColumnInfo(name = "name")
     String _name;
@@ -33,7 +34,17 @@ public class WordEntity implements Parcelable {
     @ColumnInfo(name = "notes")
     String _notes;
 
-    public WordEntity(int _Image, String _Name, String _Pronounciation, String _Description, String _Notes, double _Rating){
+
+    public WordEntity(String _Image, int _image_int, String _Name, String _Pronounciation, String _Description, String _Notes, double _Rating){
+        _image              = _Image;
+        this._image_int          = _image_int;
+        _name             = _Name;
+        _pronounciation    = _Pronounciation;
+        _description      = _Description;
+        _notes           = _Notes;
+        _rating           = _Rating;
+    }
+    public WordEntity(String _Image, String _Name, String _Pronounciation, String _Description, String _Notes, double _Rating){
         _image              = _Image;
         _name             = _Name;
         _pronounciation    = _Pronounciation;
@@ -41,8 +52,18 @@ public class WordEntity implements Parcelable {
         _notes           = _Notes;
         _rating           = _Rating;
     }
+    public WordEntity(int _image_int, String _Name, String _Pronounciation, String _Description, String _Notes, double _Rating){
+        this._image_int          = _image_int;
+        _name             = _Name;
+        _pronounciation    = _Pronounciation;
+        _description      = _Description;
+        _notes           = _Notes;
+        _rating           = _Rating;
+    }
+
     public WordEntity(){
-        _image          = 0;
+        _image          = "";
+        _image_int      =  0;
         _name           = "";
         _pronounciation = "";
         _description    = "";
@@ -50,8 +71,13 @@ public class WordEntity implements Parcelable {
         _rating         = 0;
     }
 
+    public int get_image_int() {
+        return _image_int;
+    }
 
-
+    public void set_image_int(int _image_int) {
+        this._image_int = _image_int;
+    }
 
     public int getUid() {
         return _uid;
@@ -61,11 +87,11 @@ public class WordEntity implements Parcelable {
         this._uid = uid;
     }
 
-    public int getImage() {
+    public String getImage() {
         return _image;
     }
 
-    public void setImage(int _image) {
+    public void setImage(String _image) {
         this._image = _image;
     }
 
@@ -109,18 +135,6 @@ public class WordEntity implements Parcelable {
         this._notes = notes;
     }
 
-
-    public static final Creator<WordEntity> CREATOR = new Creator<WordEntity>() {
-        @Override
-        public WordEntity createFromParcel(Parcel in) {
-            return new WordEntity(in);
-        }
-
-        @Override
-        public WordEntity[] newArray(int size) {
-            return new WordEntity[size];
-        }
-    };
     @Override
     public int describeContents() {
         return 0;
@@ -128,19 +142,6 @@ public class WordEntity implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest , int flags) {
-        dest.writeInt(_image);
-        dest.writeString(_name);
-        dest.writeString(_pronounciation);
-        dest.writeDouble(_rating);
-        dest.writeString(_description);
-        dest.writeString(_notes);
-    }
-    protected WordEntity(Parcel in) {
-        _image = in.readInt();
-        _name = in.readString();
-        _pronounciation = in.readString();
-        _rating = in.readDouble();
-        _description = in.readString();
-        _notes = in.readString();
+
     }
 }
