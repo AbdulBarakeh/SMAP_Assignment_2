@@ -173,6 +173,7 @@ public class WordLearnerService extends Service {
             if (currentListWord.getName().equals(word)){
                 Log.d(TAG, "deleteWordFromList: Word removed");
                 wordList.remove(currentListWord);
+                update(currentListWord);
             }
         }
     }

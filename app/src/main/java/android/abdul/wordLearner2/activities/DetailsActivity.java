@@ -141,7 +141,7 @@ private ImageLoader mImageLoader;
     };
 
     public void delete(View v){
-        wordService.deleteWord(Name.getText().toString());
+        wordService.deleteWord(word.getName());
         finish();
     }
 }

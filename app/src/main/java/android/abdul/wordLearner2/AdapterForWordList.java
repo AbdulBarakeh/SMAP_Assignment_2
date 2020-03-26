@@ -90,7 +90,7 @@ public class AdapterForWordList extends RecyclerView.Adapter<AdapterForWordList.
     private void loadImage() {
         mRequestQueue = Volley.newRequestQueue(context);
         mImageLoader = new ImageLoader(mRequestQueue, new ImageLoader.ImageCache() {
-            private final LruCache<String, Bitmap> mCache = new LruCache<String, Bitmap>(10);
+            private final LruCache<String, Bitmap> mCache = new LruCache<String, Bitmap>(20);
             public void putBitmap(String url, Bitmap bitmap) {
                 mCache.put(url, bitmap);
             }

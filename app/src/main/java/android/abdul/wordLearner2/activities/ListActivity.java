@@ -141,6 +141,7 @@ public class ListActivity extends AppCompatActivity {
                         AdapterListActivity.notifyDataSetChanged();
                     }
                 }
+                AdapterListActivity.notifyDataSetChanged();
             }
         }
 
