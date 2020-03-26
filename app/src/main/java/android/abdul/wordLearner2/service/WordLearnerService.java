@@ -1,5 +1,6 @@
 package android.abdul.wordLearner2.service;
 
+import android.abdul.wordLearner2.API.API;
 import android.abdul.wordLearner2.R;
 import android.abdul.wordLearner2.activities.ListActivity;
 import android.abdul.wordLearner2.database.WordDatabase;
@@ -34,6 +35,7 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import static android.abdul.wordLearner2.BaseApplication.SERVICE_CHANNEL;
 import static android.abdul.wordLearner2.BaseApplication.SUGGESTION_CHANNEL;
@@ -46,11 +48,10 @@ public class WordLearnerService extends Service {
     ArrayList<WordEntity> wordList = new ArrayList<>();
     WordEntity word = new WordEntity();
     LocalBroadcastManager LBM;
+    WordRepository DB;
+    API api;
     //Binder
     IBinder binder = new WordleranerServiceBinder();
-
-
-
     public class WordleranerServiceBinder extends Binder{
         public WordLearnerService getService(){
             return WordLearnerService.this;
@@ -90,9 +91,8 @@ public class WordLearnerService extends Service {
         startForeground(667,suggestion);
         CreateSamples();
         LBM = LocalBroadcastManager.getInstance(this);
-
-        WordRepository DB = new WordRepository(getApplicationContext());
-
+        DB = new WordRepository(getApplicationContext());
+        api = new API();
     }
 
     @Override
@@ -125,11 +125,11 @@ public class WordLearnerService extends Service {
         //If no result
         //search API
         //Insert in wordtemplate
-
-        WordEntity newWord = new WordEntity();
-        newWord.setName(word);
-        newWord.setImage("R.drawable.imagenotfound");
-        wordList.add(newWord);
+        api.parseJason(this,word);
+//        WordEntity newWord = new WordEntity();
+//        newWord.setName(word);
+//        newWord.setImage("R.drawable.imagenotfound");
+//        wordList.add(newWord);
     }
     public void deleteWord(String word){
         deleteWordFromList(word);
@@ -184,6 +184,7 @@ public class WordLearnerService extends Service {
     }
 
     public void addApiWord(WordEntity parsedWord) {
+
         wordList.add(parsedWord);
     }
 
