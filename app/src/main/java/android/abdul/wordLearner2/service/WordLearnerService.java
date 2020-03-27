@@ -179,27 +179,30 @@ public class WordLearnerService extends Service {
         return new WordEntity();
     }
     private void deleteWordFromList(String word){
-        for (WordEntity currentListWord : wordList ) {
-            if (currentListWord.getName().equals(word)){
-                Log.d(TAG, "deleteWordFromList: Word removed");
-                DB.delete(currentListWord);
-                wordList.remove(currentListWord);
-                updateDataset();
-            }
-        }
+//        for (WordEntity currentListWord : wordList ) {
+//            if (currentListWord.getName().equals(word)){
+//                Log.d(TAG, "deleteWordFromList: Word removed");
+//                wordList.remove(currentListWord);
+//                DB.delete(currentListWord);
+//
+//
+//            }
+//        }
+        update(new WordEntity());
+//        updateDataset();
     }
 
     private void update(WordEntity word){
-        Intent broadcaster = new Intent().setAction(ListActivity.BROADCAST);
+        Intent broadcaster = new Intent().setAction("delete");
         broadcaster.putExtra("word", word);
         LBM.sendBroadcast(broadcaster);
         Log.d(TAG , "update: Word updated");
     }
 
     private void updateDataset(){
-        Intent broadcasterupdate = new Intent().setAction(ListActivity.BROADCAST_UPDATE);
+        Intent broadcasterupdate = new Intent().setAction("update");
         Log.d(TAG , "updateDataset: Dataset updated");
-        LUBM.sendBroadcast(broadcasterupdate);
+        LBM.sendBroadcast(broadcasterupdate);
     }
 
     public void addApiWord(WordEntity parsedWord) {
