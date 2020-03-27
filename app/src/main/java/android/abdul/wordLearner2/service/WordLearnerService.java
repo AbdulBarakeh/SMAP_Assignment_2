@@ -188,8 +188,8 @@ public class WordLearnerService extends Service {
 //
 //            }
 //        }
-        update(new WordEntity());
-//        updateDataset();
+//        update(new WordEntity());
+        updateDataset();
     }
 
     private void update(WordEntity word){

@@ -38,11 +38,11 @@ public class ListActivity extends AppCompatActivity {
     ArrayList<WordEntity> WordList = new ArrayList<>();
     private WordLearnerService wordService;
     Intent wordServiceIntent;
-//    BroadcastListReceiver listReceiver;
-//    LocalBroadcastManager LBM;
-//    BroadcastUpdateReceiver updateReceiver;
-    BroadcastReceiver updateReceiver;
-    BroadcastReceiver deleteReceiver;
+    BroadcastListReceiver listReceiver;
+    LocalBroadcastManager LBM;
+    BroadcastUpdateReceiver updateReceiver;
+//    BroadcastReceiver updateReceiver;
+//    BroadcastReceiver deleteReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,22 +80,22 @@ public class ListActivity extends AppCompatActivity {
         });
         startMyService();
 //        registerUpdateBroadcast();
-//        registerBroadcast();
-        updateReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context , Intent intent) {
-                Log.d(TAG , "onReceive: I UPDATED");
-            }
-        };
-        LocalBroadcastManager.getInstance(this).registerReceiver(updateReceiver,new IntentFilter("update"));
-
-        deleteReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context , Intent intent) {
-                Log.d(TAG , "onReceive: I DELETED");
-            }
-        };
-        LocalBroadcastManager.getInstance(this).registerReceiver(deleteReceiver,new IntentFilter("delete"));
+        registerBroadcast();
+//        updateReceiver = new BroadcastReceiver() {
+//            @Override
+//            public void onReceive(Context context , Intent intent) {
+//                Log.d(TAG , "onReceive: I UPDATED");
+//            }
+//        };
+//        LocalBroadcastManager.getInstance(this).registerReceiver(updateReceiver,new IntentFilter("update"));
+//
+//        deleteReceiver = new BroadcastReceiver() {
+//            @Override
+//            public void onReceive(Context context , Intent intent) {
+//                Log.d(TAG , "onReceive: I DELETED");
+//            }
+//        };
+//        LocalBroadcastManager.getInstance(this).registerReceiver(deleteReceiver,new IntentFilter("delete"));
     }
 
     private void startMyService() {
@@ -108,10 +108,10 @@ public class ListActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-//        LBM.unregisterReceiver(listReceiver);
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(updateReceiver);
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(deleteReceiver);
-//        LBM.unregisterReceiver(updateReceiver);
+        LBM.unregisterReceiver(listReceiver);
+//        LocalBroadcastManager.getInstance(this).unregisterReceiver(updateReceiver);
+//        LocalBroadcastManager.getInstance(this).unregisterReceiver(deleteReceiver);
+        LBM.unregisterReceiver(updateReceiver);
     }
 
     private void setupRecyclerview() {
@@ -137,25 +137,25 @@ public class ListActivity extends AppCompatActivity {
             @Override
             public void onServiceDisconnected(ComponentName name) {}
         };
-//        private void registerBroadcast() {
-//            LBM = LocalBroadcastManager.getInstance(ListActivity.this);
-//
-//            IntentFilter intentFilter = new IntentFilter();
-//            intentFilter.addAction(BROADCAST);
-//            IntentFilter intentFilterupdate = new IntentFilter();
-//            intentFilterupdate.addAction(BROADCAST_UPDATE);
-//
-//            listReceiver = new BroadcastListReceiver();
-//            updateReceiver = new BroadcastUpdateReceiver();
-//
-//            LBM.registerReceiver(listReceiver, intentFilter);
-//            LBM.registerReceiver(updateReceiver, intentFilterupdate);
-//
-//
-//        }
-//        public class  BroadcastListReceiver extends BroadcastReceiver{
-//            @Override
-//            public void onReceive(Context context , Intent intent) {
+        private void registerBroadcast() {
+            LBM = LocalBroadcastManager.getInstance(ListActivity.this);
+
+            IntentFilter intentFilter = new IntentFilter();
+            intentFilter.addAction("delete");
+            IntentFilter intentFilterupdate = new IntentFilter();
+            intentFilterupdate.addAction("update");
+
+            listReceiver = new BroadcastListReceiver();
+            updateReceiver = new BroadcastUpdateReceiver();
+
+            LBM.registerReceiver(listReceiver, intentFilter);
+            LBM.registerReceiver(updateReceiver, intentFilterupdate);
+
+
+        }
+        public class  BroadcastListReceiver extends BroadcastReceiver{
+            @Override
+            public void onReceive(Context context , Intent intent) {
 //                WordEntity sentWord = intent.getParcelableExtra("word");
 //                for (WordEntity currentword : WordList) {
 //                    if (currentword.getName().equals(sentWord.getName())){
@@ -165,8 +165,9 @@ public class ListActivity extends AppCompatActivity {
 //                    }
 //                }
 //                AdapterListActivity.notifyDataSetChanged();
-//            }
-//        }
+                Log.d(TAG , "onReceive: DELETE!!!");
+            }
+        }
 //
 ////        private void registerUpdateBroadcast() {
 ////            LUBM = LocalBroadcastManager.getInstance(ListActivity.this);
@@ -175,15 +176,15 @@ public class ListActivity extends AppCompatActivity {
 ////            updateReceiver = new BroadcastUpdateReceiver();
 ////            LUBM.registerReceiver(updateReceiver, intentFilterupdate);
 ////        }
-//        public class BroadcastUpdateReceiver extends BroadcastReceiver{
-//            @Override
-//            public void onReceive(Context context , Intent intent) {
-////                WordList = wordService.getAllWords();
-////                AdapterListActivity.updateList(WordList);
-////                AdapterListActivity.notifyDataSetChanged();
-//                Log.d(TAG , "onReceive: Wordlist updated in" + TAG);
-//            }
-//        }
+        public class BroadcastUpdateReceiver extends BroadcastReceiver{
+            @Override
+            public void onReceive(Context context , Intent intent) {
+//                WordList = wordService.getAllWords();
+//                AdapterListActivity.updateList(WordList);
+//                AdapterListActivity.notifyDataSetChanged();
+                Log.d(TAG , "onReceive: Wordlist updated in" + TAG);
+            }
+        }
 
 }
 
