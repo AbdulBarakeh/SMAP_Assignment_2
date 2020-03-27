@@ -18,7 +18,6 @@ import android.util.Log;
 import android.widget.Toast;
 
 import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import java.util.ArrayList;
@@ -34,6 +33,7 @@ public class WordLearnerService extends Service {
     ArrayList<WordEntity> wordList = new ArrayList<>();
     WordEntity word = new WordEntity();
     LocalBroadcastManager LBM;
+    LocalBroadcastManager LUBM;
     WordRepository DB;
     API api;
     Context context;
@@ -74,6 +74,7 @@ public class WordLearnerService extends Service {
 
 
         LBM = LocalBroadcastManager.getInstance(this);
+        LUBM = LocalBroadcastManager.getInstance(this);
         DB = new WordRepository(getApplicationContext());
         api = new API();
         CreateSamples();
@@ -183,7 +184,7 @@ public class WordLearnerService extends Service {
                 Log.d(TAG, "deleteWordFromList: Word removed");
                 DB.delete(currentListWord);
                 wordList.remove(currentListWord);
-                update(currentListWord);
+                updateDataset();
             }
         }
     }
@@ -193,6 +194,12 @@ public class WordLearnerService extends Service {
         broadcaster.putExtra("word", word);
         LBM.sendBroadcast(broadcaster);
         Log.d(TAG , "update: Word updated");
+    }
+
+    private void updateDataset(){
+        Intent broadcasterupdate = new Intent().setAction(ListActivity.BROADCAST_UPDATE);
+        Log.d(TAG , "updateDataset: Dataset updated");
+        LUBM.sendBroadcast(broadcasterupdate);
     }
 
     public void addApiWord(WordEntity parsedWord) {

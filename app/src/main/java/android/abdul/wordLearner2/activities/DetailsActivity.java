@@ -1,11 +1,7 @@
 package android.abdul.wordLearner2.activities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.abdul.wordLearner2.AdapterForWordList;
+import android.abdul.wordLearner2.R;
 import android.abdul.wordLearner2.database.WordEntity;
-import android.abdul.wordLearner2.datamodels.WordTemplate;
 import android.abdul.wordLearner2.service.WordLearnerService;
 import android.app.Activity;
 import android.content.ComponentName;
@@ -17,16 +13,15 @@ import android.os.IBinder;
 import android.util.LruCache;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import android.abdul.wordLearner2.R;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
-import com.squareup.picasso.Picasso;
 
 public class DetailsActivity extends AppCompatActivity {
 
@@ -59,7 +54,6 @@ private ImageLoader mImageLoader;
 
         initializeUi();
         loadImage();
-
 
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override

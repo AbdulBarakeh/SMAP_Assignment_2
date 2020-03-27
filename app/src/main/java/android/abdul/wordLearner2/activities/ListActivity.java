@@ -12,6 +12,7 @@ import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,16 +23,13 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.ImageLoader;
-
 import java.util.ArrayList;
 
 public class ListActivity extends AppCompatActivity {
 
-    private RequestQueue mRequestQueue;
-    private ImageLoader mImageLoader;
+    private static final String TAG = "ListActivity";
     public static final String BROADCAST = "android.abdul.wordLearner2.activities.ListActivity";
+    public static final String BROADCAST_UPDATE = "android.abdul.wordLearner2.activities.ListActivity";
     private AdapterForWordList AdapterListActivity;
     RecyclerView recyclerViewListActivity;
     private EditText SearchInput;
@@ -42,6 +40,8 @@ public class ListActivity extends AppCompatActivity {
     Intent wordServiceIntent;
     BroadcastListReceiver listReceiver;
     LocalBroadcastManager LBM;
+//    BroadcastUpdateReceiver updateReceiver;
+    LocalBroadcastManager LUBM;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +79,8 @@ public class ListActivity extends AppCompatActivity {
         });
         startMyService();
         registerBroadcast();
+//        registerUpdateBroadcast();
+
     }
 
     private void startMyService() {
@@ -86,18 +88,13 @@ public class ListActivity extends AppCompatActivity {
         ContextCompat.startForegroundService(this, wordServiceIntent);
         bindService(wordServiceIntent,serviceConnection,Context.BIND_AUTO_CREATE);
     }
-    private void registerBroadcast() {
-        LBM = LocalBroadcastManager.getInstance(this);
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(BROADCAST);
-        listReceiver = new BroadcastListReceiver();
-        LBM.registerReceiver(listReceiver, intentFilter);
-    }
+
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         LBM.unregisterReceiver(listReceiver);
+//        LUBM.unregisterReceiver(updateReceiver);
     }
 
     private void setupRecyclerview() {
@@ -123,8 +120,14 @@ public class ListActivity extends AppCompatActivity {
             @Override
             public void onServiceDisconnected(ComponentName name) {}
         };
+        private void registerBroadcast() {
+            LBM = LocalBroadcastManager.getInstance(this);
+            IntentFilter intentFilter = new IntentFilter();
+            intentFilter.addAction(BROADCAST);
+            listReceiver = new BroadcastListReceiver();
+            LBM.registerReceiver(listReceiver, intentFilter);
+        }
         public class  BroadcastListReceiver extends BroadcastReceiver{
-
             @Override
             public void onReceive(Context context , Intent intent) {
                 WordEntity sentWord = intent.getParcelableExtra("word");
@@ -139,6 +142,22 @@ public class ListActivity extends AppCompatActivity {
             }
         }
 
+//        private void registerUpdateBroadcast() {
+//            LUBM = LocalBroadcastManager.getInstance(this);
+//            IntentFilter intentFilterupdate = new IntentFilter();
+//            intentFilterupdate.addAction(BROADCAST_UPDATE);
+//            updateReceiver = new BroadcastUpdateReceiver();
+//            LUBM.registerReceiver(updateReceiver, intentFilterupdate);
+//        }
+//        public class BroadcastUpdateReceiver extends BroadcastReceiver{
+//            @Override
+//            public void onReceive(Context context , Intent intent) {
+//                WordList = wordService.getAllWords();
+//                AdapterListActivity.updateList(WordList);
+//                AdapterListActivity.notifyDataSetChanged();
+//                Log.d(TAG , "onReceive: Wordlist updated in" + TAG);
+//            }
+//        }
 
 }
 

@@ -25,6 +25,7 @@
         </activity>
         <service android:name=".service.WordLearnerService"/>
         <receiver android:name=".activities.ListActivity$BroadcastListReceiver"/>
+        <receiver android:name=".activities.ListActivity$BroadcastUpdateReceiver"/>
     </application>
 
 </manifest>
