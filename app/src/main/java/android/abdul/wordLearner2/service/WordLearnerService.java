@@ -3,44 +3,30 @@ package android.abdul.wordLearner2.service;
 import android.abdul.wordLearner2.API.API;
 import android.abdul.wordLearner2.R;
 import android.abdul.wordLearner2.activities.ListActivity;
-import android.abdul.wordLearner2.database.WordDatabase;
 import android.abdul.wordLearner2.database.WordEntity;
 import android.abdul.wordLearner2.database.WordRepository;
-import android.abdul.wordLearner2.datamodels.WordTemplate;
 import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Binder;
+import android.os.Handler;
 import android.os.IBinder;
-import android.os.Message;
 import android.util.Log;
-import android.widget.Switch;
+import android.widget.Toast;
 
 import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.room.Room;
-
-import com.android.volley.NetworkResponse;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.JsonRequest;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-
-import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
+import java.util.Random;
 
 import static android.abdul.wordLearner2.BaseApplication.SERVICE_CHANNEL;
 import static android.abdul.wordLearner2.BaseApplication.SUGGESTION_CHANNEL;
-import static com.android.volley.Request.*;
-import static com.android.volley.Request.Method.GET;
 
 
 public class WordLearnerService extends Service {
@@ -50,6 +36,10 @@ public class WordLearnerService extends Service {
     LocalBroadcastManager LBM;
     WordRepository DB;
     API api;
+    Context context;
+    PendingIntent pendingIntent_suggestion;
+    Runnable run;
+    Handler handler = new Handler();
     //Binder
     IBinder binder = new WordleranerServiceBinder();
     public class WordleranerServiceBinder extends Binder{
@@ -63,10 +53,13 @@ public class WordLearnerService extends Service {
     @Override
     public void onCreate() {
         Log.d(TAG , "onCreate: I Exist");
+        context=this;
+        //LINK RESOURCE: https://codinginflow.com/tutorials/android/notifications-notification-channels/part-1-notification-channels
+        // Inspiration have been drawn from the other parts of the tutorial as well.
         Intent suggestionIntent = new Intent(this, ListActivity.class);
         Intent serviceIntent = new Intent(this, ListActivity.class);
 
-        PendingIntent pendingIntent_suggestion = PendingIntent.getActivity(this,0,suggestionIntent,0);
+        pendingIntent_suggestion = PendingIntent.getActivity(this,0,suggestionIntent,0);
         PendingIntent pendingIntent_service = PendingIntent.getActivity(this,0,serviceIntent,0);
 
         Notification service = new NotificationCompat.Builder(this, SERVICE_CHANNEL)
@@ -75,24 +68,39 @@ public class WordLearnerService extends Service {
                 .setContentTitle("Wordlearner Service")
                 .setContentText("Service is running...")
                 .setContentIntent(pendingIntent_service)
-                .setSmallIcon(R.drawable.foxicon)
+                .setSmallIcon(R.drawable.ic_foxicon)
                 .build();
-
-        Notification suggestion = new NotificationCompat.Builder(this, SUGGESTION_CHANNEL)
-                .setChannelId(SUGGESTION_CHANNEL)
-                .setOngoing(true)
-                .setContentTitle("Suggested word")
-                .setContentText("*INSERT WORD*")
-                .setContentIntent(pendingIntent_suggestion)
-                .setSmallIcon(R.drawable.ic_and)
-                .build();
-
         startForeground(666,service);
-        startForeground(667,suggestion);
-        CreateSamples();
+
+
         LBM = LocalBroadcastManager.getInstance(this);
         DB = new WordRepository(getApplicationContext());
         api = new API();
+        CreateSamples();
+        pushNotification(pendingIntent_suggestion);
+        run.run();
+    }
+//LINK SOURCE: https://www.youtube.com/watch?v=QfQE1ayCzf8 "How to Start a Background Thread in Android"
+    private void pushNotification(final PendingIntent pendingIntent_suggestion) {
+        final Random rand = new Random();
+        run = new Runnable(){
+            @Override
+            public void run() {
+                List<WordEntity> list = wordList;
+                WordEntity randomElement = list.get(rand.nextInt(list.size()));
+                Notification suggestion = new NotificationCompat.Builder(context, SUGGESTION_CHANNEL)
+                        .setChannelId(SUGGESTION_CHANNEL)
+                        .setContentTitle("Suggested word")
+                        .setContentText("Learn this word: "+ randomElement.getName())
+                        .setPriority(NotificationCompat.PRIORITY_HIGH)
+//                        .setContentIntent(pendingIntent_suggestion)
+                        .setSmallIcon(R.drawable.ic_and)
+                        .build();
+                NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                notificationManager.notify(667,suggestion);
+                handler.postDelayed(this,60000);
+            }
+        };
     }
 
     @Override
@@ -121,20 +129,29 @@ public class WordLearnerService extends Service {
     }
 
     public void addWord(String word){
-        //search database first
-        //If no result
-        //search API
-        //Insert in wordtemplate
-        api.parseJason(this,word);
-//        WordEntity newWord = new WordEntity();
-//        newWord.setName(word);
-//        newWord.setImage("R.drawable.imagenotfound");
-//        wordList.add(newWord);
+        WordEntity dbRes;
+        for (WordEntity specificWord : wordList){
+            if (specificWord.getName().equals(word)){
+                Log.d(TAG , "addWord: Word already exist");
+                Toast.makeText(this , "Word already exist" , Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }
+        if(DB.findByName(word) == null)
+        {
+            api.parseJason(this,word);
+            return;
+        }
+        else{
+            dbRes = DB.findByName(word);
+        }
+        wordList.add(dbRes);
     }
     public void deleteWord(String word){
         deleteWordFromList(word);
     }
     public void updateWord(WordEntity word){
+        DB.updateOne(word);
         update(word);
     }
 
@@ -146,16 +163,8 @@ public class WordLearnerService extends Service {
         Sample.add(new WordEntity("https://media.owlbot.info/dictionary/images/sssssb.jpg.400x400_q85_box-0,0,500,500_crop_detail.jpg",     "Cheetah",  "ˈCHēdə",       "a large slender spotted cat found in Africa and parts of Asia. It is the fastest animal on land.","",0));
         Sample.add(new WordEntity("https://media.owlbot.info/dictionary/images/rrrrrm.jpg.400x400_q85_box-0,0,500,500_crop_detail.jpg",   "Crocodile","ˈkräkəˌdīl",   "a large predatory semiaquatic reptile with long jaws, long tail, short legs, and a horny textured skin.","",0));
         Sample.add(new WordEntity("https://media.owlbot.info/dictionary/images/27ti5gwrzr_Julie_Larsen_Maher_3242_African_Elephant_UGA_06_30_10_hr.jpg.400x400_q85_box-356,0,1156,798_crop_detail.jpg",    "Elephant", "ˈeləfənt",     "a very large plant-eating mammal with a prehensile trunk, long curved ivory tusks, and large ears, native to Africa and southern Asia. It is the largest living land animal.","",0));
-//        Sample.add(new WordEntity(R.drawable.giraffe,     "Giraffe",  "jəˈraf",       "a large African mammal with a very long neck and forelegs, having a coat patterned with brown patches separated by lighter lines. It is the tallest living animal.","",0));
-//        Sample.add(new WordEntity(R.drawable.gnu,         "Gnu",      "n(y)o͞o",       "a large dark antelope with a long head, a beard and mane, and a sloping back.","",0));
-//        Sample.add(new WordEntity(R.drawable.kudo,        "Kudo",     "ˈko͞odo͞o",      "an African antelope that has a greyish or brownish coat with white vertical stripes, and a short bushy tail. The male has long spirally curved horns.","",0));
-//        Sample.add(new WordEntity(R.drawable.leopard,     "Leopard",  "ˈlepərd",      "a large solitary cat that has a fawn or brown coat with black spots, native to the forests of Africa and southern Asia.","",0));
-//        Sample.add(new WordEntity(R.drawable.lion,        "Lion",     "ˈlīən",        "a large tawny-coloured cat that lives in prides, found in Africa and NW India. The male has a flowing shaggy mane and takes little part in hunting, which is done cooperatively by the females.","",0));
-//        Sample.add(new WordEntity(R.drawable.oryx,        "Oryx",     "null",         "a large antelope living in arid regions of Africa and Arabia, having dark markings on the face and long horns.","",0));
-//        Sample.add(new WordEntity(R.drawable.ostrich,     "Ostrich",  "ˈästriCH",     "a flightless swift-running African bird with a long neck, long legs, and two toes on each foot. It is the largest living bird, with males reaching a height of up to 2.75 m.","",0));
-//        Sample.add(new WordEntity(R.drawable.shark,       "Shark",    "SHärk",        "a long-bodied chiefly marine fish with a cartilaginous skeleton, a prominent dorsal fin, and tooth-like scales. Most sharks are predatory, though the largest kinds feed on plankton, and some can grow to a large size.","",0));
-//        Sample.add(new WordEntity(R.drawable.snake,       "Snake",    "snāk",         "a long limbless reptile which has no eyelids, a short tail, and jaws that are capable of considerable extension. Some snakes have a venomous bite.","",0));
         wordList = Sample;
+        DB.insertAll(wordList);
         return wordList;
     }
     private WordEntity findWordInList(String word){
@@ -172,6 +181,7 @@ public class WordLearnerService extends Service {
         for (WordEntity currentListWord : wordList ) {
             if (currentListWord.getName().equals(word)){
                 Log.d(TAG, "deleteWordFromList: Word removed");
+                DB.delete(currentListWord);
                 wordList.remove(currentListWord);
                 update(currentListWord);
             }
@@ -182,11 +192,19 @@ public class WordLearnerService extends Service {
         Intent broadcaster = new Intent().setAction(ListActivity.BROADCAST);
         broadcaster.putExtra("word", word);
         LBM.sendBroadcast(broadcaster);
+        Log.d(TAG , "update: Word updated");
     }
 
     public void addApiWord(WordEntity parsedWord) {
-
-        wordList.add(parsedWord);
+        WordEntity newWord = new WordEntity();
+        newWord = parsedWord;
+        if (newWord.getImage() == null){
+            newWord.setImage("https://stockpictures.io/wp-content/uploads/2020/01/image-not-found-big-768x432.png");
+        }
+        DB.insertOne(newWord);
+        wordList.add(newWord);
+        update(newWord);
+        Log.d(TAG , "addApiWord: APIword Added to list");
     }
 
 }

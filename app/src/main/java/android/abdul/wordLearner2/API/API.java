@@ -1,5 +1,6 @@
 package android.abdul.wordLearner2.API;
 
+import android.abdul.wordLearner2.R;
 import android.abdul.wordLearner2.database.WordEntity;
 import android.abdul.wordLearner2.service.WordLearnerService;
 
@@ -10,6 +11,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import org.json.JSONObject;
 
@@ -25,7 +27,7 @@ public class API{
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET , URL , null , new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                Gson gson = new Gson();
+                Gson gson = new GsonBuilder().serializeNulls().create();
                 ApiWord receivedWord = gson.fromJson(response.toString() , ApiWord.class);
                 List<Definition> definitions = receivedWord.getDefinitions();
                 String image = "";

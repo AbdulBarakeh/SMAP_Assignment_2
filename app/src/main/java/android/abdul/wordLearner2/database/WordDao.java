@@ -8,31 +8,32 @@ import androidx.room.Update;
 
 import java.util.ArrayList;
 import java.util.List;
-
+//SRC: https://android.jlelse.eu/5-steps-to-implement-room-persistence-library-in-android-47b10cd47b24
 @Dao
 public interface WordDao {
     @Query("SELECT * FROM WordEntity")
     List<WordEntity> getAll();
 
-    @Query("SELECT * FROM WordEntity WHERE _uid IN (:wordUids)")
+    @Query("SELECT * FROM WordEntity WHERE uid IN (:wordUids)")
     List<WordEntity> loadAllByUids(int[] wordUids);
 
-    @Query("SELECT * FROM WordEntity WHERE name LIKE :name LIMIT 1")
+    @Query("SELECT * FROM WordEntity WHERE name in (:name) LIMIT 1")
     WordEntity findByName(String name);
 
-    @Query("SELECT * FROM WordEntity WHERE _uid LIKE :uid LIMIT 1")
+    @Query("SELECT * FROM WordEntity WHERE uid in (:uid) LIMIT 1")
     WordEntity findByUid(int uid);
 
     @Insert
     void insertAll(ArrayList<WordEntity> words);
 
-    @Delete
-    void delete(WordEntity word);
-
     @Insert
     void insertOne(WordEntity word);
 
+    @Delete
+    void delete(WordEntity word);
+
     @Update
     void updateOne(WordEntity word);
+
 
 }

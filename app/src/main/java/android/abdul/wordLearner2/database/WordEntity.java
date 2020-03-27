@@ -6,11 +6,12 @@ import android.os.Parcelable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-
+// SRC: https://android.jlelse.eu/5-steps-to-implement-room-persistence-library-in-android-47b10cd47b24
 @Entity
 public class WordEntity implements Parcelable {
 
     @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "uid")
     public int _uid;
 
     @ColumnInfo(name = "image")
@@ -70,6 +71,29 @@ public class WordEntity implements Parcelable {
         _notes          = "";
         _rating         = 0;
     }
+
+    protected WordEntity(Parcel in) {
+        _uid = in.readInt();
+        _image = in.readString();
+        _image_int = in.readInt();
+        _name = in.readString();
+        _pronounciation = in.readString();
+        _description = in.readString();
+        _rating = in.readDouble();
+        _notes = in.readString();
+    }
+
+    public static final Creator<WordEntity> CREATOR = new Creator<WordEntity>() {
+        @Override
+        public WordEntity createFromParcel(Parcel in) {
+            return new WordEntity(in);
+        }
+
+        @Override
+        public WordEntity[] newArray(int size) {
+            return new WordEntity[size];
+        }
+    };
 
     public int get_image_int() {
         return _image_int;
@@ -142,6 +166,13 @@ public class WordEntity implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest , int flags) {
-
+        dest.writeInt(_uid);
+        dest.writeString(_image);
+        dest.writeInt(_image_int);
+        dest.writeString(_name);
+        dest.writeString(_pronounciation);
+        dest.writeString(_description);
+        dest.writeDouble(_rating);
+        dest.writeString(_notes);
     }
 }

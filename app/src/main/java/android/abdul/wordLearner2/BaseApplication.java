@@ -6,7 +6,8 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.os.Build;
 import android.util.Log;
-
+//LINK RESOURCE: https://codinginflow.com/tutorials/android/notifications-notification-channels/part-1-notification-channels
+// Inspiration have been drawn from the other parts of the tutorial as well.
 public class BaseApplication extends Application {
     public static final String SUGGESTION_CHANNEL = "Suggestion_Channel";
     public static final String SERVICE_CHANNEL = "Service_Channel";
@@ -22,14 +23,13 @@ public class BaseApplication extends Application {
             NotificationChannel serviceChannel = new NotificationChannel(SERVICE_CHANNEL,"Service_Channel", NotificationManager.IMPORTANCE_DEFAULT);
             serviceChannel.setDescription("Starts service");
 
-            NotificationChannel suggestionChannel = new NotificationChannel(SUGGESTION_CHANNEL,"Suggestion_Channel", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationChannel suggestionChannel = new NotificationChannel(SUGGESTION_CHANNEL,"Suggestion_Channel", NotificationManager.IMPORTANCE_HIGH);
             suggestionChannel.setDescription("Creates suggestions for words");
 
-            NotificationManager notificationManagerService = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            notificationManagerService.createNotificationChannel(serviceChannel);
-            NotificationManager notificationManagerSuggestion = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            notificationManagerSuggestion.createNotificationChannel(suggestionChannel);
+            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.createNotificationChannel(serviceChannel);
+            notificationManager.createNotificationChannel(suggestionChannel);
         }
-        Log.d(TAG , "createNotificationChannel: I*M OOOO ");
+        Log.d(TAG , "createNotificationChannel: notification channels created ");
     }
 }

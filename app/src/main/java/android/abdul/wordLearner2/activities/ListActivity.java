@@ -10,10 +10,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.util.LruCache;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,7 +24,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.Volley;
 
 import java.util.ArrayList;
 
@@ -83,9 +80,6 @@ public class ListActivity extends AppCompatActivity {
         startMyService();
         registerBroadcast();
     }
-
-
-
 
     private void startMyService() {
         wordServiceIntent = new Intent(this, WordLearnerService.class);
