@@ -87,6 +87,7 @@ public class AdapterForWordList extends RecyclerView.Adapter<AdapterForWordList.
         return ListOfWords.size();
     }
 
+// SRC:   https://cypressnorth.com/mobile-application-development/setting-android-google-volley-imageloader-networkimageview/
     private void loadImage() {
         mRequestQueue = Volley.newRequestQueue(context);
         mImageLoader = new ImageLoader(mRequestQueue, new ImageLoader.ImageCache() {

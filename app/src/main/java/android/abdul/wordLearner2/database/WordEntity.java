@@ -26,12 +26,11 @@ public class WordEntity implements Parcelable {
     @ColumnInfo(name = "description")
     String _description;
 
-    @ColumnInfo(name = "rating")
-    double _rating;
-
     @ColumnInfo(name = "notes")
     String _notes;
 
+    @ColumnInfo(name = "rating")
+    double _rating;
 
     public WordEntity(String _Image, String _Name, String _Pronounciation, String _Description, String _Notes, double _Rating){
         _image              = _Image;

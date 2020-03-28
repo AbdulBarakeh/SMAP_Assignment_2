@@ -33,20 +33,18 @@ public class ListActivity extends AppCompatActivity {
     private static final String TAG = "ListActivity";
     public static final String BROADCAST = "android.abdul.wordLearner2.activities.ListActivity";
     public static final String BROADCAST_UPDATE = "android.abdul.wordLearner2.activities.ListActivity";
-    private AdapterForWordList AdapterListActivity;
+    private static AdapterForWordList AdapterListActivity;
     RecyclerView recyclerViewListActivity;
     private EditText SearchInput;
     private Button addButton;
 
-    ArrayList<WordEntity> WordList = new ArrayList<>();
-    private WordLearnerService wordService;
+    static ArrayList<WordEntity> WordList = new ArrayList<>();
+    private static WordLearnerService wordService;
     Intent wordServiceIntent;
     BroadcastListReceiver listReceiver;
     LocalBroadcastManager LBM;
     BroadcastUpdateReceiver updateReceiver;
 
-//    BroadcastReceiver updateReceiver;
-//    BroadcastReceiver deleteReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,7 +145,7 @@ public class ListActivity extends AppCompatActivity {
 
 
         }
-        public class  BroadcastListReceiver extends BroadcastReceiver{
+        public static class  BroadcastListReceiver extends BroadcastReceiver{
             @Override
             public void onReceive(Context context , Intent intent) {
                 WordEntity sentWord = intent.getParcelableExtra("word");
@@ -160,10 +158,11 @@ public class ListActivity extends AppCompatActivity {
                 }
                 AdapterListActivity.notifyDataSetChanged();
                 Log.d(TAG , "onReceive: DELETE!!!");
+                //TODO: FIX LOGS
             }
         }
 //
-        public class BroadcastUpdateReceiver extends BroadcastReceiver{
+        public static class BroadcastUpdateReceiver extends BroadcastReceiver{
             @Override
             public void onReceive(Context context , Intent intent) {
                 try {

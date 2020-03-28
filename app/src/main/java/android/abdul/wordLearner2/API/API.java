@@ -30,15 +30,21 @@ public class API{
                 Gson gson = new GsonBuilder().serializeNulls().create();
                 ApiWord receivedWord = gson.fromJson(response.toString() , ApiWord.class);
                 List<Definition> definitions = receivedWord.getDefinitions();
+                Definition firstIndex = definitions.get(0);
                 String image = "";
                 String def = "";
-                for (Definition current : definitions) {
-                    if (!current.getImageUrl().equals("")) {
-                        image = current.getImageUrl();
-                    }
-                    if (!current.getDefinition().equals("")) {
-                        def = current.getDefinition();
-                    }
+                if (firstIndex.getImageUrl() == null){
+                    firstIndex.setImageUrl("");
+                }
+                if (!firstIndex.getImageUrl().equals("")) {
+                    image = firstIndex.getImageUrl();
+                }
+                if (firstIndex.getDefinition() == null){
+                    firstIndex.setDefinition("");
+                }
+                if (!firstIndex.getDefinition().equals("")) {
+                    def = firstIndex.getDefinition();
+
                 }
                 WordEntity parsedWord = new WordEntity(image , receivedWord.getWord() , receivedWord.getPronunciation() , def , "" , 0);
                 service.addApiWord(parsedWord);

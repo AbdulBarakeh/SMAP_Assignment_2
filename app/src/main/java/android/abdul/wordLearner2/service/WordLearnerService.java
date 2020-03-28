@@ -139,7 +139,7 @@ public class WordLearnerService extends Service {
     public void addWord(String word){
         WordEntity res;
         for (WordEntity specificWord : wordList){
-            if (specificWord.getName().equals(word)){
+            if (specificWord.getName().toLowerCase().equals(word.toLowerCase())){
                 Log.d(TAG , "addWord: Word already exist");
                 Toast.makeText(this , "Word already exist" , Toast.LENGTH_SHORT).show();
                 return;
@@ -196,7 +196,7 @@ public class WordLearnerService extends Service {
     public void addApiWord(WordEntity parsedWord) {
         WordEntity newWord = new WordEntity();
         newWord = parsedWord;
-        if (newWord.getImage() == null){
+        if (newWord.getImage() == null || newWord.getImage().equals("")){
             newWord.setImage("https://stockpictures.io/wp-content/uploads/2020/01/image-not-found-big-768x432.png");
         }
         DB.insertOne(newWord);
