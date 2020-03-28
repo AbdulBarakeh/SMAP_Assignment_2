@@ -23,6 +23,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ExecutionException;
 
 import static android.abdul.wordLearner2.BaseApplication.SERVICE_CHANNEL;
 import static android.abdul.wordLearner2.BaseApplication.SUGGESTION_CHANNEL;
@@ -74,7 +75,15 @@ public class WordLearnerService extends Service {
         LBM = LocalBroadcastManager.getInstance(this);
         DB = new WordRepository(getApplicationContext());
         api = new API();
-//        CreateSamples();
+        try {
+            GetSamples();
+        }
+        catch ( ExecutionException e ) {
+            e.printStackTrace();
+        }
+        catch ( InterruptedException e ) {
+            e.printStackTrace();
+        }
         pushNotification(pendingIntent_suggestion);
         run.run();
     }
@@ -137,16 +146,19 @@ public class WordLearnerService extends Service {
         }
         api.parseJason(this,word);
     }
-    public void deleteWord(String word){
+    public void deleteWord(String word) throws ExecutionException, InterruptedException {
         deleteWordFromList(word);
     }
+
     public void updateWord(WordEntity word){
         DB.updateOne(word);
         update(word);
     }
 
-    //Create list of words
-//    private ArrayList<WordEntity> CreateSamples(){
+//    Create list of words
+    private void GetSamples() throws ExecutionException, InterruptedException {
+        List<WordEntity> tempList = DB.getAllWords();
+        wordList.addAll(tempList);
 //        ArrayList<WordEntity> Sample = new ArrayList<>();
 //        Sample.add(new WordEntity("https://media.owlbot.info/dictionary/images/kkkkkkw.jpg.400x400_q85_box-0,0,600,600_crop_detail.jpg",     "Buffalo",  "ˈbəf(ə)ˌlō",   "a heavily built wild ox with backward-curving horns, found mainly in the Old World tropics.","",0));
 //        Sample.add(new WordEntity("https://media.owlbot.info/dictionary/images/nnnt.png.400x400_q85_box-0,0,500,500_crop_detail.png",       "Camel",    "ˈkaməl",       "a large, long-necked ungulate mammal of arid country, with long slender legs, broad cushioned feet, and either one or two humps on the back. Camels can survive for long periods without food or drink, chiefly by using up the fat reserves in their humps.","",0));
@@ -155,8 +167,11 @@ public class WordLearnerService extends Service {
 //        Sample.add(new WordEntity("https://media.owlbot.info/dictionary/images/27ti5gwrzr_Julie_Larsen_Maher_3242_African_Elephant_UGA_06_30_10_hr.jpg.400x400_q85_box-356,0,1156,798_crop_detail.jpg",    "Elephant", "ˈeləfənt",     "a very large plant-eating mammal with a prehensile trunk, long curved ivory tusks, and large ears, native to Africa and southern Asia. It is the largest living land animal.","",0));
 //        wordList = Sample;
 //        DB.insertAll(wordList);
+////        for (WordEntity current : wordList){
+////            DB.insertOne(current);
+////        }
 //        return wordList;
-//    }
+    }
     private WordEntity findWordInList(String word){
         for (WordEntity specificWord : wordList) {
             if (specificWord.getName().equals(word)){
@@ -167,8 +182,12 @@ public class WordLearnerService extends Service {
         Log.d(TAG, "findWordInList: Word not found");
         return new WordEntity();
     }
-    private void deleteWordFromList(String word){
-        List<WordEntity> current = DB.getAllWords();
+    private void deleteWordFromList(String word) throws ExecutionException, InterruptedException {
+//        List<WordEntity> current = DB.getAllWords();
+        WordEntity wordTobeDeleted = DB.findByName(word);
+        DB.delete(wordTobeDeleted);
+        wordList.remove(wordTobeDeleted);
+        updateDataset();
         Log.d(TAG , "deleteWordFromList: I'M HERE");
         //        WordEntity currentWord = DB.findByName(word);
 //        wordList.remove(currentWord);

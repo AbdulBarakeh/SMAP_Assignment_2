@@ -11,13 +11,13 @@ import java.util.List;
 //SRC: https://android.jlelse.eu/5-steps-to-implement-room-persistence-library-in-android-47b10cd47b24
 @Dao
 public interface WordDao {
-    @Query("SELECT * FROM WordEntity")
+    @Query("SELECT * FROM wordentity")
     List<WordEntity> getAllWords();
 
-    @Query("SELECT * FROM WordEntity WHERE uid IN (:wordUids)")
-    List<WordEntity> loadAllByUids(int[] wordUids);
+//    @Query("SELECT * FROM wordEntity WHERE uid IN (:wordUids)")
+//    List<WordEntity> loadAllByUids(int[] wordUids);
 
-    @Query("SELECT * FROM WordEntity WHERE name in (:name) LIMIT 1")
+    @Query("SELECT * FROM WordEntity WHERE name LIKE (:name) LIMIT 1")
     WordEntity findByName(String name);
 
     @Query("SELECT * FROM WordEntity WHERE uid in (:uid) LIMIT 1")

@@ -23,6 +23,8 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
 
+import java.util.concurrent.ExecutionException;
+
 public class DetailsActivity extends AppCompatActivity {
 
 private Button cancel;
@@ -134,8 +136,14 @@ private ImageLoader mImageLoader;
         public void onServiceDisconnected(ComponentName name) {}
     };
 
-    public void delete(View v){
+    public void delete(View v) throws ExecutionException, InterruptedException {
         wordService.deleteWord(word.getName());
         finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unbindService(serviceConnection);
     }
 }

@@ -81,23 +81,7 @@ public class ListActivity extends AppCompatActivity {
             }
         });
         startMyService();
-//        registerUpdateBroadcast();
         registerBroadcast();
-//        updateReceiver = new BroadcastReceiver() {
-//            @Override
-//            public void onReceive(Context context , Intent intent) {
-//                Log.d(TAG , "onReceive: I UPDATED");
-//            }
-//        };
-//        LocalBroadcastManager.getInstance(this).registerReceiver(updateReceiver,new IntentFilter("update"));
-//
-//        deleteReceiver = new BroadcastReceiver() {
-//            @Override
-//            public void onReceive(Context context , Intent intent) {
-//                Log.d(TAG , "onReceive: I DELETED");
-//            }
-//        };
-//        LocalBroadcastManager.getInstance(this).registerReceiver(deleteReceiver,new IntentFilter("delete"));
     }
 
     private void startMyService() {
@@ -110,6 +94,7 @@ public class ListActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        unbindService(serviceConnection);
         LBM.unregisterReceiver(listReceiver);
 //        LocalBroadcastManager.getInstance(this).unregisterReceiver(updateReceiver);
 //        LocalBroadcastManager.getInstance(this).unregisterReceiver(deleteReceiver);
