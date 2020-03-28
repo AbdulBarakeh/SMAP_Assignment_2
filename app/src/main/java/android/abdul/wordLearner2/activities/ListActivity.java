@@ -179,9 +179,9 @@ public class ListActivity extends AppCompatActivity {
         public class BroadcastUpdateReceiver extends BroadcastReceiver{
             @Override
             public void onReceive(Context context , Intent intent) {
-//                WordList = wordService.getAllWords();
-//                AdapterListActivity.updateList(WordList);
-//                AdapterListActivity.notifyDataSetChanged();
+                WordList = wordService.getAllWords();
+                AdapterListActivity.updateList(WordList);
+                AdapterListActivity.notifyDataSetChanged();
                 Log.d(TAG , "onReceive: Wordlist updated in" + TAG);
             }
         }

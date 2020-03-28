@@ -33,7 +33,6 @@ public class WordLearnerService extends Service {
     ArrayList<WordEntity> wordList = new ArrayList<>();
     WordEntity word = new WordEntity();
     LocalBroadcastManager LBM;
-    LocalBroadcastManager LUBM;
     WordRepository DB;
     API api;
     Context context;
@@ -74,10 +73,9 @@ public class WordLearnerService extends Service {
 
 
         LBM = LocalBroadcastManager.getInstance(this);
-        LUBM = LocalBroadcastManager.getInstance(this);
         DB = new WordRepository(getApplicationContext());
         api = new API();
-        CreateSamples();
+//        CreateSamples();
         pushNotification(pendingIntent_suggestion);
         run.run();
     }
@@ -157,17 +155,17 @@ public class WordLearnerService extends Service {
     }
 
     //Create list of words
-    private ArrayList<WordEntity> CreateSamples(){
-        ArrayList<WordEntity> Sample = new ArrayList<>();
-        Sample.add(new WordEntity("https://media.owlbot.info/dictionary/images/kkkkkkw.jpg.400x400_q85_box-0,0,600,600_crop_detail.jpg",     "Buffalo",  "ˈbəf(ə)ˌlō",   "a heavily built wild ox with backward-curving horns, found mainly in the Old World tropics.","",0));
-        Sample.add(new WordEntity("https://media.owlbot.info/dictionary/images/nnnt.png.400x400_q85_box-0,0,500,500_crop_detail.png",       "Camel",    "ˈkaməl",       "a large, long-necked ungulate mammal of arid country, with long slender legs, broad cushioned feet, and either one or two humps on the back. Camels can survive for long periods without food or drink, chiefly by using up the fat reserves in their humps.","",0));
-        Sample.add(new WordEntity("https://media.owlbot.info/dictionary/images/sssssb.jpg.400x400_q85_box-0,0,500,500_crop_detail.jpg",     "Cheetah",  "ˈCHēdə",       "a large slender spotted cat found in Africa and parts of Asia. It is the fastest animal on land.","",0));
-        Sample.add(new WordEntity("https://media.owlbot.info/dictionary/images/rrrrrm.jpg.400x400_q85_box-0,0,500,500_crop_detail.jpg",   "Crocodile","ˈkräkəˌdīl",   "a large predatory semiaquatic reptile with long jaws, long tail, short legs, and a horny textured skin.","",0));
-        Sample.add(new WordEntity("https://media.owlbot.info/dictionary/images/27ti5gwrzr_Julie_Larsen_Maher_3242_African_Elephant_UGA_06_30_10_hr.jpg.400x400_q85_box-356,0,1156,798_crop_detail.jpg",    "Elephant", "ˈeləfənt",     "a very large plant-eating mammal with a prehensile trunk, long curved ivory tusks, and large ears, native to Africa and southern Asia. It is the largest living land animal.","",0));
-        wordList = Sample;
-        DB.insertAll(wordList);
-        return wordList;
-    }
+//    private ArrayList<WordEntity> CreateSamples(){
+//        ArrayList<WordEntity> Sample = new ArrayList<>();
+//        Sample.add(new WordEntity("https://media.owlbot.info/dictionary/images/kkkkkkw.jpg.400x400_q85_box-0,0,600,600_crop_detail.jpg",     "Buffalo",  "ˈbəf(ə)ˌlō",   "a heavily built wild ox with backward-curving horns, found mainly in the Old World tropics.","",0));
+//        Sample.add(new WordEntity("https://media.owlbot.info/dictionary/images/nnnt.png.400x400_q85_box-0,0,500,500_crop_detail.png",       "Camel",    "ˈkaməl",       "a large, long-necked ungulate mammal of arid country, with long slender legs, broad cushioned feet, and either one or two humps on the back. Camels can survive for long periods without food or drink, chiefly by using up the fat reserves in their humps.","",0));
+//        Sample.add(new WordEntity("https://media.owlbot.info/dictionary/images/sssssb.jpg.400x400_q85_box-0,0,500,500_crop_detail.jpg",     "Cheetah",  "ˈCHēdə",       "a large slender spotted cat found in Africa and parts of Asia. It is the fastest animal on land.","",0));
+//        Sample.add(new WordEntity("https://media.owlbot.info/dictionary/images/rrrrrm.jpg.400x400_q85_box-0,0,500,500_crop_detail.jpg",   "Crocodile","ˈkräkəˌdīl",   "a large predatory semiaquatic reptile with long jaws, long tail, short legs, and a horny textured skin.","",0));
+//        Sample.add(new WordEntity("https://media.owlbot.info/dictionary/images/27ti5gwrzr_Julie_Larsen_Maher_3242_African_Elephant_UGA_06_30_10_hr.jpg.400x400_q85_box-356,0,1156,798_crop_detail.jpg",    "Elephant", "ˈeləfənt",     "a very large plant-eating mammal with a prehensile trunk, long curved ivory tusks, and large ears, native to Africa and southern Asia. It is the largest living land animal.","",0));
+//        wordList = Sample;
+//        DB.insertAll(wordList);
+//        return wordList;
+//    }
     private WordEntity findWordInList(String word){
         for (WordEntity specificWord : wordList) {
             if (specificWord.getName().equals(word)){
@@ -179,17 +177,22 @@ public class WordLearnerService extends Service {
         return new WordEntity();
     }
     private void deleteWordFromList(String word){
+        ArrayList<WordEntity> current = DB.getAll();
+        Log.d(TAG , "deleteWordFromList: I'M HERE");
+        //        WordEntity currentWord = DB.findByName(word);
+//        wordList.remove(currentWord);
+//        updateDataset();
 //        for (WordEntity currentListWord : wordList ) {
 //            if (currentListWord.getName().equals(word)){
 //                Log.d(TAG, "deleteWordFromList: Word removed");
 //                wordList.remove(currentListWord);
-//                DB.delete(currentListWord);
-//
+////                DB.delete(currentListWord);
+//                updateDataset();
 //
 //            }
 //        }
+
 //        update(new WordEntity());
-        updateDataset();
     }
 
     private void update(WordEntity word){
