@@ -11,7 +11,7 @@ import androidx.room.PrimaryKey;
 public class WordEntity implements Parcelable {
 
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "uid")
+    @ColumnInfo(name = "id")
     public int _uid;
 
     @ColumnInfo(name = "image")
@@ -34,7 +34,6 @@ public class WordEntity implements Parcelable {
 
 
     public WordEntity(String _Image, String _Name, String _Pronounciation, String _Description, String _Notes, double _Rating){
-//        _uid                = uid;
         _image              = _Image;
         _name             = _Name;
         _pronounciation    = _Pronounciation;

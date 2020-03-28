@@ -20,8 +20,8 @@ public interface WordDao {
     @Query("SELECT * FROM WordEntity WHERE name LIKE (:name) LIMIT 1")
     WordEntity findByName(String name);
 
-    @Query("SELECT * FROM WordEntity WHERE uid in (:uid) LIMIT 1")
-    WordEntity findByUid(int uid);
+    @Query("SELECT * FROM WordEntity WHERE id in (:id) LIMIT 1")
+    WordEntity findByUid(int id);
 
     @Insert
     void insertAll(List<WordEntity> words);

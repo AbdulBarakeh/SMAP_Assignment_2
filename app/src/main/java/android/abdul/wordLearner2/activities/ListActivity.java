@@ -97,8 +97,6 @@ public class ListActivity extends AppCompatActivity {
         super.onDestroy();
         unbindService(serviceConnection);
         LBM.unregisterReceiver(listReceiver);
-//        LocalBroadcastManager.getInstance(this).unregisterReceiver(updateReceiver);
-//        LocalBroadcastManager.getInstance(this).unregisterReceiver(deleteReceiver);
         LBM.unregisterReceiver(updateReceiver);
     }
 
@@ -152,26 +150,19 @@ public class ListActivity extends AppCompatActivity {
         public class  BroadcastListReceiver extends BroadcastReceiver{
             @Override
             public void onReceive(Context context , Intent intent) {
-//                WordEntity sentWord = intent.getParcelableExtra("word");
-//                for (WordEntity currentword : WordList) {
-//                    if (currentword.getName().equals(sentWord.getName())){
-//                        currentword.setRating(sentWord.getRating());
-//                        currentword.setNotes(sentWord.getNotes());
-//                        AdapterListActivity.notifyDataSetChanged();
-//                    }
-//                }
-//                AdapterListActivity.notifyDataSetChanged();
+                WordEntity sentWord = intent.getParcelableExtra("word");
+                for (WordEntity currentword : WordList) {
+                    if (currentword.getName().equals(sentWord.getName())){
+                        currentword.setRating(sentWord.getRating());
+                        currentword.setNotes(sentWord.getNotes());
+                        AdapterListActivity.notifyDataSetChanged();
+                    }
+                }
+                AdapterListActivity.notifyDataSetChanged();
                 Log.d(TAG , "onReceive: DELETE!!!");
             }
         }
 //
-////        private void registerUpdateBroadcast() {
-////            LUBM = LocalBroadcastManager.getInstance(ListActivity.this);
-////            IntentFilter intentFilterupdate = new IntentFilter();
-////            intentFilterupdate.addAction(BROADCAST_UPDATE);
-////            updateReceiver = new BroadcastUpdateReceiver();
-////            LUBM.registerReceiver(updateReceiver, intentFilterupdate);
-////        }
         public class BroadcastUpdateReceiver extends BroadcastReceiver{
             @Override
             public void onReceive(Context context , Intent intent) {

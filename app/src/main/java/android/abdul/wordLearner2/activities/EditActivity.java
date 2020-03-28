@@ -40,7 +40,6 @@ String wordname;
 WordEntity word;
 WordLearnerService wordService;
 private RequestQueue mRequestQueue;
-private ImageLoader mImageLoader;
 Intent EditToDetail;
 
     @Override
@@ -52,11 +51,11 @@ Intent EditToDetail;
         Intent receivedFromDetail = getIntent();
         if (savedInstanceState != null){
             word = savedInstanceState.getParcelable("savedWord");
+            wordname = word.getName();
         }
         else{
             wordname = receivedFromDetail.getStringExtra("word");
         }
-        loadImage();
         InitializeUI();
         EditToDetail = new Intent(this,DetailsActivity.class);
 
@@ -64,8 +63,6 @@ Intent EditToDetail;
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                EditToDetail.putExtra("word",wordname);
-//                startActivity(EditToDetail);
                 finish();
             }
         });
@@ -100,18 +97,7 @@ Intent EditToDetail;
 
         startMyService();
     }
-    private void loadImage() {
-        mRequestQueue = Volley.newRequestQueue(this);
-        mImageLoader = new ImageLoader(mRequestQueue, new ImageLoader.ImageCache() {
-            private final LruCache<String, Bitmap> mCache = new LruCache<String, Bitmap>(10);
-            public void putBitmap(String url, Bitmap bitmap) {
-                mCache.put(url, bitmap);
-            }
-            public Bitmap getBitmap(String url) {
-                return mCache.get(url);
-            }
-        });
-    }
+
     private void setViewdata() {
         //Set the data into the UI elements
         Name.setText(word.getName());
@@ -157,4 +143,9 @@ Intent EditToDetail;
         }
     };
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unbindService(serviceConnection);
+    }
 }

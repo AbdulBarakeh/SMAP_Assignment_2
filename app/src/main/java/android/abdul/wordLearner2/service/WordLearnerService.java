@@ -37,7 +37,6 @@ public class WordLearnerService extends Service {
     WordRepository DB;
     API api;
     Context context;
-    PendingIntent pendingIntent_suggestion;
     Runnable run;
     Handler handler = new Handler();
     //Binder
@@ -56,10 +55,8 @@ public class WordLearnerService extends Service {
         context=this;
         //LINK RESOURCE: https://codinginflow.com/tutorials/android/notifications-notification-channels/part-1-notification-channels
         // Inspiration have been drawn from the other parts of the tutorial as well.
-        Intent suggestionIntent = new Intent(this, ListActivity.class);
         Intent serviceIntent = new Intent(this, ListActivity.class);
 
-        pendingIntent_suggestion = PendingIntent.getActivity(this,0,suggestionIntent,0);
         PendingIntent pendingIntent_service = PendingIntent.getActivity(this,0,serviceIntent,0);
 
         Notification service = new NotificationCompat.Builder(this, SERVICE_CHANNEL)
@@ -68,6 +65,7 @@ public class WordLearnerService extends Service {
                 .setContentTitle("Wordlearner Service")
                 .setContentText("Service is running...")
                 .setContentIntent(pendingIntent_service)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setSmallIcon(R.drawable.ic_foxicon)
                 .build();
         startForeground(666,service);
@@ -84,11 +82,11 @@ public class WordLearnerService extends Service {
         catch ( InterruptedException e ) {
             e.printStackTrace();
         }
-        pushNotification(pendingIntent_suggestion);
+        pushNotification();
         run.run();
     }
 //LINK SOURCE: https://www.youtube.com/watch?v=QfQE1ayCzf8 "How to Start a Background Thread in Android"
-    private void pushNotification(final PendingIntent pendingIntent_suggestion) {
+    private void pushNotification() {
         final Random rand = new Random();
         run = new Runnable(){
             @Override
@@ -99,13 +97,13 @@ public class WordLearnerService extends Service {
                         .setChannelId(SUGGESTION_CHANNEL)
                         .setContentTitle("Suggested word")
                         .setContentText("Learn this word: "+ randomElement.getName())
+                        .setDefaults(Notification.DEFAULT_ALL)
                         .setPriority(NotificationCompat.PRIORITY_HIGH)
-//                        .setContentIntent(pendingIntent_suggestion)
                         .setSmallIcon(R.drawable.ic_and)
                         .build();
                 NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
                 notificationManager.notify(667,suggestion);
-                handler.postDelayed(this,60000);
+                handler.postDelayed(this,1000);
             }
         };
     }
@@ -158,22 +156,10 @@ public class WordLearnerService extends Service {
         update(word);
     }
 
-//    Create list of words
+//    Get list of words
     private void GetSamples() throws ExecutionException, InterruptedException {
         List<WordEntity> tempList = DB.getAllWords();
         wordList.addAll(tempList);
-//        ArrayList<WordEntity> Sample = new ArrayList<>();
-//        Sample.add(new WordEntity("https://media.owlbot.info/dictionary/images/kkkkkkw.jpg.400x400_q85_box-0,0,600,600_crop_detail.jpg",     "Buffalo",  "ˈbəf(ə)ˌlō",   "a heavily built wild ox with backward-curving horns, found mainly in the Old World tropics.","",0));
-//        Sample.add(new WordEntity("https://media.owlbot.info/dictionary/images/nnnt.png.400x400_q85_box-0,0,500,500_crop_detail.png",       "Camel",    "ˈkaməl",       "a large, long-necked ungulate mammal of arid country, with long slender legs, broad cushioned feet, and either one or two humps on the back. Camels can survive for long periods without food or drink, chiefly by using up the fat reserves in their humps.","",0));
-//        Sample.add(new WordEntity("https://media.owlbot.info/dictionary/images/sssssb.jpg.400x400_q85_box-0,0,500,500_crop_detail.jpg",     "Cheetah",  "ˈCHēdə",       "a large slender spotted cat found in Africa and parts of Asia. It is the fastest animal on land.","",0));
-//        Sample.add(new WordEntity("https://media.owlbot.info/dictionary/images/rrrrrm.jpg.400x400_q85_box-0,0,500,500_crop_detail.jpg",   "Crocodile","ˈkräkəˌdīl",   "a large predatory semiaquatic reptile with long jaws, long tail, short legs, and a horny textured skin.","",0));
-//        Sample.add(new WordEntity("https://media.owlbot.info/dictionary/images/27ti5gwrzr_Julie_Larsen_Maher_3242_African_Elephant_UGA_06_30_10_hr.jpg.400x400_q85_box-356,0,1156,798_crop_detail.jpg",    "Elephant", "ˈeləfənt",     "a very large plant-eating mammal with a prehensile trunk, long curved ivory tusks, and large ears, native to Africa and southern Asia. It is the largest living land animal.","",0));
-//        wordList = Sample;
-//        DB.insertAll(wordList);
-////        for (WordEntity current : wordList){
-////            DB.insertOne(current);
-////        }
-//        return wordList;
     }
     private WordEntity findWordInList(String word){
         for (WordEntity specificWord : wordList) {
