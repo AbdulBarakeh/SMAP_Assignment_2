@@ -126,6 +126,8 @@ Intent EditToDetail;
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
+        word.setNotes(Notes.getText().toString());
+        word.setRating(Double.valueOf(Rating.getText().toString()));
         outState.putParcelable("savedWord",word);
     }
 

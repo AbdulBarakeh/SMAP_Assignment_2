@@ -21,7 +21,6 @@ public class BaseApplication extends Application {
     public void onCreate() {
         super.onCreate();
         createNotificationChannel();
-//        getTaskDatabase();
     }
     private void createNotificationChannel(){
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O){
@@ -38,15 +37,5 @@ public class BaseApplication extends Application {
         }
         Log.d(TAG , "createNotificationChannel: notification channels created ");
     }
-//    //SRC: TheSituationRoom1.6 Demo ITSMAPF20
-//    //singleton pattern used, for lazy loading + single instance since db object is expensive
-//    public WordDatabase getTaskDatabase(){
-//        if(db == null){
-//            //this builder is for simplicity of the example and not good practise
-//            //- dangerous to allow queries on the main thread as it could block
-//            //- destructive migrations is dangerous as you might loose data with change in schema
-//            db = Room.databaseBuilder(this, WordDatabase.class, "my_words").allowMainThreadQueries().fallbackToDestructiveMigration().addCallback(db.callback).build();
-//        }
-//        return db;
-//    }
+
 }

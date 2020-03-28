@@ -103,7 +103,7 @@ public class WordLearnerService extends Service {
                         .build();
                 NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
                 notificationManager.notify(667,suggestion);
-                handler.postDelayed(this,1000);
+                handler.postDelayed(this,60000);
             }
         };
     }
