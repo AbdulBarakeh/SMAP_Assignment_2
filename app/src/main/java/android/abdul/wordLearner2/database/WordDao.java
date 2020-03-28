@@ -12,7 +12,7 @@ import java.util.List;
 @Dao
 public interface WordDao {
     @Query("SELECT * FROM WordEntity")
-    List<WordEntity> getAll();
+    List<WordEntity> getAllWords();
 
     @Query("SELECT * FROM WordEntity WHERE uid IN (:wordUids)")
     List<WordEntity> loadAllByUids(int[] wordUids);
@@ -24,7 +24,7 @@ public interface WordDao {
     WordEntity findByUid(int uid);
 
     @Insert
-    void insertAll(ArrayList<WordEntity> words);
+    void insertAll(List<WordEntity> words);
 
     @Insert
     void insertOne(WordEntity word);

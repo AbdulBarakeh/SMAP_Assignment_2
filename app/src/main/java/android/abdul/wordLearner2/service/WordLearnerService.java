@@ -71,7 +71,6 @@ public class WordLearnerService extends Service {
                 .build();
         startForeground(666,service);
 
-
         LBM = LocalBroadcastManager.getInstance(this);
         DB = new WordRepository(getApplicationContext());
         api = new API();
@@ -128,7 +127,7 @@ public class WordLearnerService extends Service {
     }
 
     public void addWord(String word){
-        WordEntity dbRes;
+        WordEntity res;
         for (WordEntity specificWord : wordList){
             if (specificWord.getName().equals(word)){
                 Log.d(TAG , "addWord: Word already exist");
@@ -136,15 +135,7 @@ public class WordLearnerService extends Service {
                 return;
             }
         }
-        if(DB.findByName(word) == null)
-        {
-            api.parseJason(this,word);
-            return;
-        }
-        else{
-            dbRes = DB.findByName(word);
-        }
-        wordList.add(dbRes);
+        api.parseJason(this,word);
     }
     public void deleteWord(String word){
         deleteWordFromList(word);
@@ -177,7 +168,7 @@ public class WordLearnerService extends Service {
         return new WordEntity();
     }
     private void deleteWordFromList(String word){
-        ArrayList<WordEntity> current = DB.getAll();
+        List<WordEntity> current = DB.getAllWords();
         Log.d(TAG , "deleteWordFromList: I'M HERE");
         //        WordEntity currentWord = DB.findByName(word);
 //        wordList.remove(currentWord);

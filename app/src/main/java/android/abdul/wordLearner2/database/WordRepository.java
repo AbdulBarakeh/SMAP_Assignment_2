@@ -11,10 +11,13 @@ import java.util.List;
 public class WordRepository {
     private WordDao wordDao;
     private List<WordEntity> allWords;
-    public WordRepository(Application application) {
-        WordDatabase wordDatabase = WordDatabase.getInstance(application);
+    public WordRepository(Context context) {
+        WordDatabase wordDatabase = WordDatabase.getInstance(context);
         wordDao = wordDatabase.wordDao();
-        allWords = wordDao.getAll();
+        allWords = wordDao.getAllWords();
+    }
+    public List<WordEntity> getAllWords(){
+        return allWords;
     }
     public void insertAll( ArrayList<WordEntity> words){
         new InsertAllWordsAsyncTask(wordDao).execute(words);
@@ -57,7 +60,7 @@ public class WordRepository {
         }
     }
 
-    private static class InsertAllWordsAsyncTask extends AsyncTask<ArrayList<WordEntity>, Void,Void>{
+    private static class InsertAllWordsAsyncTask extends AsyncTask<List<WordEntity>, Void,Void>{
         private WordDao wordDao;
 
         private InsertAllWordsAsyncTask(WordDao wordDao){
@@ -65,7 +68,7 @@ public class WordRepository {
         }
 
         @Override
-        protected Void doInBackground(ArrayList<WordEntity>... wordEntities) {
+        protected Void doInBackground(List<WordEntity>... wordEntities) {
             wordDao.insertAll(wordEntities[0]);
             return null;
         }

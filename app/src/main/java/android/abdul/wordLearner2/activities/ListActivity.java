@@ -19,6 +19,8 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -41,6 +43,7 @@ public class ListActivity extends AppCompatActivity {
     BroadcastListReceiver listReceiver;
     LocalBroadcastManager LBM;
     BroadcastUpdateReceiver updateReceiver;
+
 //    BroadcastReceiver updateReceiver;
 //    BroadcastReceiver deleteReceiver;
 
@@ -48,7 +51,6 @@ public class ListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
-
         setupRecyclerview();
         Button exit = findViewById(R.id.Exit_button_List);
         SearchInput = findViewById(R.id.search_Input);
