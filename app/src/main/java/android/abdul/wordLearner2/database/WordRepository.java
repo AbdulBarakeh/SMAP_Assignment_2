@@ -24,7 +24,7 @@ public class WordRepository {
 public ExecutorService executor = Executors.newSingleThreadExecutor();
     private WordDatabase wordDatabase;
     public WordRepository(Context context) {
-        wordDatabase = Room.databaseBuilder(context,WordDatabase.class,"WordDatabase17")
+        wordDatabase = Room.databaseBuilder(context,WordDatabase.class,"WordDatabase21")
                 .addCallback(new RoomDatabase.Callback() {
                     @Override
                     public void onCreate(@NonNull SupportSQLiteDatabase db) {
@@ -88,8 +88,8 @@ public ExecutorService executor = Executors.newSingleThreadExecutor();
         };
         return executor.submit(getwordByUid).get();
     }
-    //AsyncTasks Are deprecated and should not be used
-    public void insertAll( final List<WordEntity> words){
+    //AsyncTasks Are deprecated and should not be used, although I wasn't able to make it work with callback functions like above
+    public void InsertAll( final List<WordEntity> words){
 
         new AsyncTask<Void, Void, Void>() {
             @Override
@@ -100,7 +100,7 @@ public ExecutorService executor = Executors.newSingleThreadExecutor();
         }.execute();
     }
 
-    public void insertOne( final WordEntity word){
+    public void InsertOne( final WordEntity word){
 
         new AsyncTask<Void,Void,Void>(){
 
@@ -111,6 +111,7 @@ public ExecutorService executor = Executors.newSingleThreadExecutor();
             }
         }.execute();
     }
+
     public void delete( final WordEntity word) {
 
         new AsyncTask<WordEntity, Void, Void>() {
@@ -123,7 +124,7 @@ public ExecutorService executor = Executors.newSingleThreadExecutor();
         }.execute();
     }
 
-    public void updateOne( final WordEntity word){
+    public void update( final WordEntity word){
         new AsyncTask<WordEntity,Void,Void>(){
 
             @Override
@@ -133,5 +134,6 @@ public ExecutorService executor = Executors.newSingleThreadExecutor();
             }
         }.execute();
     }
+
 
 }

@@ -126,6 +126,7 @@ public class WordLearnerService extends Service {
     }
 
     public ArrayList<WordEntity> getAllWords() throws ExecutionException, InterruptedException {
+        //List is element based which makes it work better with databases, which is why we convert it to arraylist instead of making DB return Arraylist in the first place.
         List<WordEntity> temp = DB.getAllWords();
         wordList.clear();
         wordList.addAll(temp);
@@ -152,7 +153,7 @@ public class WordLearnerService extends Service {
     }
 
     public void updateWord(WordEntity word){
-        DB.updateOne(word);
+        DB.update(word);
         update(word);
     }
 
@@ -199,7 +200,7 @@ public class WordLearnerService extends Service {
         if (newWord.getImage() == null || newWord.getImage().equals("")){
             newWord.setImage("https://stockpictures.io/wp-content/uploads/2020/01/image-not-found-big-768x432.png");
         }
-        DB.insertOne(newWord);
+        DB.InsertOne(newWord);
         wordList.add(newWord);
         update(newWord);
         Log.d(TAG , "addApiWord: APIword Added to list");
