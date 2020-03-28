@@ -26,6 +26,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 public class ListActivity extends AppCompatActivity {
 
@@ -116,7 +117,15 @@ public class ListActivity extends AppCompatActivity {
             @Override
             public void onServiceConnected(ComponentName name , IBinder service) {
                 wordService = ( (WordLearnerService.WordleranerServiceBinder) service ).getService();
-                WordList = wordService.getAllWords();
+                try {
+                    WordList = wordService.getAllWords();
+                }
+                catch ( ExecutionException e ) {
+                    e.printStackTrace();
+                }
+                catch ( InterruptedException e ) {
+                    e.printStackTrace();
+                }
                 AdapterListActivity.updateList(WordList);
                 AdapterListActivity.notifyDataSetChanged();
             }
@@ -166,7 +175,15 @@ public class ListActivity extends AppCompatActivity {
         public class BroadcastUpdateReceiver extends BroadcastReceiver{
             @Override
             public void onReceive(Context context , Intent intent) {
-                WordList = wordService.getAllWords();
+                try {
+                    WordList = wordService.getAllWords();
+                }
+                catch ( ExecutionException e ) {
+                    e.printStackTrace();
+                }
+                catch ( InterruptedException e ) {
+                    e.printStackTrace();
+                }
                 AdapterListActivity.updateList(WordList);
                 AdapterListActivity.notifyDataSetChanged();
                 Log.d(TAG , "onReceive: Wordlist updated in" + TAG);

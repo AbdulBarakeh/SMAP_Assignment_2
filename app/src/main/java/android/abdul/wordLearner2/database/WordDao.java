@@ -11,7 +11,7 @@ import java.util.List;
 //SRC: https://android.jlelse.eu/5-steps-to-implement-room-persistence-library-in-android-47b10cd47b24
 @Dao
 public interface WordDao {
-    @Query("SELECT * FROM wordentity")
+    @Query("SELECT * FROM Wordentity")
     List<WordEntity> getAllWords();
 
 //    @Query("SELECT * FROM wordEntity WHERE uid IN (:wordUids)")
@@ -29,8 +29,8 @@ public interface WordDao {
     @Insert
     void insertOne(WordEntity word);
 
-    @Delete
-    void delete(WordEntity word);
+    @Query("DELETE FROM Wordentity WHERE name = :word")
+    void delete(String word);
 
     @Update
     void updateOne(WordEntity word);

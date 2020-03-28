@@ -127,7 +127,10 @@ public class WordLearnerService extends Service {
         super.onDestroy();
     }
 
-    public ArrayList<WordEntity> getAllWords(){
+    public ArrayList<WordEntity> getAllWords() throws ExecutionException, InterruptedException {
+        List<WordEntity> temp = DB.getAllWords();
+        wordList.clear();
+        wordList.addAll(temp);
         return wordList;
     }
 
@@ -183,26 +186,12 @@ public class WordLearnerService extends Service {
         return new WordEntity();
     }
     private void deleteWordFromList(String word) throws ExecutionException, InterruptedException {
-//        List<WordEntity> current = DB.getAllWords();
         WordEntity wordTobeDeleted = DB.findByName(word);
         DB.delete(wordTobeDeleted);
         wordList.remove(wordTobeDeleted);
         updateDataset();
         Log.d(TAG , "deleteWordFromList: I'M HERE");
-        //        WordEntity currentWord = DB.findByName(word);
-//        wordList.remove(currentWord);
-//        updateDataset();
-//        for (WordEntity currentListWord : wordList ) {
-//            if (currentListWord.getName().equals(word)){
-//                Log.d(TAG, "deleteWordFromList: Word removed");
-//                wordList.remove(currentListWord);
-////                DB.delete(currentListWord);
-//                updateDataset();
-//
-//            }
-//        }
 
-//        update(new WordEntity());
     }
 
     private void update(WordEntity word){

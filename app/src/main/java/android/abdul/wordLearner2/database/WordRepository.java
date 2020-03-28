@@ -22,7 +22,7 @@ public class WordRepository {
 public ExecutorService executor = Executors.newSingleThreadExecutor();
     private WordDatabase wordDatabase;
     public WordRepository(Context context) {
-        wordDatabase = Room.databaseBuilder(context,WordDatabase.class,"WordDatabase1")
+        wordDatabase = Room.databaseBuilder(context,WordDatabase.class,"WordDatabase3")
 //                .fallbackToDestructiveMigration()
                 .addCallback(new RoomDatabase.Callback() {
                     @Override
@@ -100,7 +100,7 @@ public ExecutorService executor = Executors.newSingleThreadExecutor();
         new AsyncTask<WordEntity, Void, Void>() {
             @Override
             protected Void doInBackground(WordEntity... wordEntities) {
-                wordDatabase.wordDao().delete(word);
+                wordDatabase.wordDao().delete(word._name);
 
                 return null;
             }
