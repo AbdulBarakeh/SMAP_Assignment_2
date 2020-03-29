@@ -20,17 +20,17 @@ public interface WordDao {
     @Query("DELETE FROM WordEntity WHERE name = :word")
     void delete(String word);
 
+    @Query("UPDATE WordEntity SET notes= :notes, rating= :rating WHERE name = :name COLLATE NOCASE" )
+    void updateOne(String notes, double rating, String name);
+
     @Insert
     void insertAll(List<WordEntity> words);
 
     @Insert
     void insertOne(WordEntity word);
 
-//    @Update
-//    void updateOne(WordEntity word);
 
-    @Query("UPDATE WordEntity SET notes= :notes, rating= :rating WHERE id = :name")
-    void updateOne(String notes, double rating, String name);
+
 
 
 

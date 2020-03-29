@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">OrdLære</string>
+    <string name="app_name">au590917  OrdLære 2</string>
     <string name="button_edit_detail">REDIGER</string>
     <string name="list_of_animals">Mine Ord</string>
     <string name="exit_BTN_List_Activity">FORLAD</string>
@@ -17,11 +17,12 @@
     <string name="search_current_or_add_new">Søg nuværrende eller tilføj ny</string>
     <string name="button_update_edit">OPDATER</string>
     <string name="button_delete_detail">SLET</string>
-    <string name="addWordToast_WORD_EXIST">\" already exist\"</string>
-    <string name="WordAdded_LIST_ACTIVITY">tilføjet</string>
-    <string name="updateWord_LIST_ACTIVITY">opdateret</string>
+    <string name="addWordToast_WORD_EXIST">" already exist"</string>
+    <string name="WordAdded_LIST_ACTIVITY">" tilføjet"</string>
+    <string name="updateWord_LIST_ACTIVITY">" opdateret"</string>
     <string name="FreeThignsTitle">Kan du lide gratis ting?</string>
-    <string name="FreeThingsText">\"Her er et gratis ord du kan lære: \"</string>
+    <string name="FreeThingsText">"Her er et gratis ord du kan lære: "</string>
     <string name="wordlearnerServiceTitle">Ordlære tjeneste</string>
     <string name="wordlearnerserviceText">Tjeneste kører…</string>
+    <string name="deletedWord_LIST_ACTIVITY">" slettet"</string>
 </resources>

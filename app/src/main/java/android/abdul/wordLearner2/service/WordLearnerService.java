@@ -180,7 +180,7 @@ public class WordLearnerService extends Service {
         wordList.remove(wordTobeDeleted);
         updateDataset();
         Log.d(TAG , "deleteWordFromList: word deleted");
-        Toast.makeText(context , "Word Deleted" , Toast.LENGTH_SHORT).show();
+        Toast.makeText(context , word+ getString(R.string.deletedWord_LIST_ACTIVITY) , Toast.LENGTH_SHORT).show();
 
     }
     // Inspiration from -> SRC: https://www.techotopia.com/index.php/Broadcast_Intents_and_Broadcast_Receivers_in_Android_Studio
