@@ -16,11 +16,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -31,8 +30,6 @@ import java.util.concurrent.ExecutionException;
 public class ListActivity extends AppCompatActivity {
 
     private static final String TAG = "ListActivity";
-    public static final String BROADCAST = "android.abdul.wordLearner2.activities.ListActivity";
-    public static final String BROADCAST_UPDATE = "android.abdul.wordLearner2.activities.ListActivity";
     private static AdapterForWordList AdapterListActivity;
     RecyclerView recyclerViewListActivity;
     private EditText SearchInput;
@@ -89,7 +86,6 @@ public class ListActivity extends AppCompatActivity {
         bindService(wordServiceIntent,serviceConnection,Context.BIND_AUTO_CREATE);
     }
 
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -108,7 +104,8 @@ public class ListActivity extends AppCompatActivity {
         recyclerViewListActivity.setAdapter(AdapterListActivity);
         AdapterListActivity.notifyDataSetChanged();
     }
-
+        // SRC: https://developer.android.com/guide/components/bound-services
+        //Bind your service & Henrik ze teacher
         ServiceConnection serviceConnection = new ServiceConnection() {
             @Override
             public void onServiceConnected(ComponentName name , IBinder service) {
@@ -129,22 +126,26 @@ public class ListActivity extends AppCompatActivity {
             @Override
             public void onServiceDisconnected(ComponentName name) {}
         };
+
+        //register the different broadcasts
+        // Inspiration from -> SRC: https://www.techotopia.com/index.php/Broadcast_Intents_and_Broadcast_Receivers_in_Android_Studio
         private void registerBroadcast() {
             LBM = LocalBroadcastManager.getInstance(ListActivity.this);
 
             IntentFilter intentFilter = new IntentFilter();
-            intentFilter.addAction("delete");
+            intentFilter.addAction("update_word");
             IntentFilter intentFilterupdate = new IntentFilter();
-            intentFilterupdate.addAction("update");
+            intentFilterupdate.addAction("update_dataset");
 
             listReceiver = new BroadcastListReceiver();
             updateReceiver = new BroadcastUpdateReceiver();
 
             LBM.registerReceiver(listReceiver, intentFilter);
             LBM.registerReceiver(updateReceiver, intentFilterupdate);
-
-
         }
+        // Inspiration from -> SRC: https://www.techotopia.com/index.php/Broadcast_Intents_and_Broadcast_Receivers_in_Android_Studio
+        //receives word update
+        // updates on word update from edit activity
         public static class  BroadcastListReceiver extends BroadcastReceiver{
             @Override
             public void onReceive(Context context , Intent intent) {
@@ -156,12 +157,13 @@ public class ListActivity extends AppCompatActivity {
                         AdapterListActivity.notifyDataSetChanged();
                     }
                 }
-                AdapterListActivity.notifyDataSetChanged();
-                Log.d(TAG , "onReceive: DELETE!!!");
-                //TODO: FIX LOGS
+                Log.d(TAG , "onReceive: "+sentWord.getName()+" updated");
             }
         }
-//
+        //Inspiration from -> SRC: https://www.techotopia.com/index.php/Broadcast_Intents_and_Broadcast_Receivers_in_Android_Studio
+        // receives dataset update.
+        // Update whole list instead of specific word
+        //Updates on delete from detail activity
         public static class BroadcastUpdateReceiver extends BroadcastReceiver{
             @Override
             public void onReceive(Context context , Intent intent) {

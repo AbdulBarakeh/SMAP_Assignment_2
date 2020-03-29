@@ -17,4 +17,11 @@
     <string name="search_current_or_add_new">Søg nuværrende eller tilføj ny</string>
     <string name="button_update_edit">OPDATER</string>
     <string name="button_delete_detail">SLET</string>
+    <string name="addWordToast_WORD_EXIST">\" already exist\"</string>
+    <string name="WordAdded_LIST_ACTIVITY">tilføjet</string>
+    <string name="updateWord_LIST_ACTIVITY">opdateret</string>
+    <string name="FreeThignsTitle">Kan du lide gratis ting?</string>
+    <string name="FreeThingsText">\"Her er et gratis ord du kan lære: \"</string>
+    <string name="wordlearnerServiceTitle">Ordlære tjeneste</string>
+    <string name="wordlearnerserviceText">Tjeneste kører…</string>
 </resources>

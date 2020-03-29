@@ -1,9 +1,6 @@
 package android.abdul.wordLearner2.API;
-
-import android.abdul.wordLearner2.R;
 import android.abdul.wordLearner2.database.WordEntity;
 import android.abdul.wordLearner2.service.WordLearnerService;
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -12,13 +9,15 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
 import org.json.JSONObject;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
+//Help and inspiration comes from : https://www.youtube.com/watch?v=y2xtLqP8dSQ & AU219980
+//Gets word from api and sends it to service
+//Inspiration from part 1 to 4. SRC: https://codinginflow.com/tutorials/android/gson/part-1-simple-serialization-deserialization
 public class API{
     private final String Token = "Token f161a4938824d1cf79c89edce6cb6815f0e51cb8";
     public void parseJason(final WordLearnerService service, final String word){
@@ -47,7 +46,15 @@ public class API{
 
                 }
                 WordEntity parsedWord = new WordEntity(image , receivedWord.getWord() , receivedWord.getPronunciation() , def , "" , 0);
-                service.addApiWord(parsedWord);
+                try {
+                    service.addApiWord(parsedWord);
+                }
+                catch ( ExecutionException e ) {
+                    e.printStackTrace();
+                }
+                catch ( InterruptedException e ) {
+                    e.printStackTrace();
+                }
             }
         } , new Response.ErrorListener() {
             @Override

@@ -29,6 +29,7 @@ public class DetailsActivity extends AppCompatActivity {
 
 private Button cancel;
 private Button edit;
+private Button delete;
 private NetworkImageView Picture;
 private TextView Name;
 private TextView Pronoun;
@@ -36,8 +37,6 @@ private TextView Descrip;
 private TextView Notes;
 private TextView Rating;
 
-static final int BETWEEN_LIST_DETAIL_RES = 99;
-static final int BETWEEN_DETAIL_EDIT_RES = 98;
 static final int BETWEEN_DETAIL_EDIT_REQ = 102;
 WordEntity word;
 WordLearnerService wordService;
@@ -71,7 +70,21 @@ private ImageLoader mImageLoader;
                 Intent GoToEdit = new Intent(DetailsActivity.this, EditActivity.class);
                 GoToEdit.putExtra("word",wordname);
                 startActivityForResult(GoToEdit,BETWEEN_DETAIL_EDIT_REQ);
-//                finish();
+            }
+        });
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    wordService.deleteWord(word.getName());
+                }
+                catch ( ExecutionException e ) {
+                    e.printStackTrace();
+                }
+                catch ( InterruptedException e ) {
+                    e.printStackTrace();
+                }
+                finish();
             }
         });
         startMyService();
@@ -87,6 +100,7 @@ private ImageLoader mImageLoader;
             }
         }
     }
+    // SRC:   https://cypressnorth.com/mobile-application-development/setting-android-google-volley-imageloader-networkimageview/
     private void loadImage() {
         mRequestQueue = Volley.newRequestQueue(this);
         mImageLoader = new ImageLoader(mRequestQueue, new ImageLoader.ImageCache() {
@@ -119,11 +133,14 @@ private ImageLoader mImageLoader;
         Rating = findViewById( R.id.RatingOfWord_Detail);
         cancel = findViewById(R.id.ACTIVITY_DETAIL_CANCEL_BUTTON);
         edit = findViewById(R.id.ACTIVITY_DETAIL_BUTTON_EDIT);
+        delete = findViewById(R.id.ACTIVITY_DETAIL_BUTTON_DELETE);
     }
     private void startMyService() {
         intent = new Intent(this, WordLearnerService.class);
         bindService(intent,serviceConnection,BIND_AUTO_CREATE);
     }
+    // SRC: https://developer.android.com/guide/components/bound-services
+    //Bind your service & Henrik ze teacher
     ServiceConnection serviceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name , IBinder service) {
@@ -131,15 +148,9 @@ private ImageLoader mImageLoader;
             word = wordService.getWord(wordname);
             setViewdata();
         }
-
         @Override
         public void onServiceDisconnected(ComponentName name) {}
     };
-
-    public void delete(View v) throws ExecutionException, InterruptedException {
-        wordService.deleteWord(word.getName());
-        finish();
-    }
 
     @Override
     protected void onDestroy() {

@@ -22,6 +22,7 @@ public class BaseApplication extends Application {
         super.onCreate();
         createNotificationChannel();
     }
+    //Creating notification channelse for API versions over android OREO
     private void createNotificationChannel(){
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O){
 

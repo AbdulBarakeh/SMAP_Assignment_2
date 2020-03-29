@@ -15,7 +15,6 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 public abstract class WordDatabase extends RoomDatabase {
     private static WordDatabase instance;
     public abstract WordDao wordDao();
-
 }
 
 

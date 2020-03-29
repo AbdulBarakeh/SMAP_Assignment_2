@@ -29,4 +29,11 @@
     <string name="search_current_or_add_new">Search current or Add new</string>
     <string name="button_update_edit">UPDATE</string>
     <string name="button_delete_detail">DELETE</string>
+    <string name="addWordToast_WORD_EXIST">\" already exist\"</string>
+    <string name="WordAdded_LIST_ACTIVITY">added</string>
+    <string name="updateWord_LIST_ACTIVITY">updated</string>
+    <string name="FreeThignsTitle">You like free things?</string>
+    <string name="FreeThingsText">\"Here\'s a free word you can learn: \"</string>
+    <string name="wordlearnerServiceTitle">Wordlearner Service</string>
+    <string name="wordlearnerserviceText">Service is running…</string>
 </resources>

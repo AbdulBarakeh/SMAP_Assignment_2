@@ -1,5 +1,4 @@
 package android.abdul.wordLearner2.service;
-
 import android.abdul.wordLearner2.API.API;
 import android.abdul.wordLearner2.R;
 import android.abdul.wordLearner2.activities.ListActivity;
@@ -16,42 +15,33 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
-
 import androidx.core.app.NotificationCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
-
 import static android.abdul.wordLearner2.BaseApplication.SERVICE_CHANNEL;
 import static android.abdul.wordLearner2.BaseApplication.SUGGESTION_CHANNEL;
-
 
 public class WordLearnerService extends Service {
     private static final String TAG = "WordLearnerService";
     ArrayList<WordEntity> wordList = new ArrayList<>();
-    WordEntity word = new WordEntity();
     LocalBroadcastManager LBM;
     WordRepository DB;
     API api;
     Context context;
     Runnable run;
     Handler handler = new Handler();
-
-    //Binder
     IBinder binder = new WordleranerServiceBinder();
     private boolean isRunning = true;
-
+    //Binder Singleton. To geth the same instance every time.
     public class WordleranerServiceBinder extends Binder{
         public WordLearnerService getService(){
             return WordLearnerService.this;
         }
     }
 
-    public WordLearnerService() {
-    }
     @Override
     public void onCreate() {
         Log.d(TAG , "onCreate: I Exist");
@@ -59,23 +49,18 @@ public class WordLearnerService extends Service {
         //LINK RESOURCE: https://codinginflow.com/tutorials/android/notifications-notification-channels/part-1-notification-channels
         // Inspiration have been drawn from the other parts of the tutorial as well.
         Intent serviceIntent = new Intent(this, ListActivity.class);
-
         PendingIntent pendingIntent_service = PendingIntent.getActivity(this,0,serviceIntent,0);
-
         Notification service = new NotificationCompat.Builder(this, SERVICE_CHANNEL)
                 .setChannelId(SERVICE_CHANNEL)
                 .setOngoing(true)
-                .setContentTitle("Wordlearner Service")
-                .setContentText("Service is running...")
+                .setContentTitle(getString(R.string.wordlearnerServiceTitle))
+                .setContentText(getString(R.string.wordlearnerserviceText))
                 .setContentIntent(pendingIntent_service)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setSmallIcon(R.drawable.ic_foxicon)
                 .build();
         startForeground(666,service);
-
-        LBM = LocalBroadcastManager.getInstance(this);
-        DB = new WordRepository(getApplicationContext());
-        api = new API();
+        Initializer();
         try {
             GetSamples();
         }
@@ -85,46 +70,50 @@ public class WordLearnerService extends Service {
         catch ( InterruptedException e ) {
             e.printStackTrace();
         }
+        //declares runnable(new thread) and runs it
         pushNotification();
         run.run();
     }
-//LINK SOURCE: https://www.youtube.com/watch?v=QfQE1ayCzf8 "How to Start a Background Thread in Android"
+
+    private void Initializer() {
+        LBM = LocalBroadcastManager.getInstance(this);
+        DB = new WordRepository(getApplicationContext());
+        api = new API();
+    }
+
+    //LINK SOURCE: https://www.youtube.com/watch?v=QfQE1ayCzf8 "How to Start a Background Thread in Android"
+    // Pushnotification gets upadted every minute until onDestroy() 
     private void pushNotification() {
         final Random rand = new Random();
         run = new Runnable(){
 
             @Override
             public void run() {
-                List<WordEntity> list = wordList;
-                WordEntity randomElement = list.get(rand.nextInt(list.size()));
-                Notification suggestion = new NotificationCompat.Builder(context, SUGGESTION_CHANNEL)
-                        .setChannelId(SUGGESTION_CHANNEL)
-                        .setContentTitle("Suggested word")
-                        .setContentText("Learn this word: "+ randomElement.getName())
-                        .setDefaults(Notification.DEFAULT_ALL)
-                        .setPriority(NotificationCompat.PRIORITY_HIGH)
-                        .setSmallIcon(R.drawable.ic_foxicon)
-                        .build();
-                NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-                notificationManager.notify(667,suggestion);
-                if (isRunning){
-                    handler.postDelayed(this , 60000);
-                }
+            List<WordEntity> list = wordList;
+            WordEntity randomElement = list.get(rand.nextInt(list.size()));
+            Notification suggestion = new NotificationCompat.Builder(context, SUGGESTION_CHANNEL)
+                    .setChannelId(SUGGESTION_CHANNEL)
+                    .setContentTitle(getString(R.string.FreeThignsTitle))
+                    .setContentText(getString(R.string.FreeThingsText)+ randomElement.getName())
+                    .setDefaults(Notification.DEFAULT_ALL)
+                    .setPriority(NotificationCompat.PRIORITY_HIGH)
+                    .setSmallIcon(R.drawable.ic_foxicon)
+                    .build();
+            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.notify(667,suggestion);
+            if (isRunning){
+                handler.postDelayed(this , 60000);
+            }
             }
         };
     }
 
     @Override
-    public int onStartCommand(Intent intent , int flags , int startId) {
-        super.onStartCommand(intent ,flags , startId);
-        return START_NOT_STICKY;
-    }
-    @Override
     public IBinder onBind(Intent intent) {
-        // TODO: Return the communication channel to the service.
         Log.d(TAG , "onBind: I binded");
         return binder;
     }
+
     @Override
     public void onDestroy() {
         Log.d(TAG , "onDestroy: I Destroyed");
@@ -137,29 +126,32 @@ public class WordLearnerService extends Service {
         List<WordEntity> temp = DB.getAllWords();
         wordList.clear();
         wordList.addAll(temp);
+        Log.d(TAG , "getAllWords: All words gotten");
         return wordList;
     }
 
     public WordEntity getWord(String word){
+        Log.d(TAG , "getWord: " + word + "is being found");
         return findWordInList(word);
     }
-
+    public void deleteWord(String word) throws ExecutionException, InterruptedException {
+        Log.d(TAG , "deleteWord: " + word + "is being deleted...");
+        deleteWordFromList(word);
+    }
     public void addWord(String word){
-        WordEntity res;
         for (WordEntity specificWord : wordList){
             if (specificWord.getName().toLowerCase().equals(word.toLowerCase())){
-                Log.d(TAG , "addWord: Word already exist");
-                Toast.makeText(this , "Word already exist" , Toast.LENGTH_SHORT).show();
+                Log.d(TAG , "addWord: "+ specificWord.getName() +" already exist");
+                Toast.makeText(this , ""+specificWord.getName()+getString(R.string.addWordToast_WORD_EXIST) , Toast.LENGTH_SHORT).show();
                 return;
             }
         }
+        Log.d(TAG , "addWord: Looking for word in API...");
         api.parseJason(this,word);
+        Toast.makeText(context , "" + word + context.getString(R.string.WordAdded_LIST_ACTIVITY) , Toast.LENGTH_SHORT).show();
     }
-    public void deleteWord(String word) throws ExecutionException, InterruptedException {
-        deleteWordFromList(word);
-    }
-
-    public void updateWord(WordEntity word){
+    //
+    public void updateWord(WordEntity word) {
         DB.update(word);
         update(word);
     }
@@ -169,6 +161,7 @@ public class WordLearnerService extends Service {
         List<WordEntity> tempList = DB.getAllWords();
         wordList.addAll(tempList);
     }
+
     private WordEntity findWordInList(String word){
         for (WordEntity specificWord : wordList) {
             if (specificWord.getName().equals(word)){
@@ -184,24 +177,27 @@ public class WordLearnerService extends Service {
         DB.delete(wordTobeDeleted);
         wordList.remove(wordTobeDeleted);
         updateDataset();
-        Log.d(TAG , "deleteWordFromList: I'M HERE");
+        Log.d(TAG , "deleteWordFromList: word deleted");
+        Toast.makeText(context , "Word Deleted" , Toast.LENGTH_SHORT).show();
 
     }
-
+    // Inspiration from -> SRC: https://www.techotopia.com/index.php/Broadcast_Intents_and_Broadcast_Receivers_in_Android_Studio
     private void update(WordEntity word){
-        Intent broadcaster = new Intent().setAction("delete");
+        Intent broadcaster = new Intent().setAction("update_word");
         broadcaster.putExtra("word", word);
         LBM.sendBroadcast(broadcaster);
         Log.d(TAG , "update: Word updated");
+        Toast.makeText(context , ""+word.getName()+getString(R.string.updateWord_LIST_ACTIVITY) , Toast.LENGTH_SHORT).show();
     }
 
+    // Inspiration from -> SRC: https://www.techotopia.com/index.php/Broadcast_Intents_and_Broadcast_Receivers_in_Android_Studio
     private void updateDataset(){
-        Intent broadcasterupdate = new Intent().setAction("update");
+        Intent broadcasterupdate = new Intent().setAction("update_dataset");
         Log.d(TAG , "updateDataset: Dataset updated");
         LBM.sendBroadcast(broadcasterupdate);
     }
 
-    public void addApiWord(WordEntity parsedWord) {
+    public void addApiWord(WordEntity parsedWord) throws ExecutionException, InterruptedException {
         WordEntity newWord = new WordEntity();
         newWord = parsedWord;
         if (newWord.getImage() == null || newWord.getImage().equals("")){
@@ -212,5 +208,4 @@ public class WordLearnerService extends Service {
         update(newWord);
         Log.d(TAG , "addApiWord: APIword Added to list");
     }
-
 }

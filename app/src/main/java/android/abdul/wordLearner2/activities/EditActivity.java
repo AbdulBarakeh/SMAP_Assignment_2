@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,22 +18,25 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.concurrent.ExecutionException;
+
 public class EditActivity extends AppCompatActivity {
 
-private Button cancel;
-private Button update;
-private TextView Name;
-private EditText Notes;
-private TextView Rating;
-private SeekBar RatingBar;
+    private static final String TAG = "EditActivity";
+    private Button cancel;
+    private Button update;
+    private TextView Name;
+    private EditText Notes;
+    private TextView Rating;
+    private SeekBar RatingBar;
 
-String wordname;
-WordEntity word;
-WordLearnerService wordService;
-Intent EditToDetail;
-String savedNote;
-double savedRating;
-Bundle savedState;
+    String wordname;
+    WordEntity word;
+    WordLearnerService wordService;
+    Intent EditToDetail;
+    String savedNote;
+    double savedRating;
+    Bundle savedState;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +83,6 @@ Bundle savedState;
             public void onProgressChanged(SeekBar seekBar , int progress , boolean fromUser) {
                 double doubleProgress = ((double) progress)/10;
                 Rating.setText(String.valueOf(doubleProgress));
-//                word.setRating(Double.parseDouble(Rating.getText().toString()));
             }
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) { }
@@ -98,14 +101,15 @@ Bundle savedState;
             Rating.setText(String.valueOf(word.getRating()));
             // Scalability of the trigger position, and placing in to corespond with the current rating.
             RatingBar.setMax(100);
-            RatingBar.setProgress((int)word.getRating()*10);
+            RatingBar.setProgress((int)(word.getRating()*10));
         }
         else{
             Notes.setText(savedNote);
-            Rating.setText(String.valueOf(savedRating));
+            Rating.setText(String.valueOf(savedRating/10));
+            Log.d(TAG , "setViewdata: saved data"+ Rating.getText());
             // Scalability of the trigger position, and placing in to corespond with the current rating.
             RatingBar.setMax(100);
-            RatingBar.setProgress(((int)savedRating)*10);
+            RatingBar.setProgress(((int)savedRating));
         }
     }
 
@@ -129,9 +133,10 @@ Bundle savedState;
         super.onSaveInstanceState(outState);
         outState.putParcelable("savedWord",word);
         outState.putString("notes",Notes.getText().toString());
-        outState.putDouble("rating", Double.parseDouble(Rating.getText().toString()));
+        outState.putDouble("rating", Double.parseDouble(Rating.getText().toString())*10);
     }
-
+    // SRC: https://developer.android.com/guide/components/bound-services
+    //Bind your service & Henrik ze teacher
     ServiceConnection serviceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name , IBinder service) {
