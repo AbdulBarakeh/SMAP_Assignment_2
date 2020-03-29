@@ -23,7 +23,7 @@ public class WordRepository {
 public ExecutorService executor = Executors.newSingleThreadExecutor();
     private WordDatabase wordDatabase;
     public WordRepository(Context context) {
-        wordDatabase = Room.databaseBuilder(context,WordDatabase.class,"WordDatabase40")
+        wordDatabase = Room.databaseBuilder(context,WordDatabase.class,"WordDatabase41")
                 .addCallback(new RoomDatabase.Callback() {
                     @Override
                     public void onCreate(@NonNull SupportSQLiteDatabase db) {

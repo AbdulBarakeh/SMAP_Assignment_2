@@ -90,20 +90,22 @@ public class WordLearnerService extends Service {
             @Override
             public void run() {
             List<WordEntity> list = wordList;
-            WordEntity randomElement = list.get(rand.nextInt(list.size()));
-            Notification suggestion = new NotificationCompat.Builder(context, SUGGESTION_CHANNEL)
-                    .setChannelId(SUGGESTION_CHANNEL)
-                    .setContentTitle(getString(R.string.FreeThignsTitle))
-                    .setContentText(getString(R.string.FreeThingsText)+ randomElement.getName())
-                    .setDefaults(Notification.DEFAULT_ALL)
-                    .setPriority(NotificationCompat.PRIORITY_HIGH)
-                    .setSmallIcon(R.drawable.ic_foxicon)
-                    .build();
-            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            notificationManager.notify(667,suggestion);
-            if (isRunning){
-                handler.postDelayed(this , 60000);
+            if (list.size() != 0) {
+                WordEntity randomElement = list.get(rand.nextInt(list.size()));
+                Notification suggestion = new NotificationCompat.Builder(context , SUGGESTION_CHANNEL)
+                        .setChannelId(SUGGESTION_CHANNEL)
+                        .setContentTitle(getString(R.string.FreeThignsTitle))
+                        .setContentText(getString(R.string.FreeThingsText) + randomElement.getName())
+                        .setDefaults(Notification.DEFAULT_ALL)
+                        .setPriority(NotificationCompat.PRIORITY_HIGH)
+                        .setSmallIcon(R.drawable.ic_foxicon)
+                        .build();
+                NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                notificationManager.notify(667 , suggestion);
             }
+                if (isRunning) {
+                    handler.postDelayed(this , 60000);
+                }
             }
         };
     }

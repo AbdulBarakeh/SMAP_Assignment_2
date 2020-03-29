@@ -1,2 +1,2 @@
-# SMAP_Assignment_1
-F20 SMAP Assignemnt 1
+# SMAP_Assignment_2
+F20 SMAP Assignemnt 2
