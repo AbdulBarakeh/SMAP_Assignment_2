@@ -1,6 +1,6 @@
-package android.abdul.wordLearner2.API;
-import android.abdul.wordLearner2.database.WordEntity;
-import android.abdul.wordLearner2.service.WordLearnerService;
+package au590917.abdul.wordLearner2.API;
+import au590917.abdul.wordLearner2.database.WordEntity;
+import au590917.abdul.wordLearner2.service.WordLearnerService;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -14,6 +14,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
+
+import au590917.abdul.wordLearner2.service.WordLearnerService;
 
 //Help and inspiration comes from : https://www.youtube.com/watch?v=y2xtLqP8dSQ & AU219980
 //Gets word from api and sends it to service

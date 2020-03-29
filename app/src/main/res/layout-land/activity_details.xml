@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="android.abdul.wordLearner2.activities.DetailsActivity">
+    tools:context="android.abdul.wordLearner2.au590917.abdul.wordLearner2.activities.DetailsActivity">
     <!--    SRC: buttondesign.xml ( https://stackoverflow.com/questions/6054562/how-to-make-the-corners-of-a-button-round ) -->
     <com.android.volley.toolbox.NetworkImageView
     android:id="@+id/PictureOfWord_Detail"

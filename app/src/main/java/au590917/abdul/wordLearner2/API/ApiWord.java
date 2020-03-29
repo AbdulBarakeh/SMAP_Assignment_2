@@ -1,4 +1,4 @@
-package android.abdul.wordLearner2.API;
+package au590917.abdul.wordLearner2.API;
 
 import java.util.List;
 import com.google.gson.annotations.Expose;

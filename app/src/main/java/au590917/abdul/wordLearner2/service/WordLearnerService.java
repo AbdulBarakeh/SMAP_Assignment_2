@@ -1,9 +1,9 @@
-package android.abdul.wordLearner2.service;
-import android.abdul.wordLearner2.API.API;
-import android.abdul.wordLearner2.R;
-import android.abdul.wordLearner2.activities.ListActivity;
-import android.abdul.wordLearner2.database.WordEntity;
-import android.abdul.wordLearner2.database.WordRepository;
+package au590917.abdul.wordLearner2.service;
+import au590917.abdul.wordLearner2.API.API;
+import au590917.abdul.wordLearner2.R;
+import au590917.abdul.wordLearner2.activities.ListActivity;
+import au590917.abdul.wordLearner2.database.WordEntity;
+import au590917.abdul.wordLearner2.database.WordRepository;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -21,8 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
-import static android.abdul.wordLearner2.BaseApplication.SERVICE_CHANNEL;
-import static android.abdul.wordLearner2.BaseApplication.SUGGESTION_CHANNEL;
+import static au590917.abdul.wordLearner2.BaseApplication.SERVICE_CHANNEL;
+import static au590917.abdul.wordLearner2.BaseApplication.SUGGESTION_CHANNEL;
 
 public class WordLearnerService extends Service {
     private static final String TAG = "WordLearnerService";
@@ -121,12 +121,11 @@ public class WordLearnerService extends Service {
         isRunning = false;
     }
 
-    //    Get list of words
+    //Get list of words
     private void GetSamples() throws ExecutionException, InterruptedException {
         List<WordEntity> tempList = DB.getAllWords();
         wordList.addAll(tempList);
     }
-    public void SneakyUpdate(WordEntity word){ DB.update(word);}
     public ArrayList<WordEntity> getAllWords() throws ExecutionException, InterruptedException {
         //List is element based which makes it work better with databases, which is why we convert it to arraylist instead of making DB return Arraylist in the first place.
         List<WordEntity> temp = DB.getAllWords();

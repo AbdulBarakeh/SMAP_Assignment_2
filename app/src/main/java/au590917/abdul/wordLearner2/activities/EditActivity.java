@@ -1,8 +1,8 @@
-package android.abdul.wordLearner2.activities;
+package au590917.abdul.wordLearner2.activities;
 
-import android.abdul.wordLearner2.R;
-import android.abdul.wordLearner2.database.WordEntity;
-import android.abdul.wordLearner2.service.WordLearnerService;
+import au590917.abdul.wordLearner2.R;
+import au590917.abdul.wordLearner2.database.WordEntity;
+import au590917.abdul.wordLearner2.service.WordLearnerService;
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
@@ -19,6 +19,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.concurrent.ExecutionException;
+
+import au590917.abdul.wordLearner2.database.WordEntity;
+import au590917.abdul.wordLearner2.service.WordLearnerService;
 
 public class EditActivity extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package android.abdul.wordLearner2.database;
+package au590917.abdul.wordLearner2.database;
 
 import android.os.Parcel;
 import android.os.Parcelable;

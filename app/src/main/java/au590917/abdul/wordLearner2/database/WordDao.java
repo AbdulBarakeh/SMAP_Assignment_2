@@ -1,4 +1,4 @@
-package android.abdul.wordLearner2.database;
+package au590917.abdul.wordLearner2.database;
 
 import androidx.room.Dao;
 import androidx.room.Delete;

@@ -1,5 +1,5 @@
 //http://www.jsonschema2pojo.org/
-package android.abdul.wordLearner2.API;
+package au590917.abdul.wordLearner2.API;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

@@ -1,6 +1,6 @@
-package android.abdul.wordLearner2;
+package au590917.abdul.wordLearner2;
 
-import android.abdul.wordLearner2.database.WordDatabase;
+import au590917.abdul.wordLearner2.database.WordDatabase;
 import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -9,6 +9,8 @@ import android.os.Build;
 import android.util.Log;
 
 import androidx.room.Room;
+
+import au590917.abdul.wordLearner2.database.WordDatabase;
 
 //LINK RESOURCE: https://codinginflow.com/tutorials/android/notifications-notification-channels/part-1-notification-channels
 // Inspiration have been drawn from the other parts of the tutorial as well.

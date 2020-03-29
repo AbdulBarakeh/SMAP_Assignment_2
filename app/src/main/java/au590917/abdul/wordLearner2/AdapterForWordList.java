@@ -1,6 +1,7 @@
-package android.abdul.wordLearner2;
+package au590917.abdul.wordLearner2;
 
-import android.abdul.wordLearner2.database.WordEntity;
+import au590917.abdul.wordLearner2.R;
+import au590917.abdul.wordLearner2.database.WordEntity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.LruCache;
@@ -19,6 +20,9 @@ import com.android.volley.toolbox.Volley;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+
+import au590917.abdul.wordLearner2.database.WordEntity;
+
 // Over all I got no effing clue about what this file does. I just know that it is needed to make the recyclerview work
 // SRC: https://codinginflow.com/tutorials/android/simple-recyclerview-java/part-1-layouts-model-class part 1-5
 public class AdapterForWordList extends RecyclerView.Adapter<AdapterForWordList.ViewHolderForWordList> {
