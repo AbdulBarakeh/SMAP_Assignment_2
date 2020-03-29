@@ -87,7 +87,6 @@ Bundle savedState;
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) { }
         });
-
         startMyService();
     }
 
@@ -108,7 +107,6 @@ Bundle savedState;
             RatingBar.setMax(100);
             RatingBar.setProgress(((int)savedRating)*10);
         }
-
     }
 
     private void startMyService() {

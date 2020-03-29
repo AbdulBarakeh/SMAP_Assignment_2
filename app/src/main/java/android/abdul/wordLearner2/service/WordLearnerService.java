@@ -39,8 +39,11 @@ public class WordLearnerService extends Service {
     Context context;
     Runnable run;
     Handler handler = new Handler();
+
     //Binder
     IBinder binder = new WordleranerServiceBinder();
+    private boolean isRunning = true;
+
     public class WordleranerServiceBinder extends Binder{
         public WordLearnerService getService(){
             return WordLearnerService.this;
@@ -89,6 +92,7 @@ public class WordLearnerService extends Service {
     private void pushNotification() {
         final Random rand = new Random();
         run = new Runnable(){
+
             @Override
             public void run() {
                 List<WordEntity> list = wordList;
@@ -99,11 +103,13 @@ public class WordLearnerService extends Service {
                         .setContentText("Learn this word: "+ randomElement.getName())
                         .setDefaults(Notification.DEFAULT_ALL)
                         .setPriority(NotificationCompat.PRIORITY_HIGH)
-                        .setSmallIcon(R.drawable.ic_and)
+                        .setSmallIcon(R.drawable.ic_foxicon)
                         .build();
                 NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
                 notificationManager.notify(667,suggestion);
-                handler.postDelayed(this,60000);
+                if (isRunning){
+                    handler.postDelayed(this , 60000);
+                }
             }
         };
     }
@@ -123,6 +129,7 @@ public class WordLearnerService extends Service {
     public void onDestroy() {
         Log.d(TAG , "onDestroy: I Destroyed");
         super.onDestroy();
+        isRunning = false;
     }
 
     public ArrayList<WordEntity> getAllWords() throws ExecutionException, InterruptedException {

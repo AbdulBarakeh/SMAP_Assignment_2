@@ -23,7 +23,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service android:name=".service.WordLearnerService"/>
+<!--     stop service when app closes SRC: https://stackoverflow.com/questions/29323317/how-to-stop-android-service-when-app-is-closed-->
+        <service android:name=".service.WordLearnerService" android:stopWithTask="true"/>
         <receiver android:name=".activities.ListActivity$BroadcastListReceiver"/>
         <receiver android:name=".activities.ListActivity$BroadcastUpdateReceiver"/>
     </application>
