@@ -18,13 +18,13 @@ import java.util.concurrent.Executors;
 
 // SRC inspiation: https://android.jlelse.eu/5-steps-to-implement-room-persistence-library-in-android-47b10cd47b24
 //SRC inspiration: https://codinginflow.com/tutorials/android/room-viewmodel-livedata-recyclerview-mvvm/part-4-repository
-//SRC: whole WordRespository.class file - Help from student ID:  TODO: MIKKEL ID
+//SRC: whole WordRespository.class file - Help from student ID: AU547760
 
 public class WordRepository {
 public ExecutorService executor = Executors.newSingleThreadExecutor();
     private WordDatabase wordDatabase;
     public WordRepository(Context context) {
-        wordDatabase = Room.databaseBuilder(context,WordDatabase.class,"WordDatabase21")
+        wordDatabase = Room.databaseBuilder(context,WordDatabase.class,"WordDatabase31")
                 .addCallback(new RoomDatabase.Callback() {
                     @Override
                     public void onCreate(@NonNull SupportSQLiteDatabase db) {
@@ -78,61 +78,44 @@ public ExecutorService executor = Executors.newSingleThreadExecutor();
         };
         return executor.submit(getwordByname).get();
     }
-    public WordEntity findByUid(final int uid) throws ExecutionException, InterruptedException {
 
-        Callable<WordEntity> getwordByUid = new Callable<WordEntity>(){
+    public void InsertAll(final List<WordEntity> words) {
+        Runnable insertAll = new Runnable() {
             @Override
-            public WordEntity call() throws Exception {
-                return wordDatabase.wordDao().findByUid(uid);
+            public void run() {
+                wordDatabase.wordDao().insertAll(words);
             }
         };
-        return executor.submit(getwordByUid).get();
-    }
-    //AsyncTasks Are deprecated and should not be used, although I wasn't able to make it work with callback functions like above
-    public void InsertAll( final List<WordEntity> words){
-
-        new AsyncTask<Void, Void, Void>() {
-            @Override
-            protected Void doInBackground(Void... voids) {
-                wordDatabase.wordDao().insertAll(words);
-                return null;
-            }
-        }.execute();
+        executor.execute(insertAll);
     }
 
-    public void InsertOne( final WordEntity word){
-
-        new AsyncTask<Void,Void,Void>(){
-
+    public void InsertOne(final WordEntity word){
+    Runnable insertOne = new Runnable() {
+        @Override
+        public void run() {
+            wordDatabase.wordDao().insertOne(word);
+        }
+    };
+    executor.execute(insertOne);
+    }
+    public void delete(final WordEntity word){
+        Runnable delete = new Runnable() {
             @Override
-            protected Void doInBackground(Void... voids) {
-                wordDatabase.wordDao().insertOne(word);
-                return null;
+            public void run() {
+                wordDatabase.wordDao().delete(word.getName());
             }
-        }.execute();
+        };
+        executor.execute(delete);
     }
 
-    public void delete( final WordEntity word) {
-
-        new AsyncTask<WordEntity, Void, Void>() {
+    public void update(final WordEntity word){
+        Runnable update = new Runnable() {
             @Override
-            protected Void doInBackground(WordEntity... wordEntities) {
-                wordDatabase.wordDao().delete(word._name);
-
-                return null;
+            public void run() {
+                wordDatabase.wordDao().updateOne(word.getNotes(), word.getRating(), word.getName());
             }
-        }.execute();
-    }
-
-    public void update( final WordEntity word){
-        new AsyncTask<WordEntity,Void,Void>(){
-
-            @Override
-            protected Void doInBackground(WordEntity... wordEntities) {
-                wordDatabase.wordDao().updateOne(word);
-                return null;
-            }
-        }.execute();
+        };
+        executor.execute(update);
     }
 
 

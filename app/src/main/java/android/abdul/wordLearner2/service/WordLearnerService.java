@@ -121,6 +121,12 @@ public class WordLearnerService extends Service {
         isRunning = false;
     }
 
+    //    Get list of words
+    private void GetSamples() throws ExecutionException, InterruptedException {
+        List<WordEntity> tempList = DB.getAllWords();
+        wordList.addAll(tempList);
+    }
+    public void SneakyUpdate(WordEntity word){ DB.update(word);}
     public ArrayList<WordEntity> getAllWords() throws ExecutionException, InterruptedException {
         //List is element based which makes it work better with databases, which is why we convert it to arraylist instead of making DB return Arraylist in the first place.
         List<WordEntity> temp = DB.getAllWords();
@@ -156,11 +162,7 @@ public class WordLearnerService extends Service {
         update(word);
     }
 
-//    Get list of words
-    private void GetSamples() throws ExecutionException, InterruptedException {
-        List<WordEntity> tempList = DB.getAllWords();
-        wordList.addAll(tempList);
-    }
+
 
     private WordEntity findWordInList(String word){
         for (WordEntity specificWord : wordList) {

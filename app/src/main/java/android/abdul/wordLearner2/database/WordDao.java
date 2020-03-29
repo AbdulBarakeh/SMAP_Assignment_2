@@ -26,11 +26,11 @@ public interface WordDao {
     @Insert
     void insertOne(WordEntity word);
 
-    @Update
-    void updateOne(WordEntity word);
+//    @Update
+//    void updateOne(WordEntity word);
 
-//    @Query("UPDATE WordEntity SET notes= :notes, rating= :rating WHERE id = :id")
-//    void updateOne(String notes, double rating, int id);
+    @Query("UPDATE WordEntity SET notes= :notes, rating= :rating WHERE id = :name")
+    void updateOne(String notes, double rating, String name);
 
 
 
