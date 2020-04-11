@@ -34,7 +34,6 @@ public class WordLearnerService extends Service {
     Runnable run;
     Handler handler = new Handler();
     IBinder binder = new WordleranerServiceBinder();
-    private boolean isRunning = true;
     //Binder Singleton. To geth the same instance every time.
     public class WordleranerServiceBinder extends Binder{
         public WordLearnerService getService(){
@@ -103,9 +102,7 @@ public class WordLearnerService extends Service {
                 NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
                 notificationManager.notify(667 , suggestion);
             }
-                if (isRunning) {
                     handler.postDelayed(this , 60000);
-                }
             }
         };
     }
@@ -120,7 +117,6 @@ public class WordLearnerService extends Service {
     public void onDestroy() {
         Log.d(TAG , "onDestroy: I Destroyed");
         super.onDestroy();
-        isRunning = false;
     }
 
     //Get list of words
@@ -162,8 +158,6 @@ public class WordLearnerService extends Service {
         DB.update(word);
         update(word);
     }
-
-
 
     private WordEntity findWordInList(String word){
         for (WordEntity specificWord : wordList) {
