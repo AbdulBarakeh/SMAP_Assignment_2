@@ -35,15 +35,10 @@ public class WordLearnerService extends Service {
     Handler handler = new Handler();
     IBinder binder = new WordleranerServiceBinder();
     //Binder Singleton. To geth the same instance every time.
-    public class WordleranerServiceBinder extends Binder{
-        public WordLearnerService getService(){
-            return WordLearnerService.this;
-        }
-    }
+
 
     @Override
     public void onCreate() {
-        Log.d(TAG , "onCreate: I Exist");
         context=this;
         //LINK RESOURCE: https://codinginflow.com/tutorials/android/notifications-notification-channels/part-1-notification-channels
         // Inspiration have been drawn from the other parts of the tutorial as well.
@@ -72,6 +67,7 @@ public class WordLearnerService extends Service {
         //declares runnable(new thread) and runs it
         pushNotification();
         run.run();
+        Log.d(TAG , "onCreate: I Exist");
     }
 
     private void Initializer() {
@@ -107,19 +103,9 @@ public class WordLearnerService extends Service {
         };
     }
 
-    @Override
-    public IBinder onBind(Intent intent) {
-        Log.d(TAG , "onBind: I binded");
-        return binder;
-    }
 
-    @Override
-    public void onDestroy() {
-        Log.d(TAG , "onDestroy: I Destroyed");
-        super.onDestroy();
-    }
 
-    //Get list of words
+    //===GET METHODS===//
     private void GetSamples() throws ExecutionException, InterruptedException {
         List<WordEntity> tempList = DB.getAllWords();
         wordList.addAll(tempList);
@@ -132,15 +118,57 @@ public class WordLearnerService extends Service {
         Log.d(TAG , "getAllWords: All words gotten");
         return wordList;
     }
-
     public WordEntity getWord(String word){
         Log.d(TAG , "getWord: " + word + "is being found");
         return findWordInList(word);
     }
+    private WordEntity findWordInList(String word){
+        for (WordEntity specificWord : wordList) {
+            if (specificWord.getName().equals(word)){
+                Log.d(TAG, "findWordInList: Word found");
+                return specificWord;
+            }
+        }
+        Log.d(TAG, "findWordInList: Word not found");
+        return new WordEntity();
+    }
+
+    //===DELETE METHODS===//
     public void deleteWord(String word) throws ExecutionException, InterruptedException {
         Log.d(TAG , "deleteWord: " + word + "is being deleted...");
         deleteWordFromList(word);
     }
+    private void deleteWordFromList(String word) throws ExecutionException, InterruptedException {
+        WordEntity wordTobeDeleted = DB.findByName(word);
+        DB.delete(wordTobeDeleted);
+        wordList.remove(wordTobeDeleted);
+        updateDataset();
+        Log.d(TAG , "deleteWordFromList: word deleted");
+        Toast.makeText(context , word+ getString(R.string.deletedWord_LIST_ACTIVITY) , Toast.LENGTH_SHORT).show();
+
+    }
+
+    //===UPDATE METHODS===//
+    public void updateWord(WordEntity word) {
+        DB.update(word);
+        update(word);
+    }
+    // Inspiration from -> SRC: https://www.techotopia.com/index.php/Broadcast_Intents_and_Broadcast_Receivers_in_Android_Studio
+    private void update(WordEntity word){
+        Intent broadcaster = new Intent().setAction("update_word");
+        broadcaster.putExtra("word", word);
+        LBM.sendBroadcast(broadcaster);
+        Log.d(TAG , "update: Word updated");
+        Toast.makeText(context , ""+word.getName()+getString(R.string.updateWord_LIST_ACTIVITY) , Toast.LENGTH_SHORT).show();
+    }
+    // Inspiration from -> SRC: https://www.techotopia.com/index.php/Broadcast_Intents_and_Broadcast_Receivers_in_Android_Studio
+    private void updateDataset(){
+        Intent broadcasterupdate = new Intent().setAction("update_dataset");
+        Log.d(TAG , "updateDataset: Dataset updated");
+        LBM.sendBroadcast(broadcasterupdate);
+    }
+
+    //===ADD METHODS===//
     public void addWord(String word){
         for (WordEntity specificWord : wordList){
             if (specificWord.getName().toLowerCase().equals(word.toLowerCase())){
@@ -153,47 +181,6 @@ public class WordLearnerService extends Service {
         api.parseJason(this,word);
         Toast.makeText(context , "" + word + context.getString(R.string.WordAdded_LIST_ACTIVITY) , Toast.LENGTH_SHORT).show();
     }
-    //
-    public void updateWord(WordEntity word) {
-        DB.update(word);
-        update(word);
-    }
-
-    private WordEntity findWordInList(String word){
-        for (WordEntity specificWord : wordList) {
-            if (specificWord.getName().equals(word)){
-                Log.d(TAG, "findWordInList: Word found");
-                return specificWord;
-            }
-        }
-        Log.d(TAG, "findWordInList: Word not found");
-        return new WordEntity();
-    }
-    private void deleteWordFromList(String word) throws ExecutionException, InterruptedException {
-        WordEntity wordTobeDeleted = DB.findByName(word);
-        DB.delete(wordTobeDeleted);
-        wordList.remove(wordTobeDeleted);
-        updateDataset();
-        Log.d(TAG , "deleteWordFromList: word deleted");
-        Toast.makeText(context , word+ getString(R.string.deletedWord_LIST_ACTIVITY) , Toast.LENGTH_SHORT).show();
-
-    }
-    // Inspiration from -> SRC: https://www.techotopia.com/index.php/Broadcast_Intents_and_Broadcast_Receivers_in_Android_Studio
-    private void update(WordEntity word){
-        Intent broadcaster = new Intent().setAction("update_word");
-        broadcaster.putExtra("word", word);
-        LBM.sendBroadcast(broadcaster);
-        Log.d(TAG , "update: Word updated");
-        Toast.makeText(context , ""+word.getName()+getString(R.string.updateWord_LIST_ACTIVITY) , Toast.LENGTH_SHORT).show();
-    }
-
-    // Inspiration from -> SRC: https://www.techotopia.com/index.php/Broadcast_Intents_and_Broadcast_Receivers_in_Android_Studio
-    private void updateDataset(){
-        Intent broadcasterupdate = new Intent().setAction("update_dataset");
-        Log.d(TAG , "updateDataset: Dataset updated");
-        LBM.sendBroadcast(broadcasterupdate);
-    }
-
     public void addApiWord(WordEntity parsedWord) throws ExecutionException, InterruptedException {
         WordEntity newWord = new WordEntity();
         newWord = parsedWord;
@@ -204,5 +191,23 @@ public class WordLearnerService extends Service {
         wordList.add(newWord);
         update(newWord);
         Log.d(TAG , "addApiWord: APIword Added to list");
+    }
+
+    //===EXTENSIONS AND OVERRIDES===//
+    public class WordleranerServiceBinder extends Binder{
+        public WordLearnerService getService(){
+            return WordLearnerService.this;
+        }
+    }
+    @Override
+    public IBinder onBind(Intent intent) {
+        Log.d(TAG , "onBind: I binded");
+        return binder;
+    }
+    //===DESTROY===//
+    @Override
+    public void onDestroy() {
+        Log.d(TAG , "onDestroy: I Destroyed");
+        super.onDestroy();
     }
 }

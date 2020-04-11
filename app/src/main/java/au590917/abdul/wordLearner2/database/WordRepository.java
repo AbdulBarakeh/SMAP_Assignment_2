@@ -19,7 +19,7 @@ import java.util.concurrent.Executors;
 //SRC inspiration: https://codinginflow.com/tutorials/android/room-viewmodel-livedata-recyclerview-mvvm/part-4-repository
 //SRC: whole WordRespository.class file - Help from student ID: AU547760
 // Worked with student AU219980 so some resemblances might occur
-
+//Interface between app and DB. Asynchronous calls, to the DAO which calls the DB, is made here
 public class WordRepository {
 public ExecutorService executor = Executors.newSingleThreadExecutor();
     private WordDatabase wordDatabase;
@@ -53,16 +53,6 @@ public ExecutorService executor = Executors.newSingleThreadExecutor();
             }
         };
         return executor.submit(getwordByname).get();
-    }
-
-    public void InsertAll(final List<WordEntity> words) {
-        Runnable insertAll = new Runnable() {
-            @Override
-            public void run() {
-                wordDatabase.wordDao().insertAll(words);
-            }
-        };
-        executor.execute(insertAll);
     }
 
     public void InsertOne(final WordEntity word){
