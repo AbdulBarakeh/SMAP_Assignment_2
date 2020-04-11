@@ -26,16 +26,16 @@ import static au590917.abdul.wordLearner2.BaseApp.BaseApplication.SUGGESTION_CHA
 
 public class WordLearnerService extends Service {
     private static final String TAG = "WordLearnerService";
-    ArrayList<WordEntity> wordList = new ArrayList<>();
-    LocalBroadcastManager LBM;
-    WordRepository DB;
-    API api;
-    Context context;
-    Runnable run;
-    Handler handler = new Handler();
-    IBinder binder = new WordleranerServiceBinder();
-    //Binder Singleton. To geth the same instance every time.
-
+    private static final int SERVICE_NOTIFICATION = 18;
+    private static final int PUSH_NOTIFICATION = 20;
+    private ArrayList<WordEntity> wordList = new ArrayList<>();
+    private LocalBroadcastManager LBM;
+    private WordRepository DB;
+    private API api;
+    private Context context;
+    private Runnable run;
+    private Handler handler = new Handler();
+    private IBinder binder = new WordleranerServiceBinder();
 
     @Override
     public void onCreate() {
@@ -53,7 +53,7 @@ public class WordLearnerService extends Service {
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setSmallIcon(R.drawable.ic_foxicon)
                 .build();
-        startForeground(666,service);
+        startForeground(SERVICE_NOTIFICATION,service);
         Initializer();
         try {
             GetSamples();
@@ -96,14 +96,12 @@ public class WordLearnerService extends Service {
                         .setSmallIcon(R.drawable.ic_foxicon)
                         .build();
                 NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-                notificationManager.notify(667 , suggestion);
+                notificationManager.notify(PUSH_NOTIFICATION , suggestion);
             }
                     handler.postDelayed(this , 60000);
             }
         };
     }
-
-
 
     //===GET METHODS===//
     private void GetSamples() throws ExecutionException, InterruptedException {
@@ -194,6 +192,7 @@ public class WordLearnerService extends Service {
     }
 
     //===EXTENSIONS AND OVERRIDES===//
+    //Binder Singleton. To get the same instance every time.
     public class WordleranerServiceBinder extends Binder{
         public WordLearnerService getService(){
             return WordLearnerService.this;
