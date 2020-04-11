@@ -25,26 +25,16 @@ import com.android.volley.toolbox.Volley;
 
 import java.util.concurrent.ExecutionException;
 
-import au590917.abdul.wordLearner2.database.WordEntity;
-import au590917.abdul.wordLearner2.service.WordLearnerService;
-
 public class DetailsActivity extends AppCompatActivity {
 
-private Button cancel;
-private Button edit;
-private Button delete;
+private Button cancel, edit, delete;
 private NetworkImageView Picture;
-private TextView Name;
-private TextView Pronoun;
-private TextView Descrip;
-private TextView Notes;
-private TextView Rating;
-
-static final int BETWEEN_DETAIL_EDIT_REQ = 102;
-WordEntity word;
-WordLearnerService wordService;
-String wordname;
-Intent intent;
+private TextView Name, Pronoun, Descrip, Notes, Rating;
+private static final int BETWEEN_DETAIL_EDIT_REQ = 102;
+private WordEntity word;
+private WordLearnerService wordService;
+private String wordName;
+private Intent intent;
 private RequestQueue mRequestQueue;
 private ImageLoader mImageLoader;
 
@@ -54,8 +44,7 @@ private ImageLoader mImageLoader;
         setContentView(R.layout.activity_details);
 
         Intent receivedFromList = getIntent();
-        wordname = receivedFromList.getStringExtra("word");
-
+        wordName = receivedFromList.getStringExtra("word");
         initializeUi();
         loadImage();
 
@@ -71,7 +60,7 @@ private ImageLoader mImageLoader;
             @Override
             public void onClick(View v) {
                 Intent GoToEdit = new Intent(DetailsActivity.this, EditActivity.class);
-                GoToEdit.putExtra("word",wordname);
+                GoToEdit.putExtra("word", wordName);
                 startActivityForResult(GoToEdit,BETWEEN_DETAIL_EDIT_REQ);
             }
         });
@@ -148,7 +137,7 @@ private ImageLoader mImageLoader;
         @Override
         public void onServiceConnected(ComponentName name , IBinder service) {
             wordService = ( (WordLearnerService.WordleranerServiceBinder) service ).getService();
-            word = wordService.getWord(wordname);
+            word = wordService.getWord(wordName);
             setViewdata();
         }
         @Override

@@ -18,6 +18,7 @@ import java.util.concurrent.Executors;
 // SRC inspiation: https://android.jlelse.eu/5-steps-to-implement-room-persistence-library-in-android-47b10cd47b24
 //SRC inspiration: https://codinginflow.com/tutorials/android/room-viewmodel-livedata-recyclerview-mvvm/part-4-repository
 //SRC: whole WordRespository.class file - Help from student ID: AU547760
+// Worked with student AU219980 so some resemblances might occur
 
 public class WordRepository {
 public ExecutorService executor = Executors.newSingleThreadExecutor();

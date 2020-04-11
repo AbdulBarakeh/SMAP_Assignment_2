@@ -1,4 +1,4 @@
-package au590917.abdul.wordLearner2;
+package au590917.abdul.wordLearner2.BaseApp;
 
 import au590917.abdul.wordLearner2.database.WordDatabase;
 import android.app.Application;

@@ -1,6 +1,6 @@
 package au590917.abdul.wordLearner2.activities;
 
-import au590917.abdul.wordLearner2.AdapterForWordList;
+import au590917.abdul.wordLearner2.adapter.AdapterForWordList;
 import au590917.abdul.wordLearner2.R;
 import au590917.abdul.wordLearner2.database.WordEntity;
 import au590917.abdul.wordLearner2.service.WordLearnerService;
@@ -16,7 +16,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -27,24 +26,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
-import au590917.abdul.wordLearner2.database.WordEntity;
-import au590917.abdul.wordLearner2.service.WordLearnerService;
-
 public class ListActivity extends AppCompatActivity {
 
     private static final String TAG = "ListActivity";
     private static AdapterForWordList AdapterListActivity;
-    RecyclerView recyclerViewListActivity;
+    private RecyclerView recyclerViewListActivity;
     private EditText SearchInput;
     private Button addButton;
-
-    static ArrayList<WordEntity> WordList = new ArrayList<>();
+    private static ArrayList<WordEntity> WordList = new ArrayList<>();
     private static WordLearnerService wordService;
-    Intent wordServiceIntent;
-    BroadcastListReceiver listReceiver;
-    LocalBroadcastManager LBM;
-    BroadcastUpdateReceiver updateReceiver;
-
+    private Intent wordServiceIntent;
+    private BroadcastListReceiver listReceiver;
+    private LocalBroadcastManager LBM;
+    private BroadcastUpdateReceiver updateReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

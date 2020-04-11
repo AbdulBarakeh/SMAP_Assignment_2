@@ -1,4 +1,4 @@
-package au590917.abdul.wordLearner2;
+package au590917.abdul.wordLearner2.adapter;
 
 import au590917.abdul.wordLearner2.R;
 import au590917.abdul.wordLearner2.database.WordEntity;

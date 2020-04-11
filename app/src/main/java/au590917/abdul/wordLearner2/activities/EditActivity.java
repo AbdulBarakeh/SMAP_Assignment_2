@@ -18,28 +18,19 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.concurrent.ExecutionException;
-
-import au590917.abdul.wordLearner2.database.WordEntity;
-import au590917.abdul.wordLearner2.service.WordLearnerService;
-
 public class EditActivity extends AppCompatActivity {
 
     private static final String TAG = "EditActivity";
-    private Button cancel;
-    private Button update;
-    private TextView Name;
+    private Button cancel, update;
+    private TextView Name, Rating;
     private EditText Notes;
-    private TextView Rating;
     private SeekBar RatingBar;
-
-    String wordname;
-    WordEntity word;
-    WordLearnerService wordService;
-    Intent EditToDetail;
-    String savedNote;
-    double savedRating;
-    Bundle savedState;
+    private String wordName, savedNote;
+    private WordEntity word;
+    private WordLearnerService wordService;
+    private Intent EditToDetail;
+    private double savedRating;
+    private Bundle savedState;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,12 +41,12 @@ public class EditActivity extends AppCompatActivity {
         Intent receivedFromDetail = getIntent();
         if (savedState != null){
             word = savedInstanceState.getParcelable("savedWord");
-            wordname = word.getName();
+            wordName = word.getName();
             savedNote = savedInstanceState.getString("notes");
             savedRating = savedInstanceState.getDouble("rating",6.9);
         }
         else{
-            wordname = receivedFromDetail.getStringExtra("word");
+            wordName = receivedFromDetail.getStringExtra("word");
         }
         InitializeUI();
         EditToDetail = new Intent(this,DetailsActivity.class);
@@ -144,7 +135,7 @@ public class EditActivity extends AppCompatActivity {
         @Override
         public void onServiceConnected(ComponentName name , IBinder service) {
             wordService = ( (WordLearnerService.WordleranerServiceBinder) service ).getService();
-            word = wordService.getWord(wordname);
+            word = wordService.getWord(wordName);
             setViewdata();
         }
         @Override

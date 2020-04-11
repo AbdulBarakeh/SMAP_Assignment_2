@@ -21,8 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
-import static au590917.abdul.wordLearner2.BaseApplication.SERVICE_CHANNEL;
-import static au590917.abdul.wordLearner2.BaseApplication.SUGGESTION_CHANNEL;
+import static au590917.abdul.wordLearner2.BaseApp.BaseApplication.SERVICE_CHANNEL;
+import static au590917.abdul.wordLearner2.BaseApp.BaseApplication.SUGGESTION_CHANNEL;
 
 public class WordLearnerService extends Service {
     private static final String TAG = "WordLearnerService";
