@@ -16,15 +16,15 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
+import static au590917.abdul.wordLearner2.service.WordLearnerService.UPDATE_DATASET;
+import static au590917.abdul.wordLearner2.service.WordLearnerService.UPDATE_WORD;
 
 public class ListActivity extends AppCompatActivity {
 
@@ -130,9 +130,9 @@ public class ListActivity extends AppCompatActivity {
             LBM = LocalBroadcastManager.getInstance(ListActivity.this);
 
             IntentFilter intentFilter = new IntentFilter();
-            intentFilter.addAction("update_word");
+            intentFilter.addAction(UPDATE_WORD);
             IntentFilter intentFilterupdate = new IntentFilter();
-            intentFilterupdate.addAction("update_dataset");
+            intentFilterupdate.addAction(UPDATE_DATASET);
 
             listReceiver = new BroadcastListReceiver();
             updateReceiver = new BroadcastUpdateReceiver();

@@ -26,6 +26,8 @@ import static au590917.abdul.wordLearner2.BaseApp.BaseApplication.SUGGESTION_CHA
 
 public class WordLearnerService extends Service {
     private static final String TAG = "WordLearnerService";
+    public static final String UPDATE_WORD = "update_word";
+    public static final String UPDATE_DATASET = "update_dataset";
     private static final int SERVICE_NOTIFICATION = 18;
     private static final int PUSH_NOTIFICATION = 20;
     private ArrayList<WordEntity> wordList = new ArrayList<>();
@@ -153,7 +155,7 @@ public class WordLearnerService extends Service {
     }
     // Inspiration from -> SRC: https://www.techotopia.com/index.php/Broadcast_Intents_and_Broadcast_Receivers_in_Android_Studio
     private void update(WordEntity word){
-        Intent broadcaster = new Intent().setAction("update_word");
+        Intent broadcaster = new Intent().setAction(UPDATE_WORD);
         broadcaster.putExtra("word", word);
         LBM.sendBroadcast(broadcaster);
         Log.d(TAG , "update: Word updated");
@@ -161,7 +163,7 @@ public class WordLearnerService extends Service {
     }
     // Inspiration from -> SRC: https://www.techotopia.com/index.php/Broadcast_Intents_and_Broadcast_Receivers_in_Android_Studio
     private void updateDataset(){
-        Intent broadcasterupdate = new Intent().setAction("update_dataset");
+        Intent broadcasterupdate = new Intent().setAction(UPDATE_DATASET);
         Log.d(TAG , "updateDataset: Dataset updated");
         LBM.sendBroadcast(broadcasterupdate);
     }
