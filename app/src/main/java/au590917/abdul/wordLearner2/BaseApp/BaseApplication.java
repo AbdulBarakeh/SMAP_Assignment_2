@@ -5,15 +5,13 @@ import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
-import android.os.Build;
 import android.util.Log;
 
-import androidx.room.Room;
-
-import au590917.abdul.wordLearner2.database.WordDatabase;
 
 //LINK RESOURCE: https://codinginflow.com/tutorials/android/notifications-notification-channels/part-1-notification-channels
 // Inspiration have been drawn from the other parts of the tutorial as well.
+//The functionality of this file is to create the notification channels which will be used in the app
+//By extending the Application class createNotificationChannel() will be called on startup before anything else
 public class BaseApplication extends Application {
     public static final String SUGGESTION_CHANNEL = "Suggestion_Channel";
     public static final String SERVICE_CHANNEL = "Service_Channel";

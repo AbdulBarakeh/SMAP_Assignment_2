@@ -1,4 +1,5 @@
 package au590917.abdul.wordLearner2.API;
+
 import au590917.abdul.wordLearner2.database.WordEntity;
 import au590917.abdul.wordLearner2.service.WordLearnerService;
 import com.android.volley.Request;
@@ -15,10 +16,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
-import au590917.abdul.wordLearner2.service.WordLearnerService;
 
 //Help and inspiration comes from : https://www.youtube.com/watch?v=y2xtLqP8dSQ & AU219980
-//Gets word from api and sends it to service
+//Sends request with word attached and receives response
 //Inspiration from part 1 to 4. SRC: https://codinginflow.com/tutorials/android/gson/part-1-simple-serialization-deserialization
 public class API{
     private final String Token = "Token f161a4938824d1cf79c89edce6cb6815f0e51cb8";

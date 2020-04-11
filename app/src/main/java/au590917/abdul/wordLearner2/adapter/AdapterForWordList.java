@@ -8,22 +8,18 @@ import android.util.LruCache;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
-import com.squareup.picasso.Picasso;
+
 
 import java.util.ArrayList;
 
-import au590917.abdul.wordLearner2.database.WordEntity;
 
-// Over all I got no effing clue about what this file does. I just know that it is needed to make the recyclerview work
+// The adapters functionality is to display the list of words, in the recycler view, in the form of the list_item.xml template
 // SRC: https://codinginflow.com/tutorials/android/simple-recyclerview-java/part-1-layouts-model-class part 1-5
 public class AdapterForWordList extends RecyclerView.Adapter<AdapterForWordList.ViewHolderForWordList> {
     private ArrayList<WordEntity> ListOfWords;

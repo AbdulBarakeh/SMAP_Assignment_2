@@ -5,6 +5,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 // inspiration comes from : https://www.youtube.com/watch?v=y2xtLqP8dSQ
 //SRC: http://www.jsonschema2pojo.org/
+// Used to convert JSON object to java object
 public class ApiWord {
 
     @SerializedName("definitions")

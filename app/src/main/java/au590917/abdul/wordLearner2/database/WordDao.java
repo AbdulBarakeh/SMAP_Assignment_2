@@ -1,12 +1,8 @@
 package au590917.abdul.wordLearner2.database;
 
 import androidx.room.Dao;
-import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
-import androidx.room.Update;
-
-import java.util.ArrayList;
 import java.util.List;
 //SRC: https://android.jlelse.eu/5-steps-to-implement-room-persistence-library-in-android-47b10cd47b24
 @Dao

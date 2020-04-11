@@ -4,7 +4,7 @@ package au590917.abdul.wordLearner2.API;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 //SRC: http://www.jsonschema2pojo.org/
-
+// Used to convert JSON object to java object
 class Definition {
 
     @SerializedName("definition")
