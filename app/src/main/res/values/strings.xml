@@ -39,4 +39,5 @@
     <string name="deletedWord_LIST_ACTIVITY">" deleted"</string>
     <string name="ServiceDescripption">Starts service</string>
     <string name="SuggestionDescription">Creates suggestions for words</string>
+    <string name="wordNotExist">word doesn\'t exist</string>
 </resources>

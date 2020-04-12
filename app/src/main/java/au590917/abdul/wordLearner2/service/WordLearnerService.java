@@ -8,10 +8,8 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
@@ -28,8 +26,9 @@ import static au590917.abdul.wordLearner2.BaseApp.BaseApplication.SUGGESTION_CHA
 
 public class WordLearnerService extends Service {
     private static final String TAG = "WordLearnerService";
-    public static final String UPDATE_WORD = "update_word";
-    public static final String UPDATE_DATASET = "update_dataset";
+    public static final String UPDATE_WORD_ACTION = "update_word";
+    public static final String UPDATE_WORD_KEY = "word";
+    public static final String UPDATE_DATASET_ACTION = "update_dataset";
     private static final int SERVICE_NOTIFICATION = 18;
     private static final int PUSH_NOTIFICATION = 20;
     private ArrayList<WordEntity> wordList = new ArrayList<>();
@@ -160,15 +159,15 @@ public class WordLearnerService extends Service {
     }
     // Inspiration from -> SRC: https://www.techotopia.com/index.php/Broadcast_Intents_and_Broadcast_Receivers_in_Android_Studio
     private void update(WordEntity word){
-        Intent broadcaster = new Intent().setAction(UPDATE_WORD);
-        broadcaster.putExtra("word", word);
+        Intent broadcaster = new Intent().setAction(UPDATE_WORD_ACTION);
+        broadcaster.putExtra(UPDATE_WORD_KEY, word);
         LBM.sendBroadcast(broadcaster);
         Log.d(TAG , "update: Word updated");
         Toast.makeText(context , ""+word.getName()+getString(R.string.updateWord_LIST_ACTIVITY) , Toast.LENGTH_SHORT).show();
     }
     // Inspiration from -> SRC: https://www.techotopia.com/index.php/Broadcast_Intents_and_Broadcast_Receivers_in_Android_Studio
     private void updateDataset(){
-        Intent broadcasterupdate = new Intent().setAction(UPDATE_DATASET);
+        Intent broadcasterupdate = new Intent().setAction(UPDATE_DATASET_ACTION);
         Log.d(TAG , "updateDataset: Dataset updated");
         LBM.sendBroadcast(broadcasterupdate);
     }
@@ -184,7 +183,6 @@ public class WordLearnerService extends Service {
         }
         Log.d(TAG , "addWord: Looking for word in API...");
         api.parseJason(this,word);
-        Toast.makeText(context , "" + word + context.getString(R.string.WordAdded_LIST_ACTIVITY) , Toast.LENGTH_SHORT).show();
     }
     public void addApiWord(WordEntity parsedWord) throws ExecutionException, InterruptedException {
         WordEntity newWord = new WordEntity();
@@ -194,6 +192,7 @@ public class WordLearnerService extends Service {
         }
         DB.InsertOne(newWord);
         wordList.add(newWord);
+        Toast.makeText(context , "" + newWord.getName() + context.getString(R.string.WordAdded_LIST_ACTIVITY) , Toast.LENGTH_SHORT).show();
         update(newWord);
         Log.d(TAG , "addApiWord: APIword Added to list");
     }

@@ -23,13 +23,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
-import static au590917.abdul.wordLearner2.service.WordLearnerService.UPDATE_DATASET;
-import static au590917.abdul.wordLearner2.service.WordLearnerService.UPDATE_WORD;
+import static au590917.abdul.wordLearner2.service.WordLearnerService.UPDATE_DATASET_ACTION;
+import static au590917.abdul.wordLearner2.service.WordLearnerService.UPDATE_WORD_ACTION;
+import static au590917.abdul.wordLearner2.service.WordLearnerService.UPDATE_WORD_KEY;
 
 public class ListActivity extends AppCompatActivity {
 
     private static final String TAG = "ListActivity";
-
+    public static final String LIST_TO_DETAIL_KEY = "word";
     private static AdapterForWordList AdapterListActivity;
     private RecyclerView recyclerViewListActivity;
     private EditText SearchInput;
@@ -54,7 +55,7 @@ public class ListActivity extends AppCompatActivity {
             @Override
             public void onItemClick(int position) {
             Intent GoToDetails = new Intent(ListActivity.this, DetailsActivity.class);
-            GoToDetails.putExtra("word",WordList.get(position).getName());
+            GoToDetails.putExtra(LIST_TO_DETAIL_KEY,WordList.get(position).getName());
             startActivity(GoToDetails);
             }
         } );
@@ -131,9 +132,9 @@ public class ListActivity extends AppCompatActivity {
             LBM = LocalBroadcastManager.getInstance(ListActivity.this);
 
             IntentFilter intentFilter = new IntentFilter();
-            intentFilter.addAction(UPDATE_WORD);
+            intentFilter.addAction(UPDATE_WORD_ACTION);
             IntentFilter intentFilterupdate = new IntentFilter();
-            intentFilterupdate.addAction(UPDATE_DATASET);
+            intentFilterupdate.addAction(UPDATE_DATASET_ACTION);
 
             listReceiver = new BroadcastListReceiver();
             updateReceiver = new BroadcastUpdateReceiver();
@@ -147,7 +148,7 @@ public class ListActivity extends AppCompatActivity {
         public static class  BroadcastListReceiver extends BroadcastReceiver{
             @Override
             public void onReceive(Context context , Intent intent) {
-                WordEntity sentWord = intent.getParcelableExtra("word");
+                WordEntity sentWord = intent.getParcelableExtra(UPDATE_WORD_KEY);
                 for (WordEntity currentword : WordList) {
                     if (currentword.getName().equals(sentWord.getName())){
                         currentword.setRating(sentWord.getRating());

@@ -22,8 +22,11 @@ import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
 import java.util.concurrent.ExecutionException;
 
+import static au590917.abdul.wordLearner2.activities.ListActivity.LIST_TO_DETAIL_KEY;
+
 public class DetailsActivity extends AppCompatActivity {
 
+    public static final String DETAIL_TO_EDIT_KEY = "word";
     private Button cancel, edit, delete;
     private NetworkImageView Picture;
     private TextView Name, Pronoun, Descrip, Notes, Rating;
@@ -41,7 +44,7 @@ public class DetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_details);
 
         Intent receivedFromList = getIntent();
-        wordName = receivedFromList.getStringExtra("word");
+        wordName = receivedFromList.getStringExtra(LIST_TO_DETAIL_KEY);
         initializeUi();
         loadImage();
 
@@ -57,7 +60,7 @@ public class DetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent GoToEdit = new Intent(DetailsActivity.this, EditActivity.class);
-                GoToEdit.putExtra("word", wordName);
+                GoToEdit.putExtra(DETAIL_TO_EDIT_KEY, wordName);
                 startActivityForResult(GoToEdit,BETWEEN_DETAIL_EDIT_REQ);
             }
         });

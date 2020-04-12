@@ -18,6 +18,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import static au590917.abdul.wordLearner2.activities.DetailsActivity.DETAIL_TO_EDIT_KEY;
+
 public class EditActivity extends AppCompatActivity {
 
     private static final String TAG = "EditActivity";
@@ -28,11 +30,13 @@ public class EditActivity extends AppCompatActivity {
     private String wordName, savedNote;
     private WordEntity word;
     private WordLearnerService wordService;
-    Intent EditToDetail;
-    double savedRating;
-    Bundle savedState;
-//    private static String SAVED_WORD ="savedWord";
-    //TODO: externalize
+    private Intent EditToDetail;
+    private double savedRating;
+    private Bundle savedState;
+    private static String SAVED_WORD ="savedWord";
+    private static String SAVED_NOTES = "notes";
+    private static String SAVED_RATING = "rating";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,13 +45,13 @@ public class EditActivity extends AppCompatActivity {
         //Get all data either from detail or from the savedinstance.
         Intent receivedFromDetail = getIntent();
         if (savedState != null){
-            word = savedInstanceState.getParcelable("savedWord");
+            word = savedInstanceState.getParcelable(SAVED_WORD);
             wordName = word.getName();
-            savedNote = savedInstanceState.getString("notes");
-            savedRating = savedInstanceState.getDouble("rating",6.9);
+            savedNote = savedInstanceState.getString(SAVED_NOTES);
+            savedRating = savedInstanceState.getDouble(SAVED_RATING,6.9);
         }
         else{
-            wordName = receivedFromDetail.getStringExtra("word");
+            wordName = receivedFromDetail.getStringExtra(DETAIL_TO_EDIT_KEY);
         }
         InitializeUI();
         EditToDetail = new Intent(this,DetailsActivity.class);
@@ -59,7 +63,6 @@ public class EditActivity extends AppCompatActivity {
                 finish();
             }
         });
-//        Intent intent = new Intent().setAction()
         update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -126,9 +129,9 @@ public class EditActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putParcelable("savedWord",word);
-        outState.putString("notes",Notes.getText().toString());
-        outState.putDouble("rating", Double.parseDouble(Rating.getText().toString())*10);
+        outState.putParcelable(SAVED_WORD,word);
+        outState.putString(SAVED_NOTES,Notes.getText().toString());
+        outState.putDouble(SAVED_RATING, Double.parseDouble(Rating.getText().toString())*10);
     }
     // SRC: https://developer.android.com/guide/components/bound-services
     //Bind your service & Henrik ze teacher

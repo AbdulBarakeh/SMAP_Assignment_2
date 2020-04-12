@@ -1,5 +1,9 @@
 package au590917.abdul.wordLearner2.API;
 
+import android.util.Log;
+import android.widget.Toast;
+
+import au590917.abdul.wordLearner2.R;
 import au590917.abdul.wordLearner2.database.WordEntity;
 import au590917.abdul.wordLearner2.service.WordLearnerService;
 import com.android.volley.Request;
@@ -21,6 +25,7 @@ import java.util.concurrent.ExecutionException;
 //Sends request with word attached and receives response
 //Inspiration from part 1 to 4. SRC: https://codinginflow.com/tutorials/android/gson/part-1-simple-serialization-deserialization
 public class API{
+    private static final String TAG = "API";
     private final String Token = "Token f161a4938824d1cf79c89edce6cb6815f0e51cb8";
     public void parseJason(final WordLearnerService service, final String word){
         final String URL = "https://owlbot.info/api/v4/dictionary/" + word;
@@ -61,7 +66,8 @@ public class API{
         } , new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                Log.d(TAG , "onErrorResponse: word doesn't exist");
+                Toast.makeText(service , R.string.wordNotExist , Toast.LENGTH_SHORT).show();
             }
         }){
             @Override
