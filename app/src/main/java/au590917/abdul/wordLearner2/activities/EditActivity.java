@@ -28,10 +28,10 @@ public class EditActivity extends AppCompatActivity {
     private String wordName, savedNote;
     private WordEntity word;
     private WordLearnerService wordService;
-    private Intent EditToDetail;
-    private double savedRating;
-    private Bundle savedState;
-    private static String SAVED_WORD ="savedWord";
+    Intent EditToDetail;
+    double savedRating;
+    Bundle savedState;
+//    private static String SAVED_WORD ="savedWord";
     //TODO: externalize
     @Override
     protected void onCreate(Bundle savedInstanceState) {

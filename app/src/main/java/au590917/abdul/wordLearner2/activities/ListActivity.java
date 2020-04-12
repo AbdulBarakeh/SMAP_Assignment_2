@@ -29,6 +29,7 @@ import static au590917.abdul.wordLearner2.service.WordLearnerService.UPDATE_WORD
 public class ListActivity extends AppCompatActivity {
 
     private static final String TAG = "ListActivity";
+
     private static AdapterForWordList AdapterListActivity;
     private RecyclerView recyclerViewListActivity;
     private EditText SearchInput;

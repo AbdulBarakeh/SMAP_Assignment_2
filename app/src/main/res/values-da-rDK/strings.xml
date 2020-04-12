@@ -25,4 +25,6 @@
     <string name="wordlearnerServiceTitle">Ordlære tjeneste</string>
     <string name="wordlearnerserviceText">Tjeneste kører…</string>
     <string name="deletedWord_LIST_ACTIVITY">" slettet"</string>
+    <string name="ServiceDescripption">Starter tjeneste</string>
+    <string name="SuggestionDescription">Skaber ordforslag</string>
 </resources>

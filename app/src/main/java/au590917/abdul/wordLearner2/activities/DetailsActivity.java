@@ -14,29 +14,26 @@ import android.util.LruCache;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
-
 import java.util.concurrent.ExecutionException;
 
 public class DetailsActivity extends AppCompatActivity {
 
-private Button cancel, edit, delete;
-private NetworkImageView Picture;
-private TextView Name, Pronoun, Descrip, Notes, Rating;
-private static final int BETWEEN_DETAIL_EDIT_REQ = 102;
-private WordEntity word;
-private WordLearnerService wordService;
-private String wordName;
-private Intent intent;
-private RequestQueue mRequestQueue;
-private ImageLoader mImageLoader;
+    private Button cancel, edit, delete;
+    private NetworkImageView Picture;
+    private TextView Name, Pronoun, Descrip, Notes, Rating;
+    private static final int BETWEEN_DETAIL_EDIT_REQ = 102;
+    private WordEntity word;
+    private WordLearnerService wordService;
+    private String wordName;
+    private Intent intent;
+    private RequestQueue mRequestQueue;
+    private ImageLoader mImageLoader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -37,4 +37,6 @@
     <string name="wordlearnerServiceTitle">Wordlearner Service</string>
     <string name="wordlearnerserviceText">Service is running…</string>
     <string name="deletedWord_LIST_ACTIVITY">" deleted"</string>
+    <string name="ServiceDescripption">Starts service</string>
+    <string name="SuggestionDescription">Creates suggestions for words</string>
 </resources>
