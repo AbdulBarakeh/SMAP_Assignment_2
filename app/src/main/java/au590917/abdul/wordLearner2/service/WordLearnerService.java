@@ -8,8 +8,10 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
@@ -38,6 +40,8 @@ public class WordLearnerService extends Service {
     private Runnable run;
     private Handler handler = new Handler();
     private IBinder binder = new WordleranerServiceBinder();
+    private NotificationManager notificationManager;
+
 
     @Override
     public void onCreate() {
@@ -46,16 +50,15 @@ public class WordLearnerService extends Service {
         // Inspiration have been drawn from the other parts of the tutorial as well.
         Intent serviceIntent = new Intent(this, ListActivity.class);
         PendingIntent pendingIntent_service = PendingIntent.getActivity(this,0,serviceIntent,0);
-        Notification service = new NotificationCompat.Builder(this, SERVICE_CHANNEL)
+        Notification service = new NotificationCompat.Builder(this , SERVICE_CHANNEL)
                 .setChannelId(SERVICE_CHANNEL)
-                .setOngoing(true)
                 .setContentTitle(getString(R.string.wordlearnerServiceTitle))
                 .setContentText(getString(R.string.wordlearnerserviceText))
                 .setContentIntent(pendingIntent_service)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setSmallIcon(R.drawable.ic_foxicon)
                 .build();
-        startForeground(SERVICE_NOTIFICATION,service);
+        startForeground(SERVICE_NOTIFICATION, service);
         Initializer();
         try {
             GetSamples();
@@ -72,6 +75,7 @@ public class WordLearnerService extends Service {
         Log.d(TAG , "onCreate: I Exist");
     }
 
+
     private void Initializer() {
         LBM = LocalBroadcastManager.getInstance(this);
         DB = new WordRepository(getApplicationContext());
@@ -79,7 +83,8 @@ public class WordLearnerService extends Service {
     }
 
     //LINK SOURCE: https://www.youtube.com/watch?v=QfQE1ayCzf8 "How to Start a Background Thread in Android"
-    // Pushnotification gets upadted every minute until onDestroy() 
+    // Pushnotification gets upadted every minute until onDestroy()
+    //Language only changes on the next push notification
     private void pushNotification() {
         final Random rand = new Random();
         run = new Runnable(){
@@ -97,7 +102,7 @@ public class WordLearnerService extends Service {
                         .setPriority(NotificationCompat.PRIORITY_HIGH)
                         .setSmallIcon(R.drawable.ic_foxicon)
                         .build();
-                NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
                 notificationManager.notify(PUSH_NOTIFICATION , suggestion);
             }
                     handler.postDelayed(this , 60000);
@@ -211,4 +216,5 @@ public class WordLearnerService extends Service {
         Log.d(TAG , "onDestroy: I Destroyed");
         super.onDestroy();
     }
+
 }

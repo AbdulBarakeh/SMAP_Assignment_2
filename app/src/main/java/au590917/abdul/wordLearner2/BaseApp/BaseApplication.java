@@ -1,11 +1,13 @@
 package au590917.abdul.wordLearner2.BaseApp;
 
-import au590917.abdul.wordLearner2.database.WordDatabase;
 import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.util.Log;
+
+import androidx.annotation.NonNull;
 
 
 //LINK RESOURCE: https://codinginflow.com/tutorials/android/notifications-notification-channels/part-1-notification-channels
@@ -16,7 +18,7 @@ public class BaseApplication extends Application {
     public static final String SUGGESTION_CHANNEL = "Suggestion_Channel";
     public static final String SERVICE_CHANNEL = "Service_Channel";
     private static final String TAG = "BaseApplication";
-    private WordDatabase db;
+    NotificationManager notificationManager;
     @Override
     public void onCreate() {
         super.onCreate();
@@ -32,11 +34,16 @@ public class BaseApplication extends Application {
             NotificationChannel suggestionChannel = new NotificationChannel(SUGGESTION_CHANNEL,"Suggestion_Channel", NotificationManager.IMPORTANCE_HIGH);
             suggestionChannel.setDescription("Creates suggestions for words");
 
-            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             notificationManager.createNotificationChannel(serviceChannel);
             notificationManager.createNotificationChannel(suggestionChannel);
         }
         Log.d(TAG , "createNotificationChannel: notification channels created ");
     }
 
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        notificationManager.notify();
+    }
 }

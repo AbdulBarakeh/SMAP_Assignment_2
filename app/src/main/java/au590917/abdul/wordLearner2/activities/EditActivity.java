@@ -31,7 +31,8 @@ public class EditActivity extends AppCompatActivity {
     private Intent EditToDetail;
     private double savedRating;
     private Bundle savedState;
-
+    private static String SAVED_WORD ="savedWord";
+    //TODO: externalize
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

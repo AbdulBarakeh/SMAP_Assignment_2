@@ -19,11 +19,9 @@
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<!--     stop service when app closes SRC: https://stackoverflow.com/questions/29323317/how-to-stop-android-service-when-app-is-closed-->
         <service android:name=".service.WordLearnerService"/>
         <receiver android:name=".activities.ListActivity$BroadcastListReceiver"/>
         <receiver android:name=".activities.ListActivity$BroadcastUpdateReceiver"/>
